@@ -231,3 +231,4 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:4rem 0 
   .hero-ctas .btn-cta,.hero-ctas .btn-outline{width:100%;max-width:100%;justify-content:center;padding:14px 20px !important;font-size:0.95rem !important;box-sizing:border-box}
   .hero-stats{gap:1.5rem;flex-wrap:wrap}
   .hero-stat-num{font-size:1.8rem}
+}
