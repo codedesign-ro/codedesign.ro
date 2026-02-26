@@ -6,7 +6,7 @@ document.documentElement.classList.add('js-loaded');
 
 function init() {
 
-  // ---- Language ----
+  // Language
   const html = document.documentElement;
   const langBtns = document.querySelectorAll('.lang-btn');
   let lang = localStorage.getItem('cd-lang') || 'ro';
@@ -15,23 +15,31 @@ function init() {
     lang = l;
     html.setAttribute('data-lang', l);
     localStorage.setItem('cd-lang', l);
-    langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    langBtns.forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === l);
+    });
   }
   setLang(lang);
-  langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+  langBtns.forEach(function(b) {
+    b.addEventListener('click', function() { setLang(b.dataset.lang); });
+  });
 
-  // ---- Navbar scroll ----
-  const nav = document.querySelector('nav');
-  if (nav) window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+  // Navbar scroll
+  var nav = document.querySelector('nav');
+  if (nav) {
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  }
 
-  // ---- Hamburger ----
-  const hamburger = document.querySelector('.hamburger');
-  const mobileMenu = document.querySelector('.mobile-menu');
+  // Hamburger
+  var hamburger = document.querySelector('.hamburger');
+  var mobileMenu = document.querySelector('.mobile-menu');
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', String(open));
-      const spans = hamburger.querySelectorAll('span');
+    hamburger.addEventListener('click', function() {
+      var open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      var spans = hamburger.querySelectorAll('span');
       if (open) {
         spans[0].style.transform = 'translateY(7px) rotate(45deg)';
         spans[1].style.opacity = '0';
@@ -42,92 +50,105 @@ function init() {
         spans[2].style.transform = '';
       }
     });
-    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.querySelectorAll('span').forEach(s => {
-        s.style.transform = '';
-        s.style.opacity = '';
+    mobileMenu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        mobileMenu.classList.remove('open');
+        hamburger.querySelectorAll('span').forEach(function(s) {
+          s.style.transform = '';
+          s.style.opacity = '';
+        });
       });
-    }));
+    });
   }
 
-  // ---- Active nav link ----
-  const path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
+  // Active nav link
+  var path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(function(a) {
     if (a.getAttribute('href') === path) a.classList.add('active');
   });
 
-  // ---- Scroll reveal ----
-  const revealEls = document.querySelectorAll('.reveal');
-  if (revealEls.length) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length && 'IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 
-    revealEls.forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('visible');
-      else observer.observe(el);
+    revealEls.forEach(function(el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        revealObserver.observe(el);
+      }
     });
+  } else {
+    revealEls.forEach(function(el) { el.classList.add('visible'); });
   }
 
-  // ---- Counter ----
-  // Always animate counters that are already visible on load
+  // Counter animation
   function animCounter(el, target, dur) {
     dur = dur || 1800;
     if (el.dataset.animated) return;
     el.dataset.animated = '1';
-    let start = 0;
-    const suffix = el.dataset.suffix || '';
-    const step = function(ts) {
+    var start = null;
+    var suffix = el.dataset.suffix || '';
+    function step(ts) {
       if (!start) start = ts;
-      const prog = Math.min((ts - start) / dur, 1);
-      const eased = 1 - Math.pow(1 - prog, 3);
+      var prog = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - prog, 3);
       el.textContent = Math.floor(eased * target) + suffix;
       if (prog < 1) requestAnimationFrame(step);
-    };
+    }
     requestAnimationFrame(step);
   }
 
-  const counters = document.querySelectorAll('.counter');
+  var counters = document.querySelectorAll('.counter');
   if (counters.length) {
-    // First: immediately animate any counter already in viewport
+    // Animate counters already visible on load
     counters.forEach(function(el) {
-      const r = el.getBoundingClientRect();
+      var r = el.getBoundingClientRect();
       if (r.top < window.innerHeight && r.bottom > 0) {
         animCounter(el, parseInt(el.dataset.target, 10));
       }
     });
 
-    // Then: watch for counters that scroll into view later
-    const cObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          animCounter(e.target, parseInt(e.target.dataset.target, 10));
-          cObserver.unobserve(e.target);
-        }
+    // Watch for counters that scroll into view
+    if ('IntersectionObserver' in window) {
+      var cObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            animCounter(e.target, parseInt(e.target.dataset.target, 10));
+            cObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      counters.forEach(function(el) {
+        if (!el.dataset.animated) cObserver.observe(el);
       });
-    }, { threshold: 0.2 });
-    counters.forEach(function(el) {
-      if (!el.dataset.animated) cObserver.observe(el);
-    });
+    }
   }
 
-  // ---- Contact form ----
-  const form = document.querySelector('.contact-form');
+  // Contact form
+  var form = document.querySelector('.contact-form');
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      const orig = btn.innerHTML;
-      btn.innerHTML = '<span class="ro">Trimis! ✓</span><span class="en">Sent! ✓</span>';
+      var btn = form.querySelector('button[type="submit"]');
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<span class="ro">Trimis! \u2713</span><span class="en">Sent! \u2713</span>';
       btn.disabled = true;
-      setTimeout(function() { btn.innerHTML = orig; btn.disabled = false; form.reset(); }, 3000);
+      setTimeout(function() {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        form.reset();
+      }, 3000);
     });
   }
 }
