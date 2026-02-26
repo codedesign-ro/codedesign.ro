@@ -76,7 +76,7 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,0.4)}
 .card:hover::before{opacity:1}
 
 /* ICON BOX */
-.icon-box{width:52px;height:52px;border-radius:14px;background:rgba(79,110,247,0.1);border:1px solid rgba(79,110,247,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;flex-shrink:0}
+.icon-box{width:52px;height:52px;border-radius:14px;border:1px solid rgba(79,110,247,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;flex-shrink:0}
 .icon-box img{width:30px;height:30px;object-fit:contain}
 
 /* TAGS */
