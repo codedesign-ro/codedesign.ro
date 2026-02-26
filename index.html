@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ro" data-lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Design — Web Design &amp; Servicii IT România</title>
+  <meta name="description" content="Code Design — Web design, SEO, programare web și servicii IT pentru companii de toate dimensiunile." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="codedesign_logo_57px.png" alt="Code Design" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active"><span class="ro">Acasă</span><span class="en">Home</span></a></li>
+    <li><a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a></li>
+    <li><a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn active" data-lang="ro">RO</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <a href="contact.html" class="btn-cta nav-cta-btn"><span class="ro">Contactează-ne</span><span class="en">Contact Us</span></a>
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu">
+    <a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a>
+    <a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+    <a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="orb" style="width:700px;height:500px;background:rgba(79,110,247,0.10);top:-100px;right:-150px"></div>
+  <div class="orb" style="width:400px;height:400px;background:rgba(79,110,247,0.06);bottom:-100px;left:-100px"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="page-pill fade-up">
+          <span class="pulse" style="width:7px;height:7px;background:var(--accent);border-radius:50%;display:inline-block"></span>
+          <span class="ro">Web Design &amp; Servicii IT România</span>
+          <span class="en">Web Design &amp; IT Services Romania</span>
+        </div>
+        <h1 class="fade-up-2">
+          <span class="ro">Construim <span class="accent-word">branduri,</span><br>nu doar site-uri</span>
+          <span class="en">We build <span class="accent-word">brands,</span><br>not just websites</span>
+        </h1>
+        <p class="fade-up-3" style="font-size:1.1rem;color:var(--muted);max-width:520px;margin:1.5rem 0 2.5rem">
+          <span class="ro">Lucrăm îndeaproape cu clienții noștri pentru a crea prezențe online puternice. De la web design la SEO și servicii cloud — totul într-un singur loc.</span>
+          <span class="en">We work closely with our clients to create powerful online presences. From web design to SEO and cloud services — all in one place.</span>
+        </p>
+        <div class="hero-ctas fade-up-4">
+          <a href="servicii.html" class="btn-cta" style="font-size:1rem;padding:13px 30px">
+            <span class="ro">Serviciile Noastre →</span><span class="en">Our Services →</span>
+          </a>
+          <a href="contact.html" class="btn-outline" style="font-size:1rem;padding:13px 30px">
+            <span class="ro">Contactează-ne</span><span class="en">Get in Touch</span>
+          </a>
+        </div>
+        <div class="hero-stats fade-up-4">
+          <div>
+            <div class="hero-stat-num"><span class="counter" data-target="50" data-suffix="+">0+</span></div>
+            <div class="hero-stat-lbl"><span class="ro">Clienți Activi</span><span class="en">Active Clients</span></div>
+          </div>
+          <div>
+            <div class="hero-stat-num"><span class="counter" data-target="8" data-suffix="+">0+</span></div>
+            <div class="hero-stat-lbl"><span class="ro">Ani Experiență</span><span class="en">Years Exp.</span></div>
+          </div>
+          <div>
+            <div class="hero-stat-num"><span class="counter" data-target="120" data-suffix="+">0+</span></div>
+            <div class="hero-stat-lbl"><span class="ro">Proiecte</span><span class="en">Projects</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating card -->
+      <div class="hero-card">
+        <div style="border-radius:14px;overflow:hidden;border:1px solid var(--border);margin-bottom:1rem;background:transparent;">
+          <img src="home-page-first_section.jpg" alt="Code Design Team" style="width:100%;display:block;" />
+        </div>
+        <div class="hero-tags">
+          <span class="tag">Web Design</span>
+          <span class="tag">SEO</span>
+          <span class="tag">Cloud</span>
+          <span class="tag">WordPress</span>
+          <span class="tag">Branding</span>
+          <span class="tag">Marketing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:3.5rem">
+      <span class="section-label"><span class="ro">Serviciile Noastre</span><span class="en">Our Services</span></span>
+      <h2 class="reveal"><span class="ro">Tot ce ai nevoie <strong>într-un singur loc</strong></span><span class="en">Everything you need <strong>in one place</strong></span></h2>
+    </div>
+    <div class="services-grid">
+      <div class="card reveal" style="padding:1.8rem;cursor:pointer" onclick="location.href='servicii.html'">
+        <div class="icon-box"><img src="seo_icon_illustration.jpg" alt="SEO" /></div>
+        <h3 style="margin-bottom:0.6rem">SEO On-Page &amp; Off-Page</h3>
+        <p style="font-size:0.9rem;color:var(--muted)"><span class="ro">Optimizăm site-ul tău pentru motoarele de căutare și creștem vizibilitatea organică.</span><span class="en">We optimize your website for search engines and grow your organic visibility.</span></p>
+      </div>
+      <div class="card reveal" style="padding:1.8rem;cursor:pointer" onclick="location.href='servicii.html'">
+        <div class="icon-box"><img src="Web_Design_Illuatration.png" alt="Web Design" /></div>
+        <h3 style="margin-bottom:0.6rem">Web Design</h3>
+        <p style="font-size:0.9rem;color:var(--muted)"><span class="ro">Creăm site-uri web atractive, moderne și optimizate pentru conversie.</span><span class="en">We create attractive, modern websites optimized for conversion.</span></p>
+      </div>
+      <div class="card reveal" style="padding:1.8rem;cursor:pointer" onclick="location.href='servicii.html'">
+        <div class="icon-box"><img src="Web_Developing_Icon.png" alt="Web Development" /></div>
+        <h3 style="margin-bottom:0.6rem"><span class="ro">Programare Web</span><span class="en">Web Development</span></h3>
+        <p style="font-size:0.9rem;color:var(--muted)"><span class="ro">Dezvoltăm soluții web personalizate, robuste și scalabile.</span><span class="en">We develop custom, robust and scalable web solutions.</span></p>
+      </div>
+      <div class="card reveal" style="padding:1.8rem;cursor:pointer" onclick="location.href='servicii.html'">
+        <div class="icon-box"><img src="Server_Icon.png" alt="Cloud" /></div>
+        <h3 style="margin-bottom:0.6rem">Cloud &amp; Backup</h3>
+        <p style="font-size:0.9rem;color:var(--muted)"><span class="ro">Servicii NAS Cloud și server pentru toate tipurile de afaceri.</span><span class="en">NAS Cloud and server services for all types of businesses.</span></p>
+      </div>
+      <div class="card reveal" style="padding:1.8rem;cursor:pointer" onclick="location.href='servicii.html'">
+        <div class="icon-box"><img src="Custom_Mail_Icon.png" alt="Email" /></div>
+        <h3 style="margin-bottom:0.6rem"><span class="ro">Mail Personalizat</span><span class="en">Custom Email</span></h3>
+        <p style="font-size:0.9rem;color:var(--muted)"><span class="ro">Adrese de email profesionale pe domeniul tău pentru credibilitate maximă.</span><span class="en">Professional email addresses on your domain for maximum credibility.</span></p>
+      </div>
+      <div class="card reveal" style="padding:1.8rem;cursor:pointer" onclick="location.href='servicii.html'">
+        <div class="icon-box"><img src="Advertisment_Icon.png" alt="Advertising" /></div>
+        <h3 style="margin-bottom:0.6rem">Online Advertising</h3>
+        <p style="font-size:0.9rem;color:var(--muted)"><span class="ro">Campanii publicitare online care ajung la publicul tău și generează rezultate.</span><span class="en">Online ad campaigns that reach your audience and generate results.</span></p>
+      </div>
+    </div>
+    <div class="text-center" style="margin-top:2.5rem">
+      <a href="servicii.html" class="btn-outline"><span class="ro">Vezi toate serviciile →</span><span class="en">View all services →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section>
+  <div class="container">
+    <div class="two-col">
+      <div>
+        <span class="section-label reveal"><span class="ro">Cum Lucrăm</span><span class="en">How We Work</span></span>
+        <h2 class="reveal"><span class="ro">Procesul nostru <strong>simplu și eficient</strong></span><span class="en">Our <strong>simple &amp; efficient</strong> process</span></h2>
+        <p class="reveal" style="color:var(--muted);margin:1rem 0 2.5rem;font-size:0.95rem"><span class="ro">De la prima discuție până la lansare, urmăm un proces clar și transparent.</span><span class="en">From first call to launch, we follow a clear and transparent process.</span></p>
+        <div class="process-grid">
+          <div class="process-step reveal"><div class="step-box">01</div><p><span class="ro">Colectare informații</span><span class="en">Info Gathering</span></p></div>
+          <div class="process-step reveal"><div class="step-box">02</div><p><span class="ro">Planificare</span><span class="en">Planning</span></p></div>
+          <div class="process-step reveal"><div class="step-box">03</div><p>Design</p></div>
+          <div class="process-step reveal"><div class="step-box">04</div><p><span class="ro">Dezvoltare</span><span class="en">Development</span></p></div>
+          <div class="process-step reveal"><div class="step-box">05</div><p><span class="ro">Testare</span><span class="en">Testing</span></p></div>
+          <div class="process-step reveal"><div class="step-box">06</div><p><span class="ro">Lansare</span><span class="en">Launch</span></p></div>
+        </div>
+      </div>
+      <div class="illus reveal" style="aspect-ratio:4/3">
+        <img src="home-design.jpg" alt="Procesul Code Design" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:3rem">
+      <span class="section-label"><span class="ro">Ce Spun Clienții</span><span class="en">Client Testimonials</span></span>
+    </div>
+    <div class="testimonial-card reveal">
+      <span class="quote-mark">"</span>
+      <blockquote><span class="ro">Experiența noastră cu Code Design a fost fenomenală. Prezența noastră online a crescut foarte mult într-un timp relativ scurt. Recomandăm cu căldură!</span><span class="en">Our experience with Code Design has been phenomenal. Our online presence grew enormously in a relatively short time. Highly recommended!</span></blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">DM</div>
+        <div>
+          <div class="author-name">Dani Marosan</div>
+          <div class="author-role"><span class="ro">Director Executiv</span><span class="en">Executive Director</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2 class="reveal"><span class="ro">Începe un <strong>Proiect</strong></span><span class="en">Start a <strong>Project</strong></span></h2>
+    <p class="reveal"><span class="ro">Lucrăm îndeaproape cu clienții noștri pentru a crea branduri, nu doar site-uri.</span><span class="en">We work closely with our clients to create brands, not just websites.</span></p>
+    <a href="contact.html" class="btn-cta reveal" style="font-size:1rem;padding:14px 36px"><span class="ro">Contactează-ne →</span><span class="en">Contact Us →</span></a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="codedesign_logo_57px.png" alt="Code Design" style="height:28px;filter:brightness(0) invert(1);margin-bottom:1rem;display:block" />
+        <p style="color:var(--muted);font-size:0.9rem;max-width:300px;line-height:1.7"><span class="ro">Lucrăm îndeaproape cu clienții noștri pentru a crea branduri, nu doar site-uri.</span><span class="en">We work closely with our clients to create brands, not just websites.</span></p>
+      </div>
+      <div>
+        <span class="footer-heading"><span class="ro">Servicii</span><span class="en">Services</span></span>
+        <a href="servicii.html" class="footer-link">Web Design</a>
+        <a href="servicii.html" class="footer-link">SEO</a>
+        <a href="servicii.html" class="footer-link">WordPress</a>
+        <a href="servicii.html" class="footer-link">Cloud &amp; Backup</a>
+        <a href="servicii.html" class="footer-link"><span class="ro">Mail Personalizat</span><span class="en">Custom Email</span></a>
+      </div>
+      <div>
+        <span class="footer-heading"><span class="ro">Companie</span><span class="en">Company</span></span>
+        <a href="despre-noi.html" class="footer-link"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="#" class="footer-link"><span class="ro">Politică Confidențialitate</span><span class="en">Privacy Policy</span></a>
+        <a href="#" class="footer-link">Cookie Policy</a>
+      </div>
+      <div>
+        <span class="footer-heading">Contact</span>
+        <a href="mailto:office@codedesign.ro" class="footer-link">office@codedesign.ro</a>
+        <a href="tel:0040757413393" class="footer-link">0040.757.413.393</a>
+        <div style="margin-top:1.5rem">
+          <a href="#" class="social-btn fb">f</a>
+          <a href="#" class="social-btn tw">&#120143;</a>
+          <a href="#" class="social-btn li">in</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 codedesign.ro &mdash; <span class="ro">Toate drepturile rezervate</span><span class="en">All rights reserved</span></p>
+      <p><span class="ro">Realizat cu &#9829; în România</span><span class="en">Made with &#9829; in Romania</span></p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
