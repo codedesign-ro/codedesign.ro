@@ -68,6 +68,7 @@
     .tool-btn:hover{background:rgba(255,255,255,0.07);color:var(--white);border-color:var(--border)}
     .editor-area{background:var(--bg);border:1px solid var(--border);border-radius:0 0 8px 8px;min-height:300px;padding:1rem;outline:none;font-size:0.92rem;line-height:1.75;color:var(--white)}
     .editor-area:focus{border-color:rgba(79,110,247,0.5)}
+    .editor-area *{color:var(--white)!important;background:transparent!important}
     /* BUTTONS */
     .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all 0.2s}
     .btn-primary{background:var(--accent);color:#fff}
@@ -142,7 +143,7 @@
     <button class="nav-item active" onclick="showSection('dashboard')"><span class="nav-icon">📊</span>Dashboard</button>
     <div class="nav-section">Blog</div>
     <button class="nav-item" onclick="showSection('posts')"><span class="nav-icon">📝</span>Articole</button>
-    <button class="nav-item" onclick="showSection('newPost')"><span class="nav-icon">✏️</span>Articol Nou</button>
+    <button class="nav-item" onclick="resetPostForm();showSection('newPost')"><span class="nav-icon">✏️</span>Articol Nou</button>
     <button class="nav-item" onclick="showSection('categories')"><span class="nav-icon">🏷️</span>Categorii</button>
     <div class="nav-section">Site</div>
     <button class="nav-item" onclick="showSection('siteContent')"><span class="nav-icon">🌐</span>Conținut Pagini</button>
@@ -175,7 +176,7 @@
     <div id="sec-posts" class="hidden">
       <div class="page-header">
         <div class="page-title">Articole</div>
-        <button class="btn btn-primary" onclick="showSection('newPost')">+ Articol Nou</button>
+        <button class="btn btn-primary" onclick="resetPostForm();showSection('newPost')">+ Articol Nou</button>
       </div>
       <div class="table-wrap">
         <table>
@@ -562,6 +563,9 @@ async function editPost(id) {
   const data = await res.json();
   if (!data.length) return;
   const p = data[0];
+  // Show section first (without reset)
+  showSection('newPost');
+  // Then fill all fields
   document.getElementById('editPostId').value = p.id;
   document.getElementById('postFormTitle').textContent = 'Editează Articol';
   document.getElementById('titleRo').value = p.title_ro || '';
@@ -574,8 +578,10 @@ async function editPost(id) {
   document.getElementById('postPublished').checked = p.published;
   document.getElementById('coverImage').value = p.cover_image || '';
   if (p.cover_image) { document.getElementById('coverPreview').src = p.cover_image; document.getElementById('coverPreview').style.display = 'block'; }
-  document.getElementById('postCategory').value = p.category;
-  showSection('newPost');
+  // Wait for categories to load then set value
+  setTimeout(function() {
+    document.getElementById('postCategory').value = p.category;
+  }, 300);
 }
 
 async function savePost() {
