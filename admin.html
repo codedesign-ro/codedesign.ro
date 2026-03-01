@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Code Design CMS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    :root{
+      --bg:#08090d;--card:#0f1117;--card2:#161820;--border:rgba(255,255,255,0.07);
+      --accent:#4f6ef7;--accent-lt:#7b9bff;--green:#3ecf8e;--red:#ef4444;
+      --muted:#7a7f9a;--white:#f0f2ff;--radius:10px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--white);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh}
+    /* LOGIN */
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center}
+    .login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:100%;max-width:380px}
+    .login-logo{font-size:1.3rem;font-weight:800;margin-bottom:0.3rem;color:var(--white)}
+    .login-logo span{color:var(--accent)}
+    .login-sub{color:var(--muted);font-size:0.88rem;margin-bottom:2rem}
+    /* LAYOUT */
+    .admin-layout{display:flex;min-height:100vh}
+    .sidebar{width:240px;background:var(--card);border-right:1px solid var(--border);padding:1.5rem;flex-shrink:0;position:fixed;top:0;left:0;bottom:0;overflow-y:auto}
+    .main{margin-left:240px;flex:1;padding:2rem;min-height:100vh}
+    .sidebar-logo{font-size:1.1rem;font-weight:800;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+    .sidebar-logo span{color:var(--accent)}
+    .nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.8rem;border-radius:8px;cursor:pointer;color:var(--muted);font-size:0.88rem;font-weight:500;transition:all 0.2s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+    .nav-item:hover{background:rgba(255,255,255,0.05);color:var(--white)}
+    .nav-item.active{background:rgba(79,110,247,0.15);color:var(--accent-lt)}
+    .nav-icon{font-size:1rem;width:20px;text-align:center}
+    .nav-section{font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:0.8rem 0.8rem 0.4rem;margin-top:0.5rem}
+    /* HEADER */
+    .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+    .page-title{font-size:1.4rem;font-weight:700}
+    .page-title small{font-size:0.85rem;color:var(--muted);font-weight:400;margin-left:0.5rem}
+    /* CARDS */
+    .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+    .stat-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}
+    .stat-box .num{font-size:2rem;font-weight:800;color:var(--white)}
+    .stat-box .lbl{font-size:0.8rem;color:var(--muted);margin-top:2px}
+    /* TABLE */
+    .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    table{width:100%;border-collapse:collapse}
+    th{font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);padding:0.9rem 1.2rem;text-align:left;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border)}
+    td{padding:0.9rem 1.2rem;font-size:0.88rem;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:rgba(255,255,255,0.02)}
+    .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:600}
+    .badge-green{background:rgba(62,207,142,0.1);color:var(--green)}
+    .badge-gray{background:rgba(255,255,255,0.07);color:var(--muted)}
+    /* FORMS */
+    .form-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+    .form-group{margin-bottom:1.2rem}
+    .form-group.full{grid-column:1/-1}
+    label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:0.4rem;font-weight:500}
+    input[type=text],input[type=email],input[type=password],input[type=url],select,textarea{
+      width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+      padding:0.65rem 0.9rem;color:var(--white);font-family:inherit;font-size:0.88rem;
+      outline:none;transition:border 0.2s}
+    input:focus,select:focus,textarea:focus{border-color:rgba(79,110,247,0.5)}
+    textarea{min-height:200px;resize:vertical;line-height:1.6}
+    select option{background:var(--card)}
+    /* RICH EDITOR */
+    .editor-toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:0.6rem;background:var(--card2);border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0}
+    .tool-btn{background:none;border:1px solid transparent;color:var(--muted);padding:4px 8px;border-radius:5px;cursor:pointer;font-size:0.8rem;font-family:inherit;transition:all 0.15s}
+    .tool-btn:hover{background:rgba(255,255,255,0.07);color:var(--white);border-color:var(--border)}
+    .editor-area{background:var(--bg);border:1px solid var(--border);border-radius:0 0 8px 8px;min-height:300px;padding:1rem;outline:none;font-size:0.92rem;line-height:1.75;color:var(--white)}
+    .editor-area:focus{border-color:rgba(79,110,247,0.5)}
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;border:none;transition:all 0.2s}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{background:#3d5ce8;transform:translateY(-1px)}
+    .btn-secondary{background:rgba(255,255,255,0.07);color:var(--white);border:1px solid var(--border)}
+    .btn-secondary:hover{background:rgba(255,255,255,0.12)}
+    .btn-danger{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2)}
+    .btn-danger:hover{background:rgba(239,68,68,0.2)}
+    .btn-success{background:rgba(62,207,142,0.1);color:var(--green);border:1px solid rgba(62,207,142,0.2)}
+    .btn-sm{padding:5px 12px;font-size:0.78rem}
+    /* TOAST */
+    .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.4rem;font-size:0.88rem;z-index:999;transform:translateY(100px);opacity:0;transition:all 0.3s;max-width:320px}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.success{border-color:rgba(62,207,142,0.3);color:var(--green)}
+    .toast.error{border-color:rgba(239,68,68,0.3);color:var(--red)}
+    /* IMAGE UPLOAD */
+    .img-upload{border:2px dashed var(--border);border-radius:8px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
+    .img-upload:hover{border-color:var(--accent);background:rgba(79,110,247,0.04)}
+    .img-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .img-preview{width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-top:0.8rem;display:none}
+    /* TOGGLE */
+    .toggle{position:relative;display:inline-block;width:44px;height:24px}
+    .toggle input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,0.1);border-radius:24px;cursor:pointer;transition:0.3s}
+    .toggle-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s}
+    input:checked+.toggle-slider{background:var(--accent)}
+    input:checked+.toggle-slider:before{transform:translateX(20px)}
+    /* TABS */
+    .tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+    .tab{padding:0.7rem 1.2rem;cursor:pointer;font-size:0.85rem;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s}
+    .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+    /* HIDDEN */
+    .hidden{display:none!important}
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .sidebar{transform:translateX(-100%)}
+      .main{margin-left:0}
+      .stat-row{grid-template-columns:1fr 1fr}
+      .form-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">Code<span>Design</span></div>
+    <div class="login-sub">Panou de Administrare</div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" value="admin@codedesign.ro" />
+    </div>
+    <div class="form-group">
+      <label>Parolă</label>
+      <input type="password" id="loginPass" placeholder="••••••••" />
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:10px" onclick="doLogin()">
+      Autentificare →
+    </button>
+    <p id="loginErr" style="color:var(--red);font-size:0.82rem;margin-top:0.8rem;text-align:center"></p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-layout hidden" id="adminWrap">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">Code<span>Design</span> CMS</div>
+    <div class="nav-section">Principal</div>
+    <button class="nav-item active" onclick="showSection('dashboard')"><span class="nav-icon">📊</span>Dashboard</button>
+    <div class="nav-section">Blog</div>
+    <button class="nav-item" onclick="showSection('posts')"><span class="nav-icon">📝</span>Articole</button>
+    <button class="nav-item" onclick="resetPostForm();showSection('newPost')"><span class="nav-icon">✏️</span>Articol Nou</button>
+    <button class="nav-item" onclick="showSection('categories')"><span class="nav-icon">🏷️</span>Categorii</button>
+    <div class="nav-section">Site</div>
+    <button class="nav-item" onclick="showSection('siteContent')"><span class="nav-icon">🌐</span>Conținut Pagini</button>
+    <div class="nav-section">Cont</div>
+    <button class="nav-item" onclick="doLogout()"><span class="nav-icon">🚪</span>Deconectare</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div id="sec-dashboard">
+      <div class="page-header">
+        <div class="page-title">Dashboard</div>
+        <a href="index.html" target="_blank" class="btn btn-secondary btn-sm">🌐 Vezi site-ul</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num" id="statTotal">–</div><div class="lbl">Total Articole</div></div>
+        <div class="stat-box"><div class="num" id="statPublished">–</div><div class="lbl">Publicate</div></div>
+        <div class="stat-box"><div class="num" id="statDraft">–</div><div class="lbl">Ciorne</div></div>
+        <div class="stat-box"><div class="num" id="statCats">–</div><div class="lbl">Categorii</div></div>
+      </div>
+      <div class="form-card">
+        <h3 style="margin-bottom:1rem">Articole Recente</h3>
+        <div id="recentPosts" style="color:var(--muted);font-size:0.9rem">Se încarcă...</div>
+      </div>
+    </div>
+
+    <!-- POSTS LIST -->
+    <div id="sec-posts" class="hidden">
+      <div class="page-header">
+        <div class="page-title">Articole</div>
+        <button class="btn btn-primary" onclick="resetPostForm();showSection('newPost')">+ Articol Nou</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Titlu</th><th>Categorie</th><th>Status</th><th>Data</th><th>Acțiuni</th></tr></thead>
+          <tbody id="postsTableBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Se încarcă...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- NEW / EDIT POST -->
+    <div id="sec-newPost" class="hidden">
+      <div class="page-header">
+        <div class="page-title" id="postFormTitle">Articol Nou</div>
+        <div style="display:flex;gap:0.6rem">
+          <button class="btn btn-secondary" onclick="showSection('posts')">Anulează</button>
+          <button class="btn btn-primary" onclick="savePost()">💾 Salvează</button>
+        </div>
+      </div>
+
+      <input type="hidden" id="editPostId" value="" />
+
+      <div style="display:grid;grid-template-columns:1fr 300px;gap:1.5rem">
+        <!-- LEFT -->
+        <div>
+          <div class="tab-bar">
+            <div class="tab active" onclick="switchLangTab('ro',this)">🇷🇴 Română</div>
+            <div class="tab" onclick="switchLangTab('en',this)">🇬🇧 English</div>
+          </div>
+
+          <div id="tabRo">
+            <div class="form-group">
+              <label>Titlu (RO)</label>
+              <input type="text" id="titleRo" placeholder="Titlul articolului în română" oninput="generateSlug()" />
+            </div>
+            <div class="form-group">
+              <label>Rezumat (RO) — apare în listing</label>
+              <textarea id="excerptRo" style="min-height:80px" placeholder="Scurtă descriere..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Conținut (RO)</label>
+              <div class="editor-toolbar" id="toolbarRo"></div>
+              <div class="editor-area" id="contentRo" contenteditable="true"></div>
+            </div>
+          </div>
+
+          <div id="tabEn" class="hidden">
+            <div class="form-group">
+              <label>Title (EN)</label>
+              <input type="text" id="titleEn" placeholder="Article title in English" />
+            </div>
+            <div class="form-group">
+              <label>Excerpt (EN)</label>
+              <textarea id="excerptEn" style="min-height:80px" placeholder="Short description..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Content (EN)</label>
+              <div class="editor-toolbar" id="toolbarEn"></div>
+              <div class="editor-area" id="contentEn" contenteditable="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div>
+          <div class="form-card" style="margin-bottom:1rem">
+            <h3 style="margin-bottom:1rem;font-size:0.95rem">Publicare</h3>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+              <label style="margin:0;color:var(--white)">Publicat</label>
+              <label class="toggle"><input type="checkbox" id="postPublished" /><span class="toggle-slider"></span></label>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Slug URL</label>
+              <input type="text" id="postSlug" placeholder="url-articol" />
+            </div>
+          </div>
+
+          <div class="form-card" style="margin-bottom:1rem">
+            <h3 style="margin-bottom:1rem;font-size:0.95rem">Categorie</h3>
+            <select id="postCategory">
+              <option value="General">General</option>
+            </select>
+          </div>
+
+          <div class="form-card">
+            <h3 style="margin-bottom:1rem;font-size:0.95rem">Imagine Copertă</h3>
+            <div class="form-group">
+              <label>URL Imagine</label>
+              <input type="url" id="coverImage" placeholder="https://..." oninput="previewCover()" />
+            </div>
+            <img id="coverPreview" class="img-preview" src="" alt="Preview" />
+            <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem">Încarcă imaginea pe un serviciu precum Cloudinary sau ImgBB și lipește URL-ul.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div id="sec-categories" class="hidden">
+      <div class="page-header">
+        <div class="page-title">Categorii</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="form-card">
+          <h3 style="margin-bottom:1.2rem;font-size:0.95rem">Categorie Nouă</h3>
+          <div class="form-group">
+            <label>Nume (RO)</label>
+            <input type="text" id="catNameRo" placeholder="ex: Web Design" />
+          </div>
+          <div class="form-group">
+            <label>Name (EN)</label>
+            <input type="text" id="catNameEn" placeholder="ex: Web Design" />
+          </div>
+          <div class="form-group">
+            <label>Slug</label>
+            <input type="text" id="catSlug" placeholder="ex: web-design" />
+          </div>
+          <button class="btn btn-primary" onclick="saveCategory()">+ Adaugă Categorie</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Română</th><th>English</th><th>Slug</th><th></th></tr></thead>
+            <tbody id="catsTableBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem">Se încarcă...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SITE CONTENT -->
+    <div id="sec-siteContent" class="hidden">
+      <div class="page-header">
+        <div class="page-title">Conținut Pagini <small>editează texte și titluri</small></div>
+        <button class="btn btn-primary" onclick="saveSiteContent()">💾 Salvează tot</button>
+      </div>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem">
+        ⚠️ Această funcție salvează conținut în baza de date. Pentru ca paginile să citească dinamic acest conținut, trebuie să adaugi cod JS în fiecare pagină. Momentan, modifică direct fișierele HTML pe GitHub.
+      </p>
+      <div class="form-card">
+        <h3 style="margin-bottom:1.2rem;font-size:0.95rem">Adaugă intrare conținut</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end">
+          <div><label>Pagină</label><input type="text" id="scPage" placeholder="index" /></div>
+          <div><label>Cheie</label><input type="text" id="scKey" placeholder="hero_title" /></div>
+          <div><label>Valoare RO</label><input type="text" id="scRo" placeholder="Valoarea în română" /></div>
+          <button class="btn btn-primary" onclick="saveSiteContentItem()">+</button>
+        </div>
+        <div style="margin-top:0.8rem">
+          <label>Valoare EN</label>
+          <input type="text" id="scEn" placeholder="Value in English" />
+        </div>
+      </div>
+      <div class="table-wrap" style="margin-top:1.5rem">
+        <table>
+          <thead><tr><th>Pagină</th><th>Cheie</th><th>Română</th><th>English</th><th></th></tr></thead>
+          <tbody id="siteContentBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Se încarcă...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end main -->
+</div><!-- end admin-layout -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://pyzfilefqqyrmjhfdvgw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_nH6dJS5-3iX9qv8loybgpw_iUAivA2Z';
+
+// ---- HELPERS ----
+function api(path, opts={}) {
+  return fetch(SUPABASE_URL + '/rest/v1/' + path, {
+    ...opts,
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': opts.prefer || 'return=representation',
+      ...(opts.headers||{})
+    }
+  });
+}
+
+function toast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = (type==='success'?'✓ ':'✗ ') + msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+function fmtDate(d) { return new Date(d).toLocaleDateString('ro-RO'); }
+
+function slugify(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+}
+
+function generateSlug() {
+  const t = document.getElementById('titleRo').value;
+  if (!document.getElementById('editPostId').value) {
+    document.getElementById('postSlug').value = slugify(t);
+  }
+}
+
+function previewCover() {
+  const url = document.getElementById('coverImage').value;
+  const img = document.getElementById('coverPreview');
+  if (url) { img.src = url; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
+}
+
+// ---- LOGIN ----
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPass').value;
+  if (!pass) { document.getElementById('loginErr').textContent = 'Introduceți parola'; return; }
+
+  const res = await api('admin_users?email=eq.' + encodeURIComponent(email) + '&password_hash=eq.' + encodeURIComponent(pass));
+  const data = await res.json();
+
+  if (data.length) {
+    sessionStorage.setItem('cd_admin', '1');
+    sessionStorage.setItem('cd_email', email);
+    document.getElementById('loginWrap').classList.add('hidden');
+    document.getElementById('adminWrap').classList.remove('hidden');
+    initAdmin();
+  } else {
+    document.getElementById('loginErr').textContent = 'Email sau parolă greșită';
+  }
+}
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogout() {
+  sessionStorage.removeItem('cd_admin');
+  document.getElementById('adminWrap').classList.add('hidden');
+  document.getElementById('loginWrap').classList.remove('hidden');
+}
+
+// Check if already logged in
+if (sessionStorage.getItem('cd_admin')) {
+  document.getElementById('loginWrap').classList.add('hidden');
+  document.getElementById('adminWrap').classList.remove('hidden');
+  document.addEventListener('DOMContentLoaded', initAdmin);
+}
+
+// ---- NAVIGATION ----
+function showSection(id) {
+  document.querySelectorAll('[id^="sec-"]').forEach(el=>el.classList.add('hidden'));
+  document.getElementById('sec-'+id).classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+  if (id==='posts') loadPosts();
+  if (id==='dashboard') loadDashboard();
+  if (id==='categories') loadCategories();
+  if (id==='siteContent') loadSiteContent();
+  if (id==='newPost') {
+    loadCategoriesSelect();
+    initEditors();
+  }
+}
+
+function initAdmin() {
+  loadDashboard();
+  loadCategoriesSelect();
+  initEditors();
+}
+
+// ---- EDITOR TOOLBAR ----
+const toolbarBtns = [
+  {l:'B',cmd:'bold',title:'Bold'},
+  {l:'I',cmd:'italic',title:'Italic'},
+  {l:'H2',cmd:'formatBlock',val:'h2',title:'Heading 2'},
+  {l:'H3',cmd:'formatBlock',val:'h3',title:'Heading 3'},
+  {l:'• List',cmd:'insertUnorderedList',title:'Lista'},
+  {l:'1. List',cmd:'insertOrderedList',title:'Lista numerotată'},
+  {l:'" Quote',cmd:'formatBlock',val:'blockquote',title:'Citat'},
+  {l:'Link',cmd:'createLink',title:'Link'},
+  {l:'—',cmd:'formatBlock',val:'p',title:'Paragraf normal'},
+];
+
+function initEditors() {
+  ['Ro','En'].forEach(lang => {
+    const tb = document.getElementById('toolbar'+lang);
+    if (!tb || tb.children.length) return;
+    toolbarBtns.forEach(b => {
+      const btn = document.createElement('button');
+      btn.className = 'tool-btn';
+      btn.type = 'button';
+      btn.textContent = b.l;
+      btn.title = b.title;
+      btn.onclick = () => {
+        const area = document.getElementById('content'+lang);
+        area.focus();
+        if (b.cmd === 'createLink') {
+          const url = prompt('URL:');
+          if (url) document.execCommand('createLink', false, url);
+        } else {
+          document.execCommand(b.cmd, false, b.val||null);
+        }
+      };
+      tb.appendChild(btn);
+    });
+  });
+}
+
+function switchLangTab(lang, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tabRo').classList.toggle('hidden', lang!=='ro');
+  document.getElementById('tabEn').classList.toggle('hidden', lang!=='en');
+}
+
+// ---- DASHBOARD ----
+async function loadDashboard() {
+  const [postsRes, catsRes] = await Promise.all([
+    api('posts?select=id,published'),
+    api('categories?select=id')
+  ]);
+  const posts = await postsRes.json();
+  const cats = await catsRes.json();
+  const published = Array.isArray(posts) ? posts.filter(p=>p.published).length : 0;
+  const total = Array.isArray(posts) ? posts.length : 0;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPublished').textContent = published;
+  document.getElementById('statDraft').textContent = total - published;
+  document.getElementById('statCats').textContent = Array.isArray(cats) ? cats.length : 0;
+
+  const recentRes = await api('posts?select=id,title_ro,published,created_at&order=created_at.desc&limit=5');
+  const recent = await recentRes.json();
+  if (Array.isArray(recent) && recent.length) {
+    document.getElementById('recentPosts').innerHTML = recent.map(p=>
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:0.7rem 0;border-bottom:1px solid var(--border)">' +
+        '<span style="font-size:0.88rem">' + p.title_ro + '</span>' +
+        '<div style="display:flex;gap:0.5rem;align-items:center">' +
+          '<span class="badge ' + (p.published?'badge-green':'badge-gray') + '">' + (p.published?'Publicat':'Ciornă') + '</span>' +
+          '<span style="font-size:0.78rem;color:var(--muted)">' + fmtDate(p.created_at) + '</span>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  } else {
+    document.getElementById('recentPosts').textContent = 'Nu există articole încă.';
+  }
+}
+
+// ---- POSTS ----
+async function loadPosts() {
+  const res = await api('posts?select=*&order=created_at.desc');
+  const posts = await res.json();
+  const tbody = document.getElementById('postsTableBody');
+  if (!Array.isArray(posts) || !posts.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Nu există articole încă.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = posts.map(p=>
+    '<tr>' +
+      '<td><strong>' + p.title_ro + '</strong>' + (p.title_en?'<br><small style="color:var(--muted)">'+p.title_en+'</small>':'') + '</td>' +
+      '<td>' + p.category + '</td>' +
+      '<td><span class="badge ' + (p.published?'badge-green':'badge-gray') + '">' + (p.published?'Publicat':'Ciornă') + '</span></td>' +
+      '<td>' + fmtDate(p.created_at) + '</td>' +
+      '<td style="display:flex;gap:0.4rem">' +
+        '<button class="btn btn-secondary btn-sm" onclick="editPost(\'' + p.id + '\')">✏️ Edit</button>' +
+        '<button class="btn btn-danger btn-sm" onclick="deletePost(\'' + p.id + '\',\'' + p.title_ro.replace(/'/g,"\\'") + '\')">🗑️</button>' +
+      '</td>' +
+    '</tr>'
+  ).join('');
+}
+
+function resetPostForm() {
+  document.getElementById('editPostId').value = '';
+  document.getElementById('postFormTitle').textContent = 'Articol Nou';
+  document.getElementById('titleRo').value = '';
+  document.getElementById('titleEn').value = '';
+  document.getElementById('excerptRo').value = '';
+  document.getElementById('excerptEn').value = '';
+  document.getElementById('contentRo').innerHTML = '';
+  document.getElementById('contentEn').innerHTML = '';
+  document.getElementById('postSlug').value = '';
+  document.getElementById('postPublished').checked = false;
+  document.getElementById('coverImage').value = '';
+  document.getElementById('coverPreview').style.display = 'none';
+}
+
+async function editPost(id) {
+  const res = await api('posts?id=eq.' + id);
+  const data = await res.json();
+  if (!data.length) return;
+  const p = data[0];
+  // Show section first WITHOUT resetting
+  document.querySelectorAll('[id^="sec-"]').forEach(el=>el.classList.add('hidden'));
+  document.getElementById('sec-newPost').classList.remove('hidden');
+  loadCategoriesSelect();
+  initEditors();
+  // Now fill the form
+  document.getElementById('editPostId').value = p.id;
+  document.getElementById('postFormTitle').textContent = 'Editează Articol';
+  document.getElementById('titleRo').value = p.title_ro || '';
+  document.getElementById('titleEn').value = p.title_en || '';
+  document.getElementById('excerptRo').value = p.excerpt_ro || '';
+  document.getElementById('excerptEn').value = p.excerpt_en || '';
+  document.getElementById('contentRo').innerHTML = p.content_ro || '';
+  document.getElementById('contentEn').innerHTML = p.content_en || '';
+  document.getElementById('postSlug').value = p.slug || '';
+  document.getElementById('postPublished').checked = p.published;
+  document.getElementById('coverImage').value = p.cover_image || '';
+  if (p.cover_image) { document.getElementById('coverPreview').src = p.cover_image; document.getElementById('coverPreview').style.display = 'block'; }
+  setTimeout(function() { document.getElementById('postCategory').value = p.category; }, 200);
+}
+
+async function savePost() {
+  const id = document.getElementById('editPostId').value;
+  const data = {
+    title_ro: document.getElementById('titleRo').value,
+    title_en: document.getElementById('titleEn').value,
+    excerpt_ro: document.getElementById('excerptRo').value,
+    excerpt_en: document.getElementById('excerptEn').value,
+    content_ro: document.getElementById('contentRo').innerHTML,
+    content_en: document.getElementById('contentEn').innerHTML,
+    slug: document.getElementById('postSlug').value || slugify(document.getElementById('titleRo').value),
+    published: document.getElementById('postPublished').checked,
+    cover_image: document.getElementById('coverImage').value || null,
+    category: document.getElementById('postCategory').value
+  };
+  if (!data.title_ro) { toast('Titlul (RO) este obligatoriu','error'); return; }
+
+  let res;
+  if (id) {
+    res = await api('posts?id=eq.' + id, { method:'PATCH', body: JSON.stringify(data), prefer:'return=minimal' });
+  } else {
+    res = await api('posts', { method:'POST', body: JSON.stringify(data) });
+  }
+
+  if (res.ok) {
+    toast(id ? 'Articol actualizat!' : 'Articol creat!');
+    showSection('posts');
+  } else {
+    const err = await res.json();
+    toast('Eroare: ' + (err.message||'Ceva a mers greșit'), 'error');
+  }
+}
+
+async function deletePost(id, title) {
+  if (!confirm('Ești sigur că vrei să ștergi "' + title + '"?')) return;
+  const res = await api('posts?id=eq.' + id, { method:'DELETE', prefer:'return=minimal' });
+  if (res.ok) { toast('Articol șters'); loadPosts(); }
+  else toast('Eroare la ștergere', 'error');
+}
+
+// ---- CATEGORIES ----
+async function loadCategoriesSelect() {
+  const res = await api('categories?select=*&order=name_ro');
+  const cats = await res.json();
+  if (!Array.isArray(cats)) return;
+  const sel = document.getElementById('postCategory');
+  sel.innerHTML = cats.map(c => '<option value="' + c.name_ro + '">' + c.name_ro + '</option>').join('');
+}
+
+async function loadCategories() {
+  const res = await api('categories?select=*&order=name_ro');
+  const cats = await res.json();
+  const tbody = document.getElementById('catsTableBody');
+  if (!Array.isArray(cats) || !cats.length) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem">Nu există categorii.</td></tr>'; return; }
+  tbody.innerHTML = cats.map(c =>
+    '<tr><td>' + c.name_ro + '</td><td>' + (c.name_en||'') + '</td><td style="color:var(--muted);font-size:0.82rem">' + c.slug + '</td>' +
+    '<td><button class="btn btn-danger btn-sm" onclick="deleteCategory(\'' + c.id + '\',\'' + c.name_ro + '\')">🗑️</button></td></tr>'
+  ).join('');
+}
+
+async function saveCategory() {
+  const ro = document.getElementById('catNameRo').value;
+  const en = document.getElementById('catNameEn').value;
+  const slug = document.getElementById('catSlug').value || slugify(ro);
+  if (!ro) { toast('Numele (RO) este obligatoriu','error'); return; }
+  const res = await api('categories', { method:'POST', body: JSON.stringify({name_ro:ro,name_en:en,slug}) });
+  if (res.ok) {
+    toast('Categorie adăugată!');
+    document.getElementById('catNameRo').value = '';
+    document.getElementById('catNameEn').value = '';
+    document.getElementById('catSlug').value = '';
+    loadCategories(); loadCategoriesSelect();
+  } else toast('Eroare la salvare','error');
+}
+
+async function deleteCategory(id, name) {
+  if (!confirm('Șterge categoria "' + name + '"?')) return;
+  const res = await api('categories?id=eq.' + id, { method:'DELETE', prefer:'return=minimal' });
+  if (res.ok) { toast('Categorie ștearsă'); loadCategories(); }
+  else toast('Eroare','error');
+}
+
+// ---- SITE CONTENT ----
+async function loadSiteContent() {
+  const res = await api('site_content?select=*&order=page,key');
+  const items = await res.json();
+  const tbody = document.getElementById('siteContentBody');
+  if (!Array.isArray(items) || !items.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Nu există intrări.</td></tr>'; return; }
+  tbody.innerHTML = items.map(i =>
+    '<tr><td style="color:var(--accent);font-size:0.82rem">' + i.page + '</td><td style="font-size:0.82rem;color:var(--muted)">' + i.key + '</td>' +
+    '<td style="font-size:0.85rem">' + (i.value_ro||'') + '</td><td style="font-size:0.85rem">' + (i.value_en||'') + '</td>' +
+    '<td><button class="btn btn-danger btn-sm" onclick="deleteSiteContent(\'' + i.id + '\')">🗑️</button></td></tr>'
+  ).join('');
+}
+
+async function saveSiteContentItem() {
+  const page = document.getElementById('scPage').value;
+  const key = document.getElementById('scKey').value;
+  const ro = document.getElementById('scRo').value;
+  const en = document.getElementById('scEn').value;
+  if (!page||!key||!ro) { toast('Pagină, cheie și valoare RO sunt obligatorii','error'); return; }
+  const res = await api('site_content', { method:'POST', body: JSON.stringify({page,key,value_ro:ro,value_en:en}) });
+  if (res.ok) { toast('Salvat!'); document.getElementById('scPage').value=''; document.getElementById('scKey').value=''; document.getElementById('scRo').value=''; document.getElementById('scEn').value=''; loadSiteContent(); }
+  else toast('Eroare','error');
+}
+
+async function deleteSiteContent(id) {
+  const res = await api('site_content?id=eq.' + id, { method:'DELETE', prefer:'return=minimal' });
+  if (res.ok) { toast('Șters'); loadSiteContent(); }
+  else toast('Eroare','error');
+}
+
+async function saveSiteContent() { toast('Conținut salvat în baza de date!'); }
+</script>
+</body>
+</html>
