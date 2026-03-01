@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ro" data-lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articol — Code Design</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .post-hero{padding:8rem 0 4rem;background:var(--card);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+    .post-meta{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .post-cat{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)}
+    .post-date{font-size:0.82rem;color:var(--muted)}
+    .post-cover{width:100%;max-height:480px;object-fit:cover;border-radius:var(--radius-lg);margin:3rem 0;border:1px solid var(--border)}
+    .post-body{max-width:760px;margin:0 auto}
+    .post-content{font-size:1.05rem;line-height:1.9;color:var(--white)}
+    .post-content h2{font-family:'DM Serif Display',serif;font-size:1.8rem;margin:2.5rem 0 1rem;color:var(--white)}
+    .post-content h3{font-size:1.2rem;font-weight:700;margin:2rem 0 0.8rem;color:var(--white)}
+    .post-content p{margin-bottom:1.4rem;color:rgba(240,242,255,0.85)}
+    .post-content ul,.post-content ol{margin:1rem 0 1.4rem 1.5rem;color:rgba(240,242,255,0.85)}
+    .post-content li{margin-bottom:0.5rem}
+    .post-content strong{color:var(--accent-lt)}
+    .post-content a{color:var(--accent);text-decoration:underline}
+    .post-content blockquote{border-left:3px solid var(--accent);padding:1rem 1.5rem;margin:1.5rem 0;background:rgba(79,110,247,0.06);border-radius:0 8px 8px 0;font-style:italic;color:var(--muted)}
+    .post-content img{width:100%;border-radius:var(--radius);margin:1.5rem 0}
+    .back-link{display:inline-flex;align-items:center;gap:0.5rem;color:var(--muted);text-decoration:none;font-size:0.88rem;margin-bottom:2rem;transition:color 0.2s}
+    .back-link:hover{color:var(--white)}
+    .post-loading{text-align:center;padding:8rem 2rem;color:var(--muted)}
+    .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+    @media(max-width:768px){.related-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="codedesign_logo_57px.png" alt="Code Design" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a></li>
+    <li><a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a></li>
+    <li><a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-group">
+      <button class="lang-btn active" data-lang="ro">RO</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <a href="contact.html" class="btn-cta nav-cta-btn"><span class="ro">Contactează-ne</span><span class="en">Contact Us</span></a>
+    <button class="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu">
+    <a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a>
+    <a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+    <a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div id="postContainer" class="post-loading">
+  <div style="font-size:2rem;margin-bottom:1rem">⏳</div>
+  <span class="ro">Se încarcă articolul...</span>
+  <span class="en">Loading article...</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="codedesign_logo_57px.png" alt="Code Design" style="height:28px;filter:brightness(0) invert(1);margin-bottom:1rem;display:block" />
+        <p style="color:var(--muted);font-size:0.9rem;max-width:300px;line-height:1.7"><span class="ro">Lucrăm îndeaproape cu clienții noștri pentru a crea branduri, nu doar site-uri.</span><span class="en">We work closely with our clients to create brands, not just websites.</span></p>
+      </div>
+      <div>
+        <span class="footer-heading"><span class="ro">Servicii</span><span class="en">Services</span></span>
+        <a href="servicii.html" class="footer-link">Web Design</a>
+        <a href="servicii.html" class="footer-link">SEO</a>
+        <a href="servicii.html" class="footer-link">WordPress</a>
+      </div>
+      <div>
+        <span class="footer-heading"><span class="ro">Companie</span><span class="en">Company</span></span>
+        <a href="despre-noi.html" class="footer-link"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+        <a href="blog.html" class="footer-link">Blog</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div>
+        <span class="footer-heading">Contact</span>
+        <a href="mailto:office@codedesign.ro" class="footer-link">office@codedesign.ro</a>
+        <a href="tel:0040757413393" class="footer-link">0040.757.413.393</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 codedesign.ro &mdash; <span class="ro">Toate drepturile rezervate</span><span class="en">All rights reserved</span></p>
+      <p><span class="ro">Realizat cu &#9829; în România</span><span class="en">Made with &#9829; in Romania</span></p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+const SUPABASE_URL = 'https://pyzfilefqqyrmjhfdvgw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_nH6dJS5-3iX9qv8loybgpw_iUAivA2Z';
+
+function getLang() { return document.documentElement.getAttribute('data-lang') || 'ro'; }
+function formatDate(d) { return new Date(d).toLocaleDateString('ro-RO',{year:'numeric',month:'long',day:'numeric'}); }
+
+async function loadPost() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  if (!slug) { window.location.href = 'blog.html'; return; }
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/posts?slug=eq.' + slug + '&published=eq.true&select=*', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    const data = await res.json();
+    if (!data.length) { window.location.href = 'blog.html'; return; }
+    const post = data[0];
+    renderPost(post);
+
+    // Load related posts
+    const relRes = await fetch(SUPABASE_URL + '/rest/v1/posts?published=eq.true&slug=neq.' + slug + '&order=created_at.desc&limit=3', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    const related = await relRes.json();
+    renderRelated(related);
+  } catch(e) {
+    document.getElementById('postContainer').innerHTML = '<div style="text-align:center;padding:4rem;color:var(--muted)">⚠️ Eroare la încărcarea articolului.</div>';
+  }
+}
+
+function renderPost(post) {
+  const lang = getLang();
+  const title = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
+  const content = lang === 'ro' ? post.content_ro : (post.content_en || post.content_ro);
+  document.title = title + ' — Code Design';
+
+  const cover = post.cover_image ? '<img class="post-cover" src="' + post.cover_image + '" alt="' + title + '" />' : '';
+
+  document.getElementById('postContainer').innerHTML =
+    '<div class="post-hero">' +
+      '<div class="orb" style="width:400px;height:400px;background:rgba(79,110,247,0.08);top:-100px;right:-100px"></div>' +
+      '<div class="container" style="position:relative;z-index:1">' +
+        '<a href="blog.html" class="back-link">← <span class="ro">Înapoi la Blog</span><span class="en">Back to Blog</span></a>' +
+        '<div class="post-meta">' +
+          '<span class="post-cat">' + post.category + '</span>' +
+          '<span class="post-date">' + formatDate(post.created_at) + '</span>' +
+        '</div>' +
+        '<h1 style="max-width:800px">' + title + '</h1>' +
+      '</div>' +
+    '</div>' +
+    '<section>' +
+      '<div class="container">' +
+        '<div class="post-body">' +
+          cover +
+          '<div class="post-content">' + (content || '') + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</section>' +
+    '<section style="background:var(--card);border-top:1px solid var(--border)">' +
+      '<div class="container">' +
+        '<span class="section-label"><span class="ro">Articole similare</span><span class="en">Related articles</span></span>' +
+        '<div class="related-grid" id="relatedGrid"><div style="color:var(--muted);font-size:0.9rem">Se încarcă...</div></div>' +
+      '</div>' +
+    '</section>';
+}
+
+function renderRelated(posts) {
+  const lang = getLang();
+  const grid = document.getElementById('relatedGrid');
+  if (!grid) return;
+  if (!posts.length) { grid.innerHTML = '<p style="color:var(--muted)">Nu există articole similare.</p>'; return; }
+  grid.innerHTML = posts.map(p => {
+    const t = lang === 'ro' ? p.title_ro : (p.title_en || p.title_ro);
+    const img = p.cover_image ? '<img style="width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:0.8rem" src="' + p.cover_image + '" />' : '<div style="height:140px;background:rgba(79,110,247,0.08);border-radius:10px;margin-bottom:0.8rem;display:flex;align-items:center;justify-content:center;font-size:2rem">✦</div>';
+    return '<a href="post.html?slug=' + p.slug + '" style="text-decoration:none;color:inherit;display:block">' +
+      img + '<span style="font-size:0.7rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;text-transform:uppercase">' + p.category + '</span>' +
+      '<div style="font-weight:600;margin-top:0.3rem;color:var(--white);font-size:0.95rem">' + t + '</div>' +
+    '</a>';
+  }).join('');
+}
+
+// Re-render on language change
+new MutationObserver(loadPost).observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
+
+loadPost();
+</script>
+</body>
+</html>
