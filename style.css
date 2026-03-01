@@ -52,8 +52,8 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,0.4)}
 .lang-group{display:flex;align-items:center;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px}
 .lang-btn{background:none;border:none;color:var(--muted);padding:4px 10px;border-radius:6px;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s}
 .lang-btn.active{background:var(--accent);color:#fff}
-.nav-blog-btn{background:rgba(62,207,142,0.12);color:var(--green)!important;border:1px solid rgba(62,207,142,0.3);padding:7px 16px;border-radius:8px;font-weight:600;transition:all 0.2s!important}
-.nav-blog-btn:hover{background:rgba(62,207,142,0.22)!important;border-color:rgba(62,207,142,0.5)!important}
+.nav-blog-btn{background:rgba(240,242,255,0.08);color:var(--white)!important;border:1px solid rgba(240,242,255,0.2);padding:7px 16px;border-radius:8px;font-weight:600;transition:all 0.2s!important;display:inline-flex;align-items:center;}
+.nav-blog-btn:hover{background:rgba(240,242,255,0.14)!important;border-color:rgba(240,242,255,0.35)!important}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
 .hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:transform 0.3s,opacity 0.3s}
 .mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(8,9,13,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem 2rem;flex-direction:column;gap:0.2rem}
