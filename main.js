@@ -1,5 +1,8 @@
 // CODE DESIGN — main.js
 
+var SUPABASE_URL = 'https://pyzfilefqqyrmjhfdvgw.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_nH6dJS5-3iX9qv8loybgpw_iUAivA2Z';
+
 document.documentElement.classList.add('js-loaded');
 
 function init() {
@@ -134,13 +137,41 @@ function init() {
       e.preventDefault();
       var btn = form.querySelector('button[type="submit"]');
       var orig = btn.innerHTML;
-      btn.innerHTML = '<span class="ro">Trimis! \u2713</span><span class="en">Sent! \u2713</span>';
+      btn.innerHTML = '<span class="ro">Se trimite...</span><span class="en">Sending...</span>';
       btn.disabled = true;
-      setTimeout(function() {
-        btn.innerHTML = orig;
+
+      var data = {
+        first_name: form.querySelector('[name="first_name"]').value,
+        last_name:  form.querySelector('[name="last_name"]').value,
+        email:      form.querySelector('[name="email"]').value,
+        phone:      form.querySelector('[name="phone"]').value || null,
+        message:    form.querySelector('[name="message"]').value
+      };
+
+      fetch(SUPABASE_URL + '/rest/v1/contact_submissions', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(data)
+      }).then(function(res) {
+        if (res.ok) {
+          btn.innerHTML = '<span class="ro">Trimis! \u2713</span><span class="en">Sent! \u2713</span>';
+          form.reset();
+          setTimeout(function() { btn.innerHTML = orig; btn.disabled = false; }, 3000);
+        } else {
+          btn.innerHTML = '<span class="ro">Eroare \u2014 \u00eencearc\u0103 din nou</span><span class="en">Error \u2014 try again</span>';
+          btn.disabled = false;
+          setTimeout(function() { btn.innerHTML = orig; }, 3000);
+        }
+      }).catch(function() {
+        btn.innerHTML = '<span class="ro">Eroare \u2014 \u00eencearc\u0103 din nou</span><span class="en">Error \u2014 try again</span>';
         btn.disabled = false;
-        form.reset();
-      }, 3000);
+        setTimeout(function() { btn.innerHTML = orig; }, 3000);
+      });
     });
   }
 }
