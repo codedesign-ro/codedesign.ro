@@ -189,20 +189,28 @@ function filterPosts(cat) {
 }
 
 async function loadCategories() {
-  const res = await fetch(SUPABASE_URL + '/rest/v1/categories?select=*&order=name_ro', {
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-  });
-  const cats = await res.json();
-  const bar = document.getElementById('categoriesBar');
-  const lang = getLang();
-  cats.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'cat-btn';
-    btn.dataset.cat = cat.name_ro;
-    btn.textContent = lang === 'ro' ? cat.name_ro : (cat.name_en || cat.name_ro);
-    btn.addEventListener('click', () => filterPosts(cat.name_ro));
-    bar.appendChild(btn);
-  });
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/categories?select=*&order=name_ro', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    const cats = await res.json();
+    if (!res.ok || !Array.isArray(cats)) {
+      console.error('Supabase error loading categories:', cats);
+      return;
+    }
+    const bar = document.getElementById('categoriesBar');
+    const lang = getLang();
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'cat-btn';
+      btn.dataset.cat = cat.name_ro;
+      btn.textContent = lang === 'ro' ? cat.name_ro : (cat.name_en || cat.name_ro);
+      btn.addEventListener('click', () => filterPosts(cat.name_ro));
+      bar.appendChild(btn);
+    });
+  } catch(e) {
+    console.error('loadCategories failed:', e);
+  }
 }
 
 async function loadPosts() {
@@ -210,9 +218,19 @@ async function loadPosts() {
     const res = await fetch(SUPABASE_URL + '/rest/v1/posts?select=*&published=eq.true&order=created_at.desc', {
       headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
     });
-    allPosts = await res.json();
+    const data = await res.json();
+    if (!res.ok) {
+      console.error('Supabase error loading posts:', data);
+      throw new Error(data.message || 'API error ' + res.status);
+    }
+    if (!Array.isArray(data)) {
+      console.error('Unexpected response from posts API:', data);
+      throw new Error('Unexpected API response');
+    }
+    allPosts = data;
     renderPosts(allPosts);
   } catch(e) {
+    console.error('loadPosts failed:', e);
     document.getElementById('blogGrid').innerHTML =
       '<div class="blog-empty" style="grid-column:1/-1"><div class="icon">⚠️</div><p>Eroare la încărcarea articolelor.</p></div>';
   }
