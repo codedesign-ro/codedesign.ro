@@ -243,6 +243,7 @@ const langObserver = new MutationObserver(() => {
 langObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.cat-btn[data-cat="all"]').addEventListener('click', () => filterPosts('all'));
   loadCategories();
   loadPosts();
 });
