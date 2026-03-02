@@ -30,6 +30,8 @@
     .related-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;padding:1rem;transition:all var(--transition);display:block;text-decoration:none;color:inherit}
     .related-card:hover{border-color:rgba(79,110,247,0.3);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.3)}
     @media(max-width:768px){.related-grid{grid-template-columns:1fr}}
+    .related-section{background:var(--card);border-top:1px solid var(--border);border-radius:var(--radius-lg)}
+    @media(max-width:768px){.related-section{margin:0 1rem}}
   </style>
 </head>
 <body>
@@ -159,7 +161,7 @@ function renderPost(post) {
         '</div>' +
       '</div>' +
     '</section>' +
-    '<section style="background:var(--card);border-top:1px solid var(--border)">' +
+    '<section class="related-section">' +
       '<div class="container">' +
         '<span class="section-label"><span class="ro">Articole similare</span><span class="en">Related articles</span></span>' +
         '<div class="related-grid" id="relatedGrid"><div style="color:var(--muted);font-size:0.9rem">Se încarcă...</div></div>' +
