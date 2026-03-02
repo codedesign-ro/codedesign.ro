@@ -174,4 +174,12 @@ function renderRelated(posts) {
     const img = p.cover_image ? '<img style="width:100%;height:140px;object-fit:cover;border-radius:10px;margin-bottom:0.8rem" src="' + p.cover_image + '" />' : '<div style="height:140px;background:rgba(79,110,247,0.08);border-radius:10px;margin-bottom:0.8rem;display:flex;align-items:center;justify-content:center;font-size:2rem">✦</div>';
     return '<a href="post.html?slug=' + p.slug + '" style="text-decoration:none;color:inherit;display:block">' +
       img + '<span style="font-size:0.7rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;text-transform:uppercase">' + p.category + '</span>' +
-      '<div style="font-weight:600;margin-top:0.3rem;color:var(--white);font-size:0.95
+      '<div style="font-weight:600;margin-top:0.3rem;color:var(--white);font-size:0.95rem;line-height:1.3">' + t + '</div>' +
+    '</a>';
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', loadPost);
+</script>
+</body>
+</html>
