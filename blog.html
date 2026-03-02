@@ -166,7 +166,7 @@ function renderPosts(posts) {
     const img = post.cover_image
       ? '<img class="blog-card-img" src="' + post.cover_image + '" alt="' + title + '" />'
       : '<div class="blog-card-img-placeholder">✦</div>';
-    return '<a href="post.html?slug=' + post.slug + '" class="blog-card reveal">' +
+    return '<a href="post.html?slug=' + post.slug + '" class="blog-card reveal visible">' +
       img +
       '<div class="blog-card-body">' +
         '<span class="blog-card-cat">' + post.category + '</span>' +
