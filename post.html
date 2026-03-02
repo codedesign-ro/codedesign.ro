@@ -108,31 +108,6 @@
 function getLang() { return document.documentElement.getAttribute('data-lang') || 'ro'; }
 function formatDate(d) { return new Date(d).toLocaleDateString('ro-RO',{year:'numeric',month:'long',day:'numeric'}); }
 
-async function loadPost() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug');
-  if (!slug) { window.location.href = 'blog.html'; return; }
-
-  try {
-    const res = await fetch(SUPABASE_URL + '/rest/v1/posts?slug=eq.' + slug + '&published=eq.true&select=*&apikey=' + SUPABASE_KEY + '', {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-    const data = await res.json();
-    if (!data.length) { window.location.href = 'blog.html'; return; }
-    const post = data[0];
-    renderPost(post);
-
-    // Load related posts
-    const relRes = await fetch(SUPABASE_URL + '/rest/v1/posts?published=eq.true&slug=neq.' + slug + '&order=created_at.desc&limit=3&apikey=' + SUPABASE_KEY, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
-    const related = await relRes.json();
-    renderRelated(related);
-  } catch(e) {
-    document.getElementById('postContainer').innerHTML = '<div style="text-align:center;padding:4rem;color:var(--muted)">⚠️ Eroare la încărcarea articolului.</div>';
-  }
-}
-
 function renderPost(post) {
   const lang = getLang();
   const title = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
@@ -183,6 +158,42 @@ function renderRelated(posts) {
     '</a>';
   }).join('');
 }
+
+let currentPost = null;
+let currentRelated = [];
+
+async function loadPost() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  if (!slug) { window.location.href = 'blog.html'; return; }
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/posts?slug=eq.' + slug + '&published=eq.true&select=*&apikey=' + SUPABASE_KEY + '', {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    const data = await res.json();
+    if (!data.length) { window.location.href = 'blog.html'; return; }
+    currentPost = data[0];
+    renderPost(currentPost);
+
+    // Load related posts
+    const relRes = await fetch(SUPABASE_URL + '/rest/v1/posts?published=eq.true&slug=neq.' + slug + '&order=created_at.desc&limit=3&apikey=' + SUPABASE_KEY, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    currentRelated = await relRes.json();
+    renderRelated(currentRelated);
+  } catch(e) {
+    document.getElementById('postContainer').innerHTML = '<div style="text-align:center;padding:4rem;color:var(--muted)">⚠️ Eroare la încărcarea articolului.</div>';
+  }
+}
+
+const langObserver = new MutationObserver(() => {
+  if (currentPost) {
+    renderPost(currentPost);
+    renderRelated(currentRelated);
+  }
+});
+langObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
 
 document.addEventListener('DOMContentLoaded', loadPost);
 </script>
