@@ -238,3 +238,10 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:4rem 0 
   .hero-stats{gap:1.5rem;flex-wrap:wrap}
   .hero-stat-num{font-size:1.8rem}
 }
+ /* Standardize all section images */
+  .illus img{
+   border-radius:16px;
+   border:1px solid var(--border);
+   width:100%;
+   display:block;
+}
