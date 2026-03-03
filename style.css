@@ -94,7 +94,8 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,0.4)}
 
 /* ILLUSTRATIONS */
 .illus{border-radius:var(--radius-lg);overflow:hidden;background:var(--card);border:1px solid var(--border)}
-.illus img{width:100%;height:100%;object-fit:contain;display:block;filter:invert(1) hue-rotate(180deg) brightness(0.85) saturate(1.4);padding:1.5rem}
+.illus img{width:100%;height:100%;object-fit:cover;display:block;border-radius:16px;}
+
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 0 5rem}
