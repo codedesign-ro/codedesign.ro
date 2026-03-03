@@ -93,8 +93,8 @@ nav.scrolled{box-shadow:0 8px 40px rgba(0,0,0,0.4)}
 .orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
 
 /* ILLUSTRATIONS */
-.illus{border-radius:var(--radius-lg);background:var(--card);border:1px solid var(--border);padding:1rem}
-.illus img{width:100%;height:100%;object-fit:contain;display:block;border-radius:12px;}
+.illus{border-radius:20px;background:#0f1117;border:1px solid var(--border);padding:14px}
+.illus img{width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;}
 
 
 /* HERO */
