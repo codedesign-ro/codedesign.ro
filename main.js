@@ -134,6 +134,18 @@ function init() {
     setTimeout(initCounters, 800);
   }
 
+  // FAQ accordion
+  var faqBtns = document.querySelectorAll('.faq-q');
+  faqBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Close all
+      faqBtns.forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+      // Open clicked if it was closed
+      if (!isOpen) btn.setAttribute('aria-expanded', 'true');
+    });
+  });
+
   // Contact form submit
   var form = document.querySelector('.contact-form');
   if (form) {
