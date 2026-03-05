@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
@@ -113,6 +114,7 @@
 <body>
 
 <!-- LOGIN -->
+
 <div class="login-wrap" id="loginWrap">
   <div class="login-box">
     <div class="login-logo">Code<span>Design</span></div>
@@ -133,9 +135,11 @@
 </div>
 
 <!-- ADMIN PANEL -->
+
 <div class="admin-layout hidden" id="adminWrap">
 
   <!-- SIDEBAR -->
+
   <div class="sidebar">
     <div class="sidebar-logo">Code<span>Design</span> CMS</div>
     <div class="nav-section">Principal</div>
@@ -151,192 +155,196 @@
   </div>
 
   <!-- MAIN CONTENT -->
+
   <div class="main">
 
-    <!-- DASHBOARD -->
-    <div id="sec-dashboard">
-      <div class="page-header">
-        <div class="page-title">Dashboard</div>
-        <a href="index.html" target="_blank" class="btn btn-secondary btn-sm">🌐 Vezi site-ul</a>
+```
+<!-- DASHBOARD -->
+<div id="sec-dashboard">
+  <div class="page-header">
+    <div class="page-title">Dashboard</div>
+    <a href="index.html" target="_blank" class="btn btn-secondary btn-sm">🌐 Vezi site-ul</a>
+  </div>
+  <div class="stat-row">
+    <div class="stat-box"><div class="num" id="statTotal">–</div><div class="lbl">Total Articole</div></div>
+    <div class="stat-box"><div class="num" id="statPublished">–</div><div class="lbl">Publicate</div></div>
+    <div class="stat-box"><div class="num" id="statDraft">–</div><div class="lbl">Ciorne</div></div>
+    <div class="stat-box"><div class="num" id="statCats">–</div><div class="lbl">Categorii</div></div>
+  </div>
+  <div class="form-card">
+    <h3 style="margin-bottom:1rem">Articole Recente</h3>
+    <div id="recentPosts" style="color:var(--muted);font-size:0.9rem">Se încarcă...</div>
+  </div>
+</div>
+
+<!-- POSTS LIST -->
+<div id="sec-posts" class="hidden">
+  <div class="page-header">
+    <div class="page-title">Articole</div>
+    <button class="btn btn-primary" onclick="resetPostForm();showSection('newPost')">+ Articol Nou</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Titlu</th><th>Categorie</th><th>Status</th><th>Data</th><th>Acțiuni</th></tr></thead>
+      <tbody id="postsTableBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Se încarcă...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- NEW / EDIT POST -->
+<div id="sec-newPost" class="hidden">
+  <div class="page-header">
+    <div class="page-title" id="postFormTitle">Articol Nou</div>
+    <div style="display:flex;gap:0.6rem">
+      <button class="btn btn-secondary" onclick="showSection('posts')">Anulează</button>
+      <button class="btn btn-primary" onclick="savePost()">💾 Salvează</button>
+    </div>
+  </div>
+
+  <input type="hidden" id="editPostId" value="" />
+
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:1.5rem">
+    <!-- LEFT -->
+    <div>
+      <div class="tab-bar">
+        <div class="tab active" onclick="switchLangTab('ro',this)">🇷🇴 Română</div>
+        <div class="tab" onclick="switchLangTab('en',this)">🇬🇧 English</div>
       </div>
-      <div class="stat-row">
-        <div class="stat-box"><div class="num" id="statTotal">–</div><div class="lbl">Total Articole</div></div>
-        <div class="stat-box"><div class="num" id="statPublished">–</div><div class="lbl">Publicate</div></div>
-        <div class="stat-box"><div class="num" id="statDraft">–</div><div class="lbl">Ciorne</div></div>
-        <div class="stat-box"><div class="num" id="statCats">–</div><div class="lbl">Categorii</div></div>
+
+      <div id="tabRo">
+        <div class="form-group">
+          <label>Titlu (RO)</label>
+          <input type="text" id="titleRo" placeholder="Titlul articolului în română" oninput="generateSlug()" />
+        </div>
+        <div class="form-group">
+          <label>Rezumat (RO) — apare în listing</label>
+          <textarea id="excerptRo" style="min-height:80px" placeholder="Scurtă descriere..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Conținut (RO)</label>
+          <div class="editor-toolbar" id="toolbarRo"></div>
+          <div class="editor-area" id="contentRo" contenteditable="true"></div>
+        </div>
       </div>
+
+      <div id="tabEn" class="hidden">
+        <div class="form-group">
+          <label>Title (EN)</label>
+          <input type="text" id="titleEn" placeholder="Article title in English" />
+        </div>
+        <div class="form-group">
+          <label>Excerpt (EN)</label>
+          <textarea id="excerptEn" style="min-height:80px" placeholder="Short description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Content (EN)</label>
+          <div class="editor-toolbar" id="toolbarEn"></div>
+          <div class="editor-area" id="contentEn" contenteditable="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div>
+      <div class="form-card" style="margin-bottom:1rem">
+        <h3 style="margin-bottom:1rem;font-size:0.95rem">Publicare</h3>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+          <label style="margin:0;color:var(--white)">Publicat</label>
+          <label class="toggle"><input type="checkbox" id="postPublished" /><span class="toggle-slider"></span></label>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label>Slug URL</label>
+          <input type="text" id="postSlug" placeholder="url-articol" />
+        </div>
+      </div>
+
+      <div class="form-card" style="margin-bottom:1rem">
+        <h3 style="margin-bottom:1rem;font-size:0.95rem">Categorie</h3>
+        <select id="postCategory">
+          <option value="General">General</option>
+        </select>
+      </div>
+
       <div class="form-card">
-        <h3 style="margin-bottom:1rem">Articole Recente</h3>
-        <div id="recentPosts" style="color:var(--muted);font-size:0.9rem">Se încarcă...</div>
+        <h3 style="margin-bottom:1rem;font-size:0.95rem">Imagine Copertă</h3>
+        <div class="form-group">
+          <label>URL Imagine</label>
+          <input type="url" id="coverImage" placeholder="https://..." oninput="previewCover()" />
+        </div>
+        <img id="coverPreview" class="img-preview" src="" alt="Preview" />
+        <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem">Încarcă imaginea pe un serviciu precum Cloudinary sau ImgBB și lipește URL-ul.</p>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- POSTS LIST -->
-    <div id="sec-posts" class="hidden">
-      <div class="page-header">
-        <div class="page-title">Articole</div>
-        <button class="btn btn-primary" onclick="resetPostForm();showSection('newPost')">+ Articol Nou</button>
+<!-- CATEGORIES -->
+<div id="sec-categories" class="hidden">
+  <div class="page-header">
+    <div class="page-title">Categorii</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+    <div class="form-card">
+      <h3 style="margin-bottom:1.2rem;font-size:0.95rem">Categorie Nouă</h3>
+      <div class="form-group">
+        <label>Nume (RO)</label>
+        <input type="text" id="catNameRo" placeholder="ex: Web Design" />
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Titlu</th><th>Categorie</th><th>Status</th><th>Data</th><th>Acțiuni</th></tr></thead>
-          <tbody id="postsTableBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Se încarcă...</td></tr></tbody>
-        </table>
+      <div class="form-group">
+        <label>Name (EN)</label>
+        <input type="text" id="catNameEn" placeholder="ex: Web Design" />
       </div>
+      <div class="form-group">
+        <label>Slug</label>
+        <input type="text" id="catSlug" placeholder="ex: web-design" />
+      </div>
+      <button class="btn btn-primary" onclick="saveCategory()">+ Adaugă Categorie</button>
     </div>
-
-    <!-- NEW / EDIT POST -->
-    <div id="sec-newPost" class="hidden">
-      <div class="page-header">
-        <div class="page-title" id="postFormTitle">Articol Nou</div>
-        <div style="display:flex;gap:0.6rem">
-          <button class="btn btn-secondary" onclick="showSection('posts')">Anulează</button>
-          <button class="btn btn-primary" onclick="savePost()">💾 Salvează</button>
-        </div>
-      </div>
-
-      <input type="hidden" id="editPostId" value="" />
-
-      <div style="display:grid;grid-template-columns:1fr 300px;gap:1.5rem">
-        <!-- LEFT -->
-        <div>
-          <div class="tab-bar">
-            <div class="tab active" onclick="switchLangTab('ro',this)">🇷🇴 Română</div>
-            <div class="tab" onclick="switchLangTab('en',this)">🇬🇧 English</div>
-          </div>
-
-          <div id="tabRo">
-            <div class="form-group">
-              <label>Titlu (RO)</label>
-              <input type="text" id="titleRo" placeholder="Titlul articolului în română" oninput="generateSlug()" />
-            </div>
-            <div class="form-group">
-              <label>Rezumat (RO) — apare în listing</label>
-              <textarea id="excerptRo" style="min-height:80px" placeholder="Scurtă descriere..."></textarea>
-            </div>
-            <div class="form-group">
-              <label>Conținut (RO)</label>
-              <div class="editor-toolbar" id="toolbarRo"></div>
-              <div class="editor-area" id="contentRo" contenteditable="true"></div>
-            </div>
-          </div>
-
-          <div id="tabEn" class="hidden">
-            <div class="form-group">
-              <label>Title (EN)</label>
-              <input type="text" id="titleEn" placeholder="Article title in English" />
-            </div>
-            <div class="form-group">
-              <label>Excerpt (EN)</label>
-              <textarea id="excerptEn" style="min-height:80px" placeholder="Short description..."></textarea>
-            </div>
-            <div class="form-group">
-              <label>Content (EN)</label>
-              <div class="editor-toolbar" id="toolbarEn"></div>
-              <div class="editor-area" id="contentEn" contenteditable="true"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT SIDEBAR -->
-        <div>
-          <div class="form-card" style="margin-bottom:1rem">
-            <h3 style="margin-bottom:1rem;font-size:0.95rem">Publicare</h3>
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
-              <label style="margin:0;color:var(--white)">Publicat</label>
-              <label class="toggle"><input type="checkbox" id="postPublished" /><span class="toggle-slider"></span></label>
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label>Slug URL</label>
-              <input type="text" id="postSlug" placeholder="url-articol" />
-            </div>
-          </div>
-
-          <div class="form-card" style="margin-bottom:1rem">
-            <h3 style="margin-bottom:1rem;font-size:0.95rem">Categorie</h3>
-            <select id="postCategory">
-              <option value="General">General</option>
-            </select>
-          </div>
-
-          <div class="form-card">
-            <h3 style="margin-bottom:1rem;font-size:0.95rem">Imagine Copertă</h3>
-            <div class="form-group">
-              <label>URL Imagine</label>
-              <input type="url" id="coverImage" placeholder="https://..." oninput="previewCover()" />
-            </div>
-            <img id="coverPreview" class="img-preview" src="" alt="Preview" />
-            <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem">Încarcă imaginea pe un serviciu precum Cloudinary sau ImgBB și lipește URL-ul.</p>
-          </div>
-        </div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Română</th><th>English</th><th>Slug</th><th></th></tr></thead>
+        <tbody id="catsTableBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem">Se încarcă...</td></tr></tbody>
+      </table>
     </div>
+  </div>
+</div>
 
-    <!-- CATEGORIES -->
-    <div id="sec-categories" class="hidden">
-      <div class="page-header">
-        <div class="page-title">Categorii</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
-        <div class="form-card">
-          <h3 style="margin-bottom:1.2rem;font-size:0.95rem">Categorie Nouă</h3>
-          <div class="form-group">
-            <label>Nume (RO)</label>
-            <input type="text" id="catNameRo" placeholder="ex: Web Design" />
-          </div>
-          <div class="form-group">
-            <label>Name (EN)</label>
-            <input type="text" id="catNameEn" placeholder="ex: Web Design" />
-          </div>
-          <div class="form-group">
-            <label>Slug</label>
-            <input type="text" id="catSlug" placeholder="ex: web-design" />
-          </div>
-          <button class="btn btn-primary" onclick="saveCategory()">+ Adaugă Categorie</button>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Română</th><th>English</th><th>Slug</th><th></th></tr></thead>
-            <tbody id="catsTableBody"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem">Se încarcă...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
+<!-- SITE CONTENT -->
+<div id="sec-siteContent" class="hidden">
+  <div class="page-header">
+    <div class="page-title">Conținut Pagini <small>editează texte și titluri</small></div>
+    <button class="btn btn-primary" onclick="saveSiteContent()">💾 Salvează tot</button>
+  </div>
+  <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem">
+    ⚠️ Această funcție salvează conținut în baza de date. Pentru ca paginile să citească dinamic acest conținut, trebuie să adaugi cod JS în fiecare pagină. Momentan, modifică direct fișierele HTML pe GitHub.
+  </p>
+  <div class="form-card">
+    <h3 style="margin-bottom:1.2rem;font-size:0.95rem">Adaugă intrare conținut</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end">
+      <div><label>Pagină</label><input type="text" id="scPage" placeholder="index" /></div>
+      <div><label>Cheie</label><input type="text" id="scKey" placeholder="hero_title" /></div>
+      <div><label>Valoare RO</label><input type="text" id="scRo" placeholder="Valoarea în română" /></div>
+      <button class="btn btn-primary" onclick="saveSiteContentItem()">+</button>
     </div>
-
-    <!-- SITE CONTENT -->
-    <div id="sec-siteContent" class="hidden">
-      <div class="page-header">
-        <div class="page-title">Conținut Pagini <small>editează texte și titluri</small></div>
-        <button class="btn btn-primary" onclick="saveSiteContent()">💾 Salvează tot</button>
-      </div>
-      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem">
-        ⚠️ Această funcție salvează conținut în baza de date. Pentru ca paginile să citească dinamic acest conținut, trebuie să adaugi cod JS în fiecare pagină. Momentan, modifică direct fișierele HTML pe GitHub.
-      </p>
-      <div class="form-card">
-        <h3 style="margin-bottom:1.2rem;font-size:0.95rem">Adaugă intrare conținut</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end">
-          <div><label>Pagină</label><input type="text" id="scPage" placeholder="index" /></div>
-          <div><label>Cheie</label><input type="text" id="scKey" placeholder="hero_title" /></div>
-          <div><label>Valoare RO</label><input type="text" id="scRo" placeholder="Valoarea în română" /></div>
-          <button class="btn btn-primary" onclick="saveSiteContentItem()">+</button>
-        </div>
-        <div style="margin-top:0.8rem">
-          <label>Valoare EN</label>
-          <input type="text" id="scEn" placeholder="Value in English" />
-        </div>
-      </div>
-      <div class="table-wrap" style="margin-top:1.5rem">
-        <table>
-          <thead><tr><th>Pagină</th><th>Cheie</th><th>Română</th><th>English</th><th></th></tr></thead>
-          <tbody id="siteContentBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Se încarcă...</td></tr></tbody>
-        </table>
-      </div>
+    <div style="margin-top:0.8rem">
+      <label>Valoare EN</label>
+      <input type="text" id="scEn" placeholder="Value in English" />
     </div>
+  </div>
+  <div class="table-wrap" style="margin-top:1.5rem">
+    <table>
+      <thead><tr><th>Pagină</th><th>Cheie</th><th>Română</th><th>English</th><th></th></tr></thead>
+      <tbody id="siteContentBody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Se încarcă...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+```
 
   </div><!-- end main -->
 </div><!-- end admin-layout -->
 
 <!-- TOAST -->
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -386,12 +394,18 @@ function previewCover() {
 }
 
 // ---- LOGIN ----
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
 async function doLogin() {
   const email = document.getElementById('loginEmail').value;
   const pass = document.getElementById('loginPass').value;
   if (!pass) { document.getElementById('loginErr').textContent = 'Introduceți parola'; return; }
 
-  const res = await api('admin_users?email=eq.' + encodeURIComponent(email) + '&password_hash=eq.' + encodeURIComponent(pass));
+  const hashed = await sha256(pass);
+  const res = await api('admin_users?email=eq.' + encodeURIComponent(email) + '&password_hash=eq.' + encodeURIComponent(hashed));
   const data = await res.json();
 
   if (data.length) {
@@ -696,5 +710,6 @@ async function deleteSiteContent(id) {
 
 async function saveSiteContent() { toast('Conținut salvat în baza de date!'); }
 </script>
+
 </body>
 </html>
