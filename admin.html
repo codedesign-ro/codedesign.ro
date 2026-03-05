@@ -347,36 +347,44 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
 <script>
 const SUPABASE_URL = 'https://pyzfilefqqyrmjhfdvgw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_nH6dJS5-3iX9qv8loybgpw_iUAivA2Z';
 
+// Supabase client — uses session JWT for authenticated requests
+const { createClient } = window.supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 // ---- HELPERS ----
-function api(path, opts={}) {
+async function api(path, opts = {}) {
+  const { data: { session } } = await db.auth.getSession();
+  const token = session ? session.access_token : SUPABASE_KEY;
   return fetch(SUPABASE_URL + '/rest/v1/' + path, {
     ...opts,
     headers: {
       'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json',
       'Prefer': opts.prefer || 'return=representation',
-      ...(opts.headers||{})
+      ...(opts.headers || {})
     }
   });
 }
 
-function toast(msg, type='success') {
+function toast(msg, type = 'success') {
   const t = document.getElementById('toast');
-  t.textContent = (type==='success'?'✓ ':'✗ ') + msg;
+  t.textContent = (type === 'success' ? '✓ ' : '✗ ') + msg;
   t.className = 'toast ' + type + ' show';
-  setTimeout(()=>t.classList.remove('show'), 3200);
+  setTimeout(() => t.classList.remove('show'), 3200);
 }
 
 function fmtDate(d) { return new Date(d).toLocaleDateString('ro-RO'); }
 
 function slugify(str) {
-  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 function generateSlug() {
@@ -393,61 +401,51 @@ function previewCover() {
   else { img.style.display = 'none'; }
 }
 
-// ---- LOGIN ----
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
+// ---- AUTH (Supabase Auth) ----
 async function doLogin() {
-  const email = document.getElementById('loginEmail').value;
-  const pass = document.getElementById('loginPass').value;
-  if (!pass) { document.getElementById('loginErr').textContent = 'Introduceți parola'; return; }
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginErr');
+  if (!pass) { errEl.textContent = 'Introduceți parola'; return; }
+  errEl.textContent = '';
 
-  const hashed = await sha256(pass);
-  const res = await api('admin_users?email=eq.' + encodeURIComponent(email) + '&password_hash=eq.' + encodeURIComponent(hashed));
-  const data = await res.json();
-
-  if (data.length) {
-    sessionStorage.setItem('cd_admin', '1');
-    sessionStorage.setItem('cd_email', email);
-    document.getElementById('loginWrap').classList.add('hidden');
-    document.getElementById('adminWrap').classList.remove('hidden');
-    initAdmin();
-  } else {
-    document.getElementById('loginErr').textContent = 'Email sau parolă greșită';
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+  if (error || !data.session) {
+    errEl.textContent = 'Email sau parolă greșită';
+    return;
   }
+  showAdminPanel();
 }
 
-document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-function doLogout() {
-  sessionStorage.removeItem('cd_admin');
+async function doLogout() {
+  await db.auth.signOut();
   document.getElementById('adminWrap').classList.add('hidden');
   document.getElementById('loginWrap').classList.remove('hidden');
 }
 
-// Check if already logged in
-if (sessionStorage.getItem('cd_admin')) {
+function showAdminPanel() {
   document.getElementById('loginWrap').classList.add('hidden');
   document.getElementById('adminWrap').classList.remove('hidden');
-  document.addEventListener('DOMContentLoaded', initAdmin);
+  initAdmin();
 }
+
+// Restore existing session on page load
+db.auth.getSession().then(({ data: { session } }) => {
+  if (session) showAdminPanel();
+});
 
 // ---- NAVIGATION ----
 function showSection(id) {
-  document.querySelectorAll('[id^="sec-"]').forEach(el=>el.classList.add('hidden'));
-  document.getElementById('sec-'+id).classList.remove('hidden');
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  event && event.currentTarget && event.currentTarget.classList.add('active');
-  if (id==='posts') loadPosts();
-  if (id==='dashboard') loadDashboard();
-  if (id==='categories') loadCategories();
-  if (id==='siteContent') loadSiteContent();
-  if (id==='newPost') {
-    loadCategoriesSelect();
-    initEditors();
-  }
+  document.querySelectorAll('[id^="sec-"]').forEach(el => el.classList.add('hidden'));
+  document.getElementById('sec-' + id).classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  if (id === 'posts')       loadPosts();
+  if (id === 'dashboard')   loadDashboard();
+  if (id === 'categories')  loadCategories();
+  if (id === 'siteContent') loadSiteContent();
+  if (id === 'newPost')     { loadCategoriesSelect(); initEditors(); }
 }
 
 function initAdmin() {
@@ -458,20 +456,20 @@ function initAdmin() {
 
 // ---- EDITOR TOOLBAR ----
 const toolbarBtns = [
-  {l:'B',cmd:'bold',title:'Bold'},
-  {l:'I',cmd:'italic',title:'Italic'},
-  {l:'H2',cmd:'formatBlock',val:'h2',title:'Heading 2'},
-  {l:'H3',cmd:'formatBlock',val:'h3',title:'Heading 3'},
-  {l:'• List',cmd:'insertUnorderedList',title:'Lista'},
-  {l:'1. List',cmd:'insertOrderedList',title:'Lista numerotată'},
-  {l:'" Quote',cmd:'formatBlock',val:'blockquote',title:'Citat'},
-  {l:'Link',cmd:'createLink',title:'Link'},
-  {l:'—',cmd:'formatBlock',val:'p',title:'Paragraf normal'},
+  { l: 'B',       cmd: 'bold',                title: 'Bold' },
+  { l: 'I',       cmd: 'italic',              title: 'Italic' },
+  { l: 'H2',      cmd: 'formatBlock', val: 'h2',         title: 'Heading 2' },
+  { l: 'H3',      cmd: 'formatBlock', val: 'h3',         title: 'Heading 3' },
+  { l: '• List',  cmd: 'insertUnorderedList', title: 'Lista' },
+  { l: '1. List', cmd: 'insertOrderedList',   title: 'Lista numerotată' },
+  { l: '" Quote', cmd: 'formatBlock', val: 'blockquote', title: 'Citat' },
+  { l: 'Link',    cmd: 'createLink',          title: 'Link' },
+  { l: '—',       cmd: 'formatBlock', val: 'p',          title: 'Paragraf normal' },
 ];
 
 function initEditors() {
-  ['Ro','En'].forEach(lang => {
-    const tb = document.getElementById('toolbar'+lang);
+  ['Ro', 'En'].forEach(lang => {
+    const tb = document.getElementById('toolbar' + lang);
     if (!tb || tb.children.length) return;
     toolbarBtns.forEach(b => {
       const btn = document.createElement('button');
@@ -480,13 +478,13 @@ function initEditors() {
       btn.textContent = b.l;
       btn.title = b.title;
       btn.onclick = () => {
-        const area = document.getElementById('content'+lang);
+        const area = document.getElementById('content' + lang);
         area.focus();
         if (b.cmd === 'createLink') {
           const url = prompt('URL:');
           if (url) document.execCommand('createLink', false, url);
         } else {
-          document.execCommand(b.cmd, false, b.val||null);
+          document.execCommand(b.cmd, false, b.val || null);
         }
       };
       tb.appendChild(btn);
@@ -495,10 +493,10 @@ function initEditors() {
 }
 
 function switchLangTab(lang, el) {
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('tabRo').classList.toggle('hidden', lang!=='ro');
-  document.getElementById('tabEn').classList.toggle('hidden', lang!=='en');
+  document.getElementById('tabRo').classList.toggle('hidden', lang !== 'ro');
+  document.getElementById('tabEn').classList.toggle('hidden', lang !== 'en');
 }
 
 // ---- DASHBOARD ----
@@ -508,52 +506,113 @@ async function loadDashboard() {
     api('categories?select=id')
   ]);
   const posts = await postsRes.json();
-  const cats = await catsRes.json();
-  const published = Array.isArray(posts) ? posts.filter(p=>p.published).length : 0;
-  const total = Array.isArray(posts) ? posts.length : 0;
-  document.getElementById('statTotal').textContent = total;
+  const cats  = await catsRes.json();
+  const published = Array.isArray(posts) ? posts.filter(p => p.published).length : 0;
+  const total     = Array.isArray(posts) ? posts.length : 0;
+  document.getElementById('statTotal').textContent     = total;
   document.getElementById('statPublished').textContent = published;
-  document.getElementById('statDraft').textContent = total - published;
-  document.getElementById('statCats').textContent = Array.isArray(cats) ? cats.length : 0;
+  document.getElementById('statDraft').textContent     = total - published;
+  document.getElementById('statCats').textContent      = Array.isArray(cats) ? cats.length : 0;
 
   const recentRes = await api('posts?select=id,title_ro,published,created_at&order=created_at.desc&limit=5');
   const recent = await recentRes.json();
+  const recentDiv = document.getElementById('recentPosts');
+  recentDiv.innerHTML = '';
+
   if (Array.isArray(recent) && recent.length) {
-    document.getElementById('recentPosts').innerHTML = recent.map(p=>
-      '<div style="display:flex;align-items:center;justify-content:space-between;padding:0.7rem 0;border-bottom:1px solid var(--border)">' +
-        '<span style="font-size:0.88rem">' + p.title_ro + '</span>' +
-        '<div style="display:flex;gap:0.5rem;align-items:center">' +
-          '<span class="badge ' + (p.published?'badge-green':'badge-gray') + '">' + (p.published?'Publicat':'Ciornă') + '</span>' +
-          '<span style="font-size:0.78rem;color:var(--muted)">' + fmtDate(p.created_at) + '</span>' +
-        '</div>' +
-      '</div>'
-    ).join('');
+    recent.forEach(p => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:0.7rem 0;border-bottom:1px solid var(--border)';
+
+      const titleSpan = document.createElement('span');
+      titleSpan.style.fontSize = '0.88rem';
+      titleSpan.textContent = p.title_ro;
+
+      const right = document.createElement('div');
+      right.style.cssText = 'display:flex;gap:0.5rem;align-items:center';
+
+      const badge = document.createElement('span');
+      badge.className = 'badge ' + (p.published ? 'badge-green' : 'badge-gray');
+      badge.textContent = p.published ? 'Publicat' : 'Ciornă';
+
+      const dateSpan = document.createElement('span');
+      dateSpan.style.cssText = 'font-size:0.78rem;color:var(--muted)';
+      dateSpan.textContent = fmtDate(p.created_at);
+
+      right.appendChild(badge);
+      right.appendChild(dateSpan);
+      row.appendChild(titleSpan);
+      row.appendChild(right);
+      recentDiv.appendChild(row);
+    });
   } else {
-    document.getElementById('recentPosts').textContent = 'Nu există articole încă.';
+    recentDiv.textContent = 'Nu există articole încă.';
   }
 }
 
 // ---- POSTS ----
 async function loadPosts() {
-  const res = await api('posts?select=*&order=created_at.desc');
+  const res   = await api('posts?select=*&order=created_at.desc');
   const posts = await res.json();
   const tbody = document.getElementById('postsTableBody');
+  tbody.innerHTML = '';
+
   if (!Array.isArray(posts) || !posts.length) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem">Nu există articole încă.</td></tr>';
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 5;
+    td.style.cssText = 'text-align:center;color:var(--muted);padding:2rem';
+    td.textContent = 'Nu există articole încă.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
     return;
   }
-  tbody.innerHTML = posts.map(p=>
-    '<tr>' +
-      '<td><strong>' + p.title_ro + '</strong>' + (p.title_en?'<br><small style="color:var(--muted)">'+p.title_en+'</small>':'') + '</td>' +
-      '<td>' + p.category + '</td>' +
-      '<td><span class="badge ' + (p.published?'badge-green':'badge-gray') + '">' + (p.published?'Publicat':'Ciornă') + '</span></td>' +
-      '<td>' + fmtDate(p.created_at) + '</td>' +
-      '<td style="display:flex;gap:0.4rem">' +
-        '<button class="btn btn-secondary btn-sm" onclick="editPost(\'' + p.id + '\')">✏️ Edit</button>' +
-        '<button class="btn btn-danger btn-sm" onclick="deletePost(\'' + p.id + '\',\'' + p.title_ro.replace(/'/g,"\\'") + '\')">🗑️</button>' +
-      '</td>' +
-    '</tr>'
-  ).join('');
+
+  posts.forEach(p => {
+    const tr = document.createElement('tr');
+
+    const tdTitle  = document.createElement('td');
+    const strong   = document.createElement('strong');
+    strong.textContent = p.title_ro;
+    tdTitle.appendChild(strong);
+    if (p.title_en) {
+      tdTitle.appendChild(document.createElement('br'));
+      const small = document.createElement('small');
+      small.style.color = 'var(--muted)';
+      small.textContent = p.title_en;
+      tdTitle.appendChild(small);
+    }
+
+    const tdCat = document.createElement('td');
+    tdCat.textContent = p.category;
+
+    const tdStatus = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (p.published ? 'badge-green' : 'badge-gray');
+    badge.textContent = p.published ? 'Publicat' : 'Ciornă';
+    tdStatus.appendChild(badge);
+
+    const tdDate = document.createElement('td');
+    tdDate.textContent = fmtDate(p.created_at);
+
+    const tdActions = document.createElement('td');
+    tdActions.style.cssText = 'display:flex;gap:0.4rem';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-secondary btn-sm';
+    editBtn.textContent = '✏️ Edit';
+    editBtn.onclick = () => editPost(p.id);
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger btn-sm';
+    delBtn.textContent = '🗑️';
+    delBtn.onclick = () => deletePost(p.id, p.title_ro);
+
+    tdActions.appendChild(editBtn);
+    tdActions.appendChild(delBtn);
+    tr.append(tdTitle, tdCat, tdStatus, tdDate, tdActions);
+    tbody.appendChild(tr);
+  });
 }
 
 function resetPostForm() {
@@ -572,52 +631,57 @@ function resetPostForm() {
 }
 
 async function editPost(id) {
-  const res = await api('posts?id=eq.' + id);
+  const res  = await api('posts?id=eq.' + id);
   const data = await res.json();
   if (!data.length) return;
   const p = data[0];
-  // Show section first WITHOUT resetting
-  document.querySelectorAll('[id^="sec-"]').forEach(el=>el.classList.add('hidden'));
+
+  document.querySelectorAll('[id^="sec-"]').forEach(el => el.classList.add('hidden'));
   document.getElementById('sec-newPost').classList.remove('hidden');
   loadCategoriesSelect();
   initEditors();
-  // Now fill the form
+
   document.getElementById('editPostId').value = p.id;
   document.getElementById('postFormTitle').textContent = 'Editează Articol';
   document.getElementById('titleRo').value = p.title_ro || '';
   document.getElementById('titleEn').value = p.title_en || '';
   document.getElementById('excerptRo').value = p.excerpt_ro || '';
   document.getElementById('excerptEn').value = p.excerpt_en || '';
-  document.getElementById('contentRo').innerHTML = p.content_ro || '';
-  document.getElementById('contentEn').innerHTML = p.content_en || '';
+  // Sanitize stored HTML before loading into the editable area
+  document.getElementById('contentRo').innerHTML = DOMPurify.sanitize(p.content_ro || '');
+  document.getElementById('contentEn').innerHTML = DOMPurify.sanitize(p.content_en || '');
   document.getElementById('postSlug').value = p.slug || '';
   document.getElementById('postPublished').checked = p.published;
   document.getElementById('coverImage').value = p.cover_image || '';
-  if (p.cover_image) { document.getElementById('coverPreview').src = p.cover_image; document.getElementById('coverPreview').style.display = 'block'; }
-  setTimeout(function() { document.getElementById('postCategory').value = p.category; }, 200);
+  if (p.cover_image) {
+    document.getElementById('coverPreview').src = p.cover_image;
+    document.getElementById('coverPreview').style.display = 'block';
+  }
+  setTimeout(() => { document.getElementById('postCategory').value = p.category; }, 200);
 }
 
 async function savePost() {
   const id = document.getElementById('editPostId').value;
   const data = {
-    title_ro: document.getElementById('titleRo').value,
-    title_en: document.getElementById('titleEn').value,
-    excerpt_ro: document.getElementById('excerptRo').value,
-    excerpt_en: document.getElementById('excerptEn').value,
-    content_ro: document.getElementById('contentRo').innerHTML,
-    content_en: document.getElementById('contentEn').innerHTML,
-    slug: document.getElementById('postSlug').value || slugify(document.getElementById('titleRo').value),
-    published: document.getElementById('postPublished').checked,
+    title_ro:    document.getElementById('titleRo').value,
+    title_en:    document.getElementById('titleEn').value,
+    excerpt_ro:  document.getElementById('excerptRo').value,
+    excerpt_en:  document.getElementById('excerptEn').value,
+    // Sanitize HTML before persisting to the database
+    content_ro:  DOMPurify.sanitize(document.getElementById('contentRo').innerHTML),
+    content_en:  DOMPurify.sanitize(document.getElementById('contentEn').innerHTML),
+    slug:        document.getElementById('postSlug').value || slugify(document.getElementById('titleRo').value),
+    published:   document.getElementById('postPublished').checked,
     cover_image: document.getElementById('coverImage').value || null,
-    category: document.getElementById('postCategory').value
+    category:    document.getElementById('postCategory').value
   };
-  if (!data.title_ro) { toast('Titlul (RO) este obligatoriu','error'); return; }
+  if (!data.title_ro) { toast('Titlul (RO) este obligatoriu', 'error'); return; }
 
   let res;
   if (id) {
-    res = await api('posts?id=eq.' + id, { method:'PATCH', body: JSON.stringify(data), prefer:'return=minimal' });
+    res = await api('posts?id=eq.' + id, { method: 'PATCH', body: JSON.stringify(data), prefer: 'return=minimal' });
   } else {
-    res = await api('posts', { method:'POST', body: JSON.stringify(data) });
+    res = await api('posts', { method: 'POST', body: JSON.stringify(data) });
   }
 
   if (res.ok) {
@@ -625,87 +689,156 @@ async function savePost() {
     showSection('posts');
   } else {
     const err = await res.json();
-    toast('Eroare: ' + (err.message||'Ceva a mers greșit'), 'error');
+    toast('Eroare: ' + (err.message || 'Ceva a mers greșit'), 'error');
   }
 }
 
 async function deletePost(id, title) {
   if (!confirm('Ești sigur că vrei să ștergi "' + title + '"?')) return;
-  const res = await api('posts?id=eq.' + id, { method:'DELETE', prefer:'return=minimal' });
+  const res = await api('posts?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
   if (res.ok) { toast('Articol șters'); loadPosts(); }
   else toast('Eroare la ștergere', 'error');
 }
 
 // ---- CATEGORIES ----
 async function loadCategoriesSelect() {
-  const res = await api('categories?select=*&order=name_ro');
+  const res  = await api('categories?select=*&order=name_ro');
   const cats = await res.json();
   if (!Array.isArray(cats)) return;
   const sel = document.getElementById('postCategory');
-  sel.innerHTML = cats.map(c => '<option value="' + c.name_ro + '">' + c.name_ro + '</option>').join('');
+  sel.innerHTML = '';
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.name_ro;
+    opt.textContent = c.name_ro;
+    sel.appendChild(opt);
+  });
 }
 
 async function loadCategories() {
-  const res = await api('categories?select=*&order=name_ro');
+  const res  = await api('categories?select=*&order=name_ro');
   const cats = await res.json();
   const tbody = document.getElementById('catsTableBody');
-  if (!Array.isArray(cats) || !cats.length) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:1.5rem">Nu există categorii.</td></tr>'; return; }
-  tbody.innerHTML = cats.map(c =>
-    '<tr><td>' + c.name_ro + '</td><td>' + (c.name_en||'') + '</td><td style="color:var(--muted);font-size:0.82rem">' + c.slug + '</td>' +
-    '<td><button class="btn btn-danger btn-sm" onclick="deleteCategory(\'' + c.id + '\',\'' + c.name_ro + '\')">🗑️</button></td></tr>'
-  ).join('');
+  tbody.innerHTML = '';
+
+  if (!Array.isArray(cats) || !cats.length) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 4;
+    td.style.cssText = 'text-align:center;color:var(--muted);padding:1.5rem';
+    td.textContent = 'Nu există categorii.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  cats.forEach(c => {
+    const tr    = document.createElement('tr');
+    const tdRo  = document.createElement('td'); tdRo.textContent  = c.name_ro;
+    const tdEn  = document.createElement('td'); tdEn.textContent  = c.name_en || '';
+    const tdSlug = document.createElement('td');
+    tdSlug.style.cssText = 'color:var(--muted);font-size:0.82rem';
+    tdSlug.textContent = c.slug;
+
+    const tdDel  = document.createElement('td');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger btn-sm';
+    delBtn.textContent = '🗑️';
+    delBtn.onclick = () => deleteCategory(c.id, c.name_ro);
+    tdDel.appendChild(delBtn);
+
+    tr.append(tdRo, tdEn, tdSlug, tdDel);
+    tbody.appendChild(tr);
+  });
 }
 
 async function saveCategory() {
-  const ro = document.getElementById('catNameRo').value;
-  const en = document.getElementById('catNameEn').value;
+  const ro   = document.getElementById('catNameRo').value;
+  const en   = document.getElementById('catNameEn').value;
   const slug = document.getElementById('catSlug').value || slugify(ro);
-  if (!ro) { toast('Numele (RO) este obligatoriu','error'); return; }
-  const res = await api('categories', { method:'POST', body: JSON.stringify({name_ro:ro,name_en:en,slug}) });
+  if (!ro) { toast('Numele (RO) este obligatoriu', 'error'); return; }
+  const res = await api('categories', { method: 'POST', body: JSON.stringify({ name_ro: ro, name_en: en, slug }) });
   if (res.ok) {
     toast('Categorie adăugată!');
     document.getElementById('catNameRo').value = '';
     document.getElementById('catNameEn').value = '';
-    document.getElementById('catSlug').value = '';
-    loadCategories(); loadCategoriesSelect();
-  } else toast('Eroare la salvare','error');
+    document.getElementById('catSlug').value   = '';
+    loadCategories();
+    loadCategoriesSelect();
+  } else toast('Eroare la salvare', 'error');
 }
 
 async function deleteCategory(id, name) {
   if (!confirm('Șterge categoria "' + name + '"?')) return;
-  const res = await api('categories?id=eq.' + id, { method:'DELETE', prefer:'return=minimal' });
+  const res = await api('categories?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
   if (res.ok) { toast('Categorie ștearsă'); loadCategories(); }
-  else toast('Eroare','error');
+  else toast('Eroare', 'error');
 }
 
 // ---- SITE CONTENT ----
 async function loadSiteContent() {
-  const res = await api('site_content?select=*&order=page,key');
+  const res   = await api('site_content?select=*&order=page,key');
   const items = await res.json();
   const tbody = document.getElementById('siteContentBody');
-  if (!Array.isArray(items) || !items.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">Nu există intrări.</td></tr>'; return; }
-  tbody.innerHTML = items.map(i =>
-    '<tr><td style="color:var(--accent);font-size:0.82rem">' + i.page + '</td><td style="font-size:0.82rem;color:var(--muted)">' + i.key + '</td>' +
-    '<td style="font-size:0.85rem">' + (i.value_ro||'') + '</td><td style="font-size:0.85rem">' + (i.value_en||'') + '</td>' +
-    '<td><button class="btn btn-danger btn-sm" onclick="deleteSiteContent(\'' + i.id + '\')">🗑️</button></td></tr>'
-  ).join('');
+  tbody.innerHTML = '';
+
+  if (!Array.isArray(items) || !items.length) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 5;
+    td.style.cssText = 'text-align:center;color:var(--muted);padding:1.5rem';
+    td.textContent = 'Nu există intrări.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  items.forEach(i => {
+    const tr     = document.createElement('tr');
+    const tdPage = document.createElement('td');
+    tdPage.style.cssText = 'color:var(--accent);font-size:0.82rem';
+    tdPage.textContent = i.page;
+
+    const tdKey = document.createElement('td');
+    tdKey.style.cssText = 'font-size:0.82rem;color:var(--muted)';
+    tdKey.textContent = i.key;
+
+    const tdRo = document.createElement('td'); tdRo.style.fontSize = '0.85rem'; tdRo.textContent = i.value_ro || '';
+    const tdEn = document.createElement('td'); tdEn.style.fontSize = '0.85rem'; tdEn.textContent = i.value_en || '';
+
+    const tdDel  = document.createElement('td');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger btn-sm';
+    delBtn.textContent = '🗑️';
+    delBtn.onclick = () => deleteSiteContent(i.id);
+    tdDel.appendChild(delBtn);
+
+    tr.append(tdPage, tdKey, tdRo, tdEn, tdDel);
+    tbody.appendChild(tr);
+  });
 }
 
 async function saveSiteContentItem() {
   const page = document.getElementById('scPage').value;
-  const key = document.getElementById('scKey').value;
-  const ro = document.getElementById('scRo').value;
-  const en = document.getElementById('scEn').value;
-  if (!page||!key||!ro) { toast('Pagină, cheie și valoare RO sunt obligatorii','error'); return; }
-  const res = await api('site_content', { method:'POST', body: JSON.stringify({page,key,value_ro:ro,value_en:en}) });
-  if (res.ok) { toast('Salvat!'); document.getElementById('scPage').value=''; document.getElementById('scKey').value=''; document.getElementById('scRo').value=''; document.getElementById('scEn').value=''; loadSiteContent(); }
-  else toast('Eroare','error');
+  const key  = document.getElementById('scKey').value;
+  const ro   = document.getElementById('scRo').value;
+  const en   = document.getElementById('scEn').value;
+  if (!page || !key || !ro) { toast('Pagină, cheie și valoare RO sunt obligatorii', 'error'); return; }
+  const res = await api('site_content', { method: 'POST', body: JSON.stringify({ page, key, value_ro: ro, value_en: en }) });
+  if (res.ok) {
+    toast('Salvat!');
+    document.getElementById('scPage').value = '';
+    document.getElementById('scKey').value  = '';
+    document.getElementById('scRo').value   = '';
+    document.getElementById('scEn').value   = '';
+    loadSiteContent();
+  } else toast('Eroare', 'error');
 }
 
 async function deleteSiteContent(id) {
-  const res = await api('site_content?id=eq.' + id, { method:'DELETE', prefer:'return=minimal' });
+  const res = await api('site_content?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
   if (res.ok) { toast('Șters'); loadSiteContent(); }
-  else toast('Eroare','error');
+  else toast('Eroare', 'error');
 }
 
 async function saveSiteContent() { toast('Conținut salvat în baza de date!'); }
