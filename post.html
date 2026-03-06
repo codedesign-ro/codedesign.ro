@@ -4,6 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Articol — Code Design</title>
+  <meta name="description"        id="metaDesc"      content="" />
+  <meta name="robots"             content="index, follow" />
+  <link rel="canonical"           id="linkCanonical" href="" />
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article" />
+  <meta property="og:site_name"   content="Code Design" />
+  <meta property="og:locale"      content="ro_RO" />
+  <meta property="og:title"       id="ogTitle"  content="" />
+  <meta property="og:description" id="ogDesc"   content="" />
+  <meta property="og:url"         id="ogUrl"    content="" />
+  <meta property="og:image"       id="ogImage"  content="" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       id="twTitle"  content="" />
+  <meta name="twitter:description" id="twDesc"   content="" />
+  <meta name="twitter:image"       id="twImage"  content="" />
   <link rel="stylesheet" href="style.css" />
   <style>
     .post-hero{padding:8rem 0 4rem;background:var(--card);border-bottom:1px solid var(--border);border-radius:var(--radius-lg);position:relative;overflow:hidden}
@@ -116,7 +132,24 @@ function renderPost(post) {
   const lang    = getLang();
   const title   = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
   const content = lang === 'ro' ? post.content_ro : (post.content_en || post.content_ro);
-  document.title = title + ' — Code Design';
+  const fullTitle = title + ' — Code Design';
+  const desc      = (lang === 'ro' ? post.excerpt_ro : (post.excerpt_en || post.excerpt_ro)) || '';
+  const pageUrl   = 'https://codedesign.ro/post.html?slug=' + encodeURIComponent(post.slug);
+
+  document.title = fullTitle;
+
+  // SEO meta tags — updated every render (also fires on language switch)
+  document.getElementById('metaDesc').setAttribute('content', desc);
+  document.getElementById('linkCanonical').setAttribute('href', pageUrl);
+  document.getElementById('ogTitle').setAttribute('content', fullTitle);
+  document.getElementById('ogDesc').setAttribute('content', desc);
+  document.getElementById('ogUrl').setAttribute('content', pageUrl);
+  document.getElementById('twTitle').setAttribute('content', fullTitle);
+  document.getElementById('twDesc').setAttribute('content', desc);
+  if (post.cover_image) {
+    document.getElementById('ogImage').setAttribute('content', post.cover_image);
+    document.getElementById('twImage').setAttribute('content', post.cover_image);
+  }
 
   // Build structural shell with no user data in it
   document.getElementById('postContainer').innerHTML =
