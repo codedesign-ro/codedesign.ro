@@ -101,7 +101,9 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="main.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script src="main.js"></script>
 <script>
 // SUPABASE_URL and SUPABASE_KEY are defined in main.js
 
@@ -109,30 +111,29 @@ function getLang() { return document.documentElement.getAttribute('data-lang') |
 function formatDate(d) { return new Date(d).toLocaleDateString('ro-RO',{year:'numeric',month:'long',day:'numeric'}); }
 
 function renderPost(post) {
-  const lang = getLang();
-  const title = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
+  const lang    = getLang();
+  const title   = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
   const content = lang === 'ro' ? post.content_ro : (post.content_en || post.content_ro);
   document.title = title + ' — Code Design';
 
-  const cover = post.cover_image ? '<img class="post-cover" src="' + post.cover_image + '" alt="' + title + '" />' : '';
-
+  // Build structural shell with no user data in it
   document.getElementById('postContainer').innerHTML =
     '<div class="post-hero">' +
       '<div class="orb" style="width:400px;height:400px;background:rgba(79,110,247,0.08);top:-100px;right:-100px"></div>' +
       '<div class="container" style="position:relative;z-index:1">' +
         '<a href="blog.html" class="back-link">← <span class="ro">Înapoi la Blog</span><span class="en">Back to Blog</span></a>' +
         '<div class="post-meta">' +
-          '<span class="post-cat">' + post.category + '</span>' +
-          '<span class="post-date">' + formatDate(post.created_at) + '</span>' +
+          '<span class="post-cat" id="dynPostCat"></span>' +
+          '<span class="post-date" id="dynPostDate"></span>' +
         '</div>' +
-        '<h1 style="max-width:800px">' + title + '</h1>' +
+        '<h1 id="dynPostTitle" style="max-width:800px"></h1>' +
       '</div>' +
     '</div>' +
     '<section>' +
       '<div class="container">' +
         '<div class="post-body">' +
-          cover +
-          '<div class="post-content">' + (content || '') + '</div>' +
+          '<div id="dynCoverWrap"></div>' +
+          '<div class="post-content" id="dynPostContent"></div>' +
         '</div>' +
       '</div>' +
     '</section>' +
@@ -142,21 +143,70 @@ function renderPost(post) {
         '<div class="related-grid" id="relatedGrid"><div style="color:var(--muted);font-size:0.9rem">Se încarcă...</div></div>' +
       '</div>' +
     '</section>';
+
+  // Inject user data safely
+  document.getElementById('dynPostCat').textContent  = post.category;
+  document.getElementById('dynPostDate').textContent = formatDate(post.created_at);
+  document.getElementById('dynPostTitle').textContent = title;
+
+  if (post.cover_image) {
+    const img = document.createElement('img');
+    img.className = 'post-cover';
+    img.src = post.cover_image;
+    img.alt = title;
+    document.getElementById('dynCoverWrap').appendChild(img);
+  }
+
+  // Rich HTML content from the editor — sanitize before injecting
+  document.getElementById('dynPostContent').innerHTML = DOMPurify.sanitize(content || '');
 }
 
 function renderRelated(posts) {
   const lang = getLang();
   const grid = document.getElementById('relatedGrid');
   if (!grid) return;
-  if (!posts.length) { grid.innerHTML = '<p style="color:var(--muted)">Nu există articole similare.</p>'; return; }
-  grid.innerHTML = posts.map(p => {
+  grid.innerHTML = '';
+
+  if (!posts.length) {
+    const p = document.createElement('p');
+    p.style.color = 'var(--muted)';
+    p.textContent = 'Nu există articole similare.';
+    grid.appendChild(p);
+    return;
+  }
+
+  posts.forEach(p => {
     const t = lang === 'ro' ? p.title_ro : (p.title_en || p.title_ro);
-    const img = p.cover_image ? '<img style="width:100%;height:140px;object-fit:cover;margin-bottom:0.8rem;display:block" src="' + p.cover_image + '" />' : '<div style="height:140px;background:rgba(79,110,247,0.08);margin-bottom:0.8rem;display:flex;align-items:center;justify-content:center;font-size:2rem">✦</div>';
-    return '<a href="post.html?slug=' + p.slug + '" class="related-card">' +
-      img + '<span style="font-size:0.7rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;text-transform:uppercase">' + p.category + '</span>' +
-      '<div style="font-weight:600;margin-top:0.3rem;color:var(--white);font-size:0.95rem;line-height:1.3">' + t + '</div>' +
-    '</a>';
-  }).join('');
+
+    const a = document.createElement('a');
+    a.href      = 'post.html?slug=' + encodeURIComponent(p.slug);
+    a.className = 'related-card';
+
+    if (p.cover_image) {
+      const img = document.createElement('img');
+      img.style.cssText = 'width:100%;height:140px;object-fit:cover;margin-bottom:0.8rem;display:block';
+      img.src = p.cover_image;
+      img.alt = t;
+      a.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.style.cssText = 'height:140px;background:rgba(79,110,247,0.08);margin-bottom:0.8rem;display:flex;align-items:center;justify-content:center;font-size:2rem';
+      ph.textContent = '✦';
+      a.appendChild(ph);
+    }
+
+    const cat = document.createElement('span');
+    cat.style.cssText = 'font-size:0.7rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;text-transform:uppercase';
+    cat.textContent = p.category;
+
+    const titleDiv = document.createElement('div');
+    titleDiv.style.cssText = 'font-weight:600;margin-top:0.3rem;color:var(--white);font-size:0.95rem;line-height:1.3';
+    titleDiv.textContent = t;
+
+    a.appendChild(cat);
+    a.appendChild(titleDiv);
+    grid.appendChild(a);
+  });
 }
 
 let currentPost = null;

@@ -206,30 +206,60 @@ function formatDate(dateStr) {
 function renderPosts(posts) {
   const grid = document.getElementById('blogGrid');
   const lang = getLang();
+  grid.innerHTML = '';
+
   if (!posts.length) {
-    grid.innerHTML = '<div class="blog-empty" style="grid-column:1/-1"><div class="icon">📝</div><p>' +
-      (lang === 'ro' ? 'Nu există articole în această categorie.' : 'No articles in this category.') + '</p></div>';
+    const wrap  = document.createElement('div');
+    wrap.className = 'blog-empty';
+    wrap.style.gridColumn = '1/-1';
+    const icon  = document.createElement('div'); icon.className = 'icon'; icon.textContent = '📝';
+    const msg   = document.createElement('p');
+    msg.textContent = lang === 'ro' ? 'Nu există articole în această categorie.' : 'No articles in this category.';
+    wrap.appendChild(icon);
+    wrap.appendChild(msg);
+    grid.appendChild(wrap);
     return;
   }
-  grid.innerHTML = posts.map(post => {
-    const title = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
+
+  posts.forEach(post => {
+    const title   = lang === 'ro' ? post.title_ro : (post.title_en || post.title_ro);
     const excerpt = lang === 'ro' ? post.excerpt_ro : (post.excerpt_en || post.excerpt_ro);
-    const img = post.cover_image
-      ? '<img class="blog-card-img" src="' + post.cover_image + '" alt="' + title + '" />'
-      : '<div class="blog-card-img-placeholder">✦</div>';
-    return '<a href="post.html?slug=' + post.slug + '" class="blog-card reveal visible">' +
-      img +
-      '<div class="blog-card-body">' +
-        '<span class="blog-card-cat">' + post.category + '</span>' +
-        '<div class="blog-card-title">' + title + '</div>' +
-        '<div class="blog-card-excerpt">' + (excerpt || '') + '</div>' +
-        '<div class="blog-card-footer">' +
-          '<span class="blog-card-date">' + formatDate(post.created_at) + '</span>' +
-          '<span class="blog-card-arrow">→</span>' +
-        '</div>' +
-      '</div>' +
-    '</a>';
-  }).join('');
+
+    const a = document.createElement('a');
+    a.href      = 'post.html?slug=' + encodeURIComponent(post.slug);
+    a.className = 'blog-card reveal visible';
+
+    if (post.cover_image) {
+      const img = document.createElement('img');
+      img.className = 'blog-card-img';
+      img.src = post.cover_image;
+      img.alt = title;           // set via property — safe, no HTML injection
+      a.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.className   = 'blog-card-img-placeholder';
+      ph.textContent = '✦';
+      a.appendChild(ph);
+    }
+
+    const body    = document.createElement('div'); body.className = 'blog-card-body';
+    const cat     = document.createElement('span'); cat.className  = 'blog-card-cat';  cat.textContent = post.category;
+    const titleEl = document.createElement('div');  titleEl.className = 'blog-card-title';   titleEl.textContent = title;
+    const excEl   = document.createElement('div');  excEl.className   = 'blog-card-excerpt'; excEl.textContent   = excerpt || '';
+
+    const footer  = document.createElement('div'); footer.className = 'blog-card-footer';
+    const dateEl  = document.createElement('span'); dateEl.className  = 'blog-card-date';  dateEl.textContent = formatDate(post.created_at);
+    const arrow   = document.createElement('span'); arrow.className   = 'blog-card-arrow'; arrow.textContent  = '→';
+    footer.appendChild(dateEl);
+    footer.appendChild(arrow);
+
+    body.appendChild(cat);
+    body.appendChild(titleEl);
+    body.appendChild(excEl);
+    body.appendChild(footer);
+    a.appendChild(body);
+    grid.appendChild(a);
+  });
 }
 
 function filterPosts(cat) {
