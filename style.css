@@ -264,7 +264,7 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:4rem 0 
 .pricing-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem 2rem; display: flex; flex-direction: column; position: relative; transition: all var(--transition); }
 .pricing-card:hover { border-color: rgba(79,110,247,0.3); transform: translateY(-4px); box-shadow: 0 24px 64px rgba(0,0,0,0.4); }
 .pricing-card.featured { border-color: var(--accent); background: linear-gradient(135deg, rgba(79,110,247,0.08), var(--card)); }
-.pricing-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-lt)); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.pricing-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent 0%, var(--accent) 25%, var(--accent-lt) 75%, transparent 100%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
 .pricing-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
 .pricing-name { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
 .pricing-price { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
