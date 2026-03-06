@@ -793,8 +793,12 @@ async function loadSiteContent() {
     return;
   }
 
+  const inputStyle = 'width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--white);font-family:inherit;font-size:0.85rem;outline:none';
+
   items.forEach(i => {
     const tr     = document.createElement('tr');
+    tr.dataset.id = i.id;  // used by saveSiteContent()
+
     const tdPage = document.createElement('td');
     tdPage.style.cssText = 'color:var(--accent);font-size:0.82rem';
     tdPage.textContent = i.page;
@@ -803,8 +807,21 @@ async function loadSiteContent() {
     tdKey.style.cssText = 'font-size:0.82rem;color:var(--muted)';
     tdKey.textContent = i.key;
 
-    const tdRo = document.createElement('td'); tdRo.style.fontSize = '0.85rem'; tdRo.textContent = i.value_ro || '';
-    const tdEn = document.createElement('td'); tdEn.style.fontSize = '0.85rem'; tdEn.textContent = i.value_en || '';
+    const tdRo    = document.createElement('td');
+    const inputRo = document.createElement('input');
+    inputRo.type  = 'text';
+    inputRo.value = i.value_ro || '';
+    inputRo.style.cssText  = inputStyle;
+    inputRo.dataset.field  = 'value_ro';
+    tdRo.appendChild(inputRo);
+
+    const tdEn    = document.createElement('td');
+    const inputEn = document.createElement('input');
+    inputEn.type  = 'text';
+    inputEn.value = i.value_en || '';
+    inputEn.style.cssText  = inputStyle;
+    inputEn.dataset.field  = 'value_en';
+    tdEn.appendChild(inputEn);
 
     const tdDel  = document.createElement('td');
     const delBtn = document.createElement('button');
@@ -841,7 +858,34 @@ async function deleteSiteContent(id) {
   else toast('Eroare', 'error');
 }
 
-async function saveSiteContent() { toast('Conținut salvat în baza de date!'); }
+async function saveSiteContent() {
+  const rows = document.querySelectorAll('#siteContentBody tr[data-id]');
+  if (!rows.length) { toast('Nu există intrări de salvat.', 'error'); return; }
+
+  const btn = document.querySelector('[onclick="saveSiteContent()"]');
+  const origHTML = btn.innerHTML;
+  btn.innerHTML  = 'Se salvează...';
+  btn.disabled   = true;
+
+  let errors = 0;
+  for (const row of rows) {
+    const id      = row.dataset.id;
+    const updates = {};
+    row.querySelectorAll('input[data-field]').forEach(inp => {
+      updates[inp.dataset.field] = inp.value;
+    });
+    const res = await api('site_content?id=eq.' + id, {
+      method: 'PATCH',
+      body:   JSON.stringify(updates),
+      prefer: 'return=minimal'
+    });
+    if (!res.ok) errors++;
+  }
+
+  btn.innerHTML = origHTML;
+  btn.disabled  = false;
+  errors ? toast(errors + ' erori la salvare', 'error') : toast('Conținut salvat!');
+}
 </script>
 
 </body>
