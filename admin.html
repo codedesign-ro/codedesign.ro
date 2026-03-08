@@ -468,25 +468,26 @@ const toolbarBtns = [
 function initEditors() {
   ['Ro', 'En'].forEach(lang => {
     const tb = document.getElementById('toolbar' + lang);
-    if (!tb || tb.children.length) return;
-    toolbarBtns.forEach(b => {
-      const btn = document.createElement('button');
-      btn.className = 'tool-btn';
-      btn.type = 'button';
-      btn.textContent = b.l;
-      btn.title = b.title;
-      btn.onclick = () => {
-        const area = document.getElementById('content' + lang);
-        area.focus();
-        if (b.cmd === 'createLink') {
-          const url = prompt('URL:');
-          if (url) document.execCommand('createLink', false, url);
-        } else {
-          document.execCommand(b.cmd, false, b.val || null);
-        }
-      };
-      tb.appendChild(btn);
-    });
+    if (tb && !tb.children.length) {
+      toolbarBtns.forEach(b => {
+        const btn = document.createElement('button');
+        btn.className = 'tool-btn';
+        btn.type = 'button';
+        btn.textContent = b.l;
+        btn.title = b.title;
+        btn.onclick = () => {
+          const area = document.getElementById('content' + lang);
+          area.focus();
+          if (b.cmd === 'createLink') {
+            const url = prompt('URL:');
+            if (url) document.execCommand('createLink', false, url);
+          } else {
+            document.execCommand(b.cmd, false, b.val || null);
+          }
+        };
+        tb.appendChild(btn);
+      });
+    }
 
     // Strip formatting on paste — keeps only plain text
     const area = document.getElementById('content' + lang);
