@@ -487,6 +487,19 @@ function initEditors() {
       };
       tb.appendChild(btn);
     });
+
+    // Strip formatting on paste — keeps only plain text
+    const area = document.getElementById('content' + lang);
+    if (area && !area.dataset.pasteReady) {
+      area.dataset.pasteReady = '1';
+      area.addEventListener('paste', e => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+        // Insert plain text, converting newlines to <br> for readability
+        const html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g, '<br>');
+        document.execCommand('insertHTML', false, html);
+      });
+    }
   });
 }
 
