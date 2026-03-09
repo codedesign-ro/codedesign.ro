@@ -2117,76 +2117,160 @@
 </section>
 
 <!-- TESTIMONIAL -->
-<section style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+<section class="tc-section">
   <div class="container">
-    <div class="text-center" style="margin-bottom:3rem">
+    <div class="text-center tc-header reveal">
       <span class="section-label"><span class="ro">Ce Spun Clienții</span><span class="en">Client Testimonials</span></span>
-      <h2 class="reveal"><span class="ro">Clienți <strong>mulțumiți</strong></span><span class="en"><strong>Happy</strong> clients</span></h2>
+      <h2><span class="ro">Clienți <strong>mulțumiți</strong></span><span class="en"><strong>Happy</strong> clients</span></h2>
     </div>
-    <div class="testimonial-grid">
 
-      <div class="testimonial-card reveal">
-        <span class="quote-mark">"</span>
-        <blockquote><span class="ro">Experiența noastră cu Code Design a fost fenomenală. Prezența noastră online a crescut foarte mult într-un timp relativ scurt. Recomandăm cu căldură!</span><span class="en">Our experience with Code Design has been phenomenal. Our online presence grew enormously in a relatively short time. Highly recommended!</span></blockquote>
-        <div class="testimonial-author">
-          <div class="author-avatar">DM</div>
-          <div>
-            <div class="author-name">Dani Marosan</div>
-            <div class="author-role"><span class="ro">Director Executiv</span><span class="en">Executive Director</span></div>
+    <div class="tc-wrap">
+      <button class="tc-arrow tc-prev" aria-label="Previous" onclick="tcMove(-1)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="tc-arrow tc-next" aria-label="Next" onclick="tcMove(1)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <div class="tc-track-outer">
+        <div class="tc-track" id="tcTrack">
+
+          <div class="tc-slide">
+            <div class="tc-card">
+              <div class="tc-stars">★★★★★</div>
+              <span class="tc-quote">"</span>
+              <blockquote><span class="ro">Experiența noastră cu Code Design a fost fenomenală. Prezența noastră online a crescut foarte mult într-un timp relativ scurt. Recomandăm cu căldură!</span><span class="en">Our experience with Code Design has been phenomenal. Our online presence grew enormously in a relatively short time. Highly recommended!</span></blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar">DM</div>
+                <div>
+                  <div class="author-name">Dani Marosan</div>
+                  <div class="author-role"><span class="ro">Director Executiv</span><span class="en">Executive Director</span></div>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <div class="tc-slide">
+            <div class="tc-card">
+              <div class="tc-stars">★★★★★</div>
+              <span class="tc-quote">"</span>
+              <blockquote><span class="ro">Echipa CodeDesign a înțeles cerințele noastre imediat. Site-ul arată fantastic și funcționează excelent atât pe desktop, cât și pe mobil. Foarte mulțumită de colaborare.</span><span class="en">The team at CodeDesign understood our requirements immediately. The website looks fantastic and performs great on both desktop and mobile. Very happy with the collaboration.</span></blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar">IS</div>
+                <div>
+                  <div class="author-name">Ioana Stan</div>
+                  <div class="author-role"><span class="ro">Specialist Marketing</span><span class="en">Marketing Specialist</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tc-slide">
+            <div class="tc-card">
+              <div class="tc-stars">★★★★★</div>
+              <span class="tc-quote">"</span>
+              <blockquote><span class="ro">Servicii profesionale și rezultate excelente. Site-ul este rapid, bine structurat și impresionant din punct de vedere vizual. Recomand cu toată încrederea CodeDesign oricui dorește să construiască un site modern.</span><span class="en">Professional service and excellent results. The website is fast, well structured, and visually impressive. I highly recommend CodeDesign for anyone looking to build a modern website.</span></blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar">FP</div>
+                <div>
+                  <div class="author-name">Florin Petrescu</div>
+                  <div class="author-role"><span class="ro">Consultant de Afaceri</span><span class="en">Business Consultant</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tc-slide">
+            <div class="tc-card">
+              <div class="tc-stars">★★★★★</div>
+              <span class="tc-quote">"</span>
+              <blockquote><span class="ro">Experiență excelentă de la început până la final. Comunicarea a fost clară, iar echipa a acordat atenție fiecărui detaliu. Site-ul final a depășit așteptările noastre.</span><span class="en">Great experience from start to finish. Communication was clear and the team paid attention to every detail. The final website exceeded our expectations.</span></blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar">DR</div>
+                <div>
+                  <div class="author-name">Daniela Radu</div>
+                  <div class="author-role"><span class="ro">Manager Companie</span><span class="en">Company Manager</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tc-slide">
+            <div class="tc-card">
+              <div class="tc-stars">★★★★★</div>
+              <span class="tc-quote">"</span>
+              <blockquote><span class="ro">Noul nostru site arată modern și profesional datorită CodeDesign. Au ascultat ideile noastre și le-au transformat într-un design curat și funcțional.</span><span class="en">Our new website looks modern and professional thanks to CodeDesign. They listened to our ideas and turned them into a clean and functional design.</span></blockquote>
+              <div class="testimonial-author">
+                <div class="author-avatar">BI</div>
+                <div>
+                  <div class="author-name">Bogdan Ilie</div>
+                  <div class="author-role"><span class="ro">Director Vânzări</span><span class="en">Sales Director</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <div class="testimonial-card reveal">
-        <span class="quote-mark">"</span>
-        <blockquote><span class="ro">Echipa CodeDesign a înțeles cerințele noastre imediat. Site-ul arată fantastic și funcționează excelent atât pe desktop, cât și pe mobil. Foarte mulțumită de colaborare.</span><span class="en">The team at CodeDesign understood our requirements immediately. The website looks fantastic and performs great on both desktop and mobile. Very happy with the collaboration.</span></blockquote>
-        <div class="testimonial-author">
-          <div class="author-avatar">IS</div>
-          <div>
-            <div class="author-name">Ioana Stan</div>
-            <div class="author-role"><span class="ro">Specialist Marketing</span><span class="en">Marketing Specialist</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card reveal">
-        <span class="quote-mark">"</span>
-        <blockquote><span class="ro">Servicii profesionale și rezultate excelente. Site-ul este rapid, bine structurat și impresionant din punct de vedere vizual. Recomand cu toată încrederea CodeDesign oricui dorește să construiască un site modern.</span><span class="en">Professional service and excellent results. The website is fast, well structured, and visually impressive. I highly recommend CodeDesign for anyone looking to build a modern website.</span></blockquote>
-        <div class="testimonial-author">
-          <div class="author-avatar">FP</div>
-          <div>
-            <div class="author-name">Florin Petrescu</div>
-            <div class="author-role"><span class="ro">Consultant de Afaceri</span><span class="en">Business Consultant</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card reveal">
-        <span class="quote-mark">"</span>
-        <blockquote><span class="ro">Experiență excelentă de la început până la final. Comunicarea a fost clară, iar echipa a acordat atenție fiecărui detaliu. Site-ul final a depășit așteptările noastre.</span><span class="en">Great experience from start to finish. Communication was clear and the team paid attention to every detail. The final website exceeded our expectations.</span></blockquote>
-        <div class="testimonial-author">
-          <div class="author-avatar">DR</div>
-          <div>
-            <div class="author-name">Daniela Radu</div>
-            <div class="author-role"><span class="ro">Manager Companie</span><span class="en">Company Manager</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-card reveal">
-        <span class="quote-mark">"</span>
-        <blockquote><span class="ro">Noul nostru site arată modern și profesional datorită CodeDesign. Au ascultat ideile noastre și le-au transformat într-un design curat și funcțional.</span><span class="en">Our new website looks modern and professional thanks to CodeDesign. They listened to our ideas and turned them into a clean and functional design.</span></blockquote>
-        <div class="testimonial-author">
-          <div class="author-avatar">BI</div>
-          <div>
-            <div class="author-name">Bogdan Ilie</div>
-            <div class="author-role"><span class="ro">Director Vânzări</span><span class="en">Sales Director</span></div>
-          </div>
-        </div>
-      </div>
-
+      <div class="tc-dots" id="tcDots"></div>
     </div>
   </div>
+
+  <script>
+  (function() {
+    var total   = 5;
+    var current = 0;
+    var autoTimer;
+
+    function tcMove(dir) {
+      current = (current + dir + total) % total;
+      tcRender();
+      tcResetAuto();
+    }
+    window.tcMove = tcMove;
+
+    function tcGoTo(i) {
+      current = i;
+      tcRender();
+      tcResetAuto();
+    }
+
+    function tcRender() {
+      var track = document.getElementById('tcTrack');
+      if (track) track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      var dots = document.querySelectorAll('.tc-dot');
+      dots.forEach(function(d, i) { d.classList.toggle('tc-dot-active', i === current); });
+    }
+
+    function tcResetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function() { tcMove(1); }, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var dotsEl = document.getElementById('tcDots');
+      if (!dotsEl) return;
+      for (var i = 0; i < total; i++) {
+        (function(idx) {
+          var d = document.createElement('button');
+          d.className = 'tc-dot' + (idx === 0 ? ' tc-dot-active' : '');
+          d.setAttribute('aria-label', 'Slide ' + (idx + 1));
+          d.onclick = function() { tcGoTo(idx); };
+          dotsEl.appendChild(d);
+        })(i);
+      }
+      var outer = document.querySelector('.tc-track-outer');
+      var startX = 0;
+      outer.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, {passive:true});
+      outer.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) tcMove(dx < 0 ? 1 : -1);
+      }, {passive:true});
+      tcResetAuto();
+    });
+  })();
+  </script>
 </section>
 
 <!-- FAQ -->
