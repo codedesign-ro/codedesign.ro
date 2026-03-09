@@ -504,6 +504,41 @@ function initEditors() {
         };
         tb.appendChild(btn);
       });
+
+      // Paste HTML source button
+      const htmlBtn = document.createElement('button');
+      htmlBtn.className = 'tool-btn';
+      htmlBtn.type = 'button';
+      htmlBtn.textContent = '</> HTML';
+      htmlBtn.title = 'Paste raw HTML';
+      htmlBtn.style.marginLeft = 'auto';
+      htmlBtn.onclick = () => {
+        const area = document.getElementById('content' + lang);
+        const existing = tb.nextElementSibling?.classList.contains('html-source-box') ? tb.nextElementSibling : null;
+        if (existing) { existing.remove(); return; }
+        const box = document.createElement('div');
+        box.className = 'html-source-box';
+        box.style.cssText = 'display:flex;gap:8px;padding:0.6rem;background:var(--card2);border:1px solid var(--border);border-top:none;align-items:flex-start';
+        const ta = document.createElement('textarea');
+        ta.placeholder = 'Paste HTML here...';
+        ta.style.cssText = 'flex:1;min-height:80px;background:var(--bg);color:var(--white);border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:0.82rem;resize:vertical';
+        const insert = document.createElement('button');
+        insert.className = 'btn btn-sm';
+        insert.type = 'button';
+        insert.textContent = 'Insert';
+        insert.style.cssText = 'background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;cursor:pointer;font-size:0.82rem;white-space:nowrap';
+        insert.onclick = () => {
+          const sanitised = DOMPurify.sanitize(ta.value);
+          area.focus();
+          document.execCommand('insertHTML', false, sanitised);
+          box.remove();
+        };
+        box.appendChild(ta);
+        box.appendChild(insert);
+        tb.after(box);
+        ta.focus();
+      };
+      tb.appendChild(htmlBtn);
     }
 
     // Strip formatting on paste — keeps only plain text
