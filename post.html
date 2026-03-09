@@ -564,6 +564,43 @@ function renderPost(post) {
   var tocHTML = buildTOC(contentEl, lang);
   document.getElementById('dynTOC').innerHTML = tocHTML;
   initTOCScroll();
+
+  // ── BlogPosting Schema ─────────────────────────────────────────────────
+  var existingSchema = document.getElementById('blogPostingSchema');
+  if (existingSchema) existingSchema.remove();
+  var schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    'headline': title,
+    'description': excerpt,
+    'url': pageUrl,
+    'datePublished': post.created_at,
+    'dateModified': post.updated_at || post.created_at,
+    'author': {
+      '@type': 'Organization',
+      'name': 'Code Design',
+      'url': 'https://codedesign.ro'
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'Code Design',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://codedesign.ro/codedesign-logo.png'
+      }
+    },
+    'mainEntityOfPage': {
+      '@type': 'WebPage',
+      '@id': pageUrl
+    },
+    'inLanguage': lang === 'ro' ? 'ro-RO' : 'en-US'
+  };
+  if (post.cover_image) schema['image'] = post.cover_image;
+  var scriptEl = document.createElement('script');
+  scriptEl.type = 'application/ld+json';
+  scriptEl.id   = 'blogPostingSchema';
+  scriptEl.text = JSON.stringify(schema);
+  document.head.appendChild(scriptEl);
 }
 
 // ── Render Related Posts ───────────────────────────────────────────────
