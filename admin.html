@@ -36,7 +36,7 @@
     .page-title{font-size:1.4rem;font-weight:700}
     .page-title small{font-size:0.85rem;color:var(--muted);font-weight:400;margin-left:0.5rem}
     /* CARDS */
-    .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+    .stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
     .stat-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}
     .stat-box .num{font-size:2rem;font-weight:800;color:var(--white)}
     .stat-box .lbl{font-size:0.8rem;color:var(--muted);margin-top:2px}
@@ -148,6 +148,8 @@
     <button class="nav-item" onclick="showSection('posts')"><span class="nav-icon">📝</span>Articole</button>
     <button class="nav-item" onclick="resetPostForm();showSection('newPost')"><span class="nav-icon">✏️</span>Articol Nou</button>
     <button class="nav-item" onclick="showSection('categories')"><span class="nav-icon">🏷️</span>Categorii</button>
+    <div class="nav-section">Comunicare</div>
+    <button class="nav-item" onclick="showSection('messages')"><span class="nav-icon">💬</span>Mesaje</button>
     <div class="nav-section">Site</div>
     <button class="nav-item" onclick="showSection('siteContent')"><span class="nav-icon">🌐</span>Conținut Pagini</button>
     <div class="nav-section">Cont</div>
@@ -169,6 +171,7 @@
     <div class="stat-box"><div class="num" id="statPublished">–</div><div class="lbl">Publicate</div></div>
     <div class="stat-box"><div class="num" id="statDraft">–</div><div class="lbl">Ciorne</div></div>
     <div class="stat-box"><div class="num" id="statCats">–</div><div class="lbl">Categorii</div></div>
+    <div class="stat-box"><div class="num" id="statMsgs">–</div><div class="lbl">Mesaje</div></div>
   </div>
   <div class="form-card">
     <h3 style="margin-bottom:1rem">Articole Recente</h3>
@@ -338,6 +341,19 @@
   </div>
 </div>
 
+<!-- MESSAGES -->
+<div id="sec-messages" class="hidden">
+  <div class="page-header">
+    <div class="page-title">Mesaje <small id="msgCount"></small></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nume</th><th>Email</th><th>Telefon</th><th>Mesaj</th><th>Data</th><th></th></tr></thead>
+      <tbody id="messagesTableBody"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem">Se încarcă...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
   </div><!-- end main -->
 </div><!-- end admin-layout -->
 
@@ -442,6 +458,7 @@ function showSection(id) {
   if (id === 'posts')       loadPosts();
   if (id === 'dashboard')   loadDashboard();
   if (id === 'categories')  loadCategories();
+  if (id === 'messages')    loadMessages();
   if (id === 'siteContent') loadSiteContent();
   if (id === 'newPost')     { loadCategoriesSelect(); initEditors(); }
 }
@@ -513,18 +530,21 @@ function switchLangTab(lang, el) {
 
 // ---- DASHBOARD ----
 async function loadDashboard() {
-  const [postsRes, catsRes] = await Promise.all([
+  const [postsRes, catsRes, msgsRes] = await Promise.all([
     api('posts?select=id,published'),
-    api('categories?select=id')
+    api('categories?select=id'),
+    api('contact_submissions?select=id')
   ]);
   const posts = await postsRes.json();
   const cats  = await catsRes.json();
+  const msgs  = await msgsRes.json();
   const published = Array.isArray(posts) ? posts.filter(p => p.published).length : 0;
   const total     = Array.isArray(posts) ? posts.length : 0;
   document.getElementById('statTotal').textContent     = total;
   document.getElementById('statPublished').textContent = published;
   document.getElementById('statDraft').textContent     = total - published;
   document.getElementById('statCats').textContent      = Array.isArray(cats) ? cats.length : 0;
+  document.getElementById('statMsgs').textContent      = Array.isArray(msgs) ? msgs.length : 0;
 
   const recentRes = await api('posts?select=id,title_ro,published,created_at&order=created_at.desc&limit=5');
   const recent = await recentRes.json();
@@ -897,6 +917,74 @@ async function saveSiteContent() {
   btn.innerHTML = origHTML;
   btn.disabled  = false;
   errors ? toast(errors + ' erori la salvare', 'error') : toast('Conținut salvat!');
+}
+
+// ---- MESSAGES ----
+async function loadMessages() {
+  const res  = await api('contact_submissions?select=*&order=created_at.desc');
+  const msgs = await res.json();
+  const tbody = document.getElementById('messagesTableBody');
+  const countEl = document.getElementById('msgCount');
+  tbody.innerHTML = '';
+
+  if (!Array.isArray(msgs) || !msgs.length) {
+    countEl.textContent = '';
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 6;
+    td.style.cssText = 'text-align:center;color:var(--muted);padding:2rem';
+    td.textContent = 'Nu există mesaje.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  countEl.textContent = msgs.length + ' mesaje';
+
+  msgs.forEach(m => {
+    const tr = document.createElement('tr');
+
+    const tdName = document.createElement('td');
+    const strong = document.createElement('strong');
+    strong.textContent = (m.first_name || '') + ' ' + (m.last_name || '');
+    tdName.appendChild(strong);
+
+    const tdEmail = document.createElement('td');
+    const emailLink = document.createElement('a');
+    emailLink.href = 'mailto:' + (m.email || '');
+    emailLink.textContent = m.email || '–';
+    emailLink.style.cssText = 'color:var(--accent-lt);text-decoration:none';
+    tdEmail.appendChild(emailLink);
+
+    const tdPhone = document.createElement('td');
+    tdPhone.style.cssText = 'color:var(--muted);font-size:0.85rem';
+    tdPhone.textContent = m.phone || '–';
+
+    const tdMsg = document.createElement('td');
+    tdMsg.style.cssText = 'max-width:300px;font-size:0.85rem;line-height:1.4';
+    tdMsg.textContent = m.message || '';
+
+    const tdDate = document.createElement('td');
+    tdDate.style.cssText = 'white-space:nowrap;font-size:0.82rem;color:var(--muted)';
+    tdDate.textContent = fmtDate(m.created_at);
+
+    const tdDel = document.createElement('td');
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger btn-sm';
+    delBtn.textContent = '🗑️';
+    delBtn.onclick = () => deleteMessage(m.id, m.first_name);
+    tdDel.appendChild(delBtn);
+
+    tr.append(tdName, tdEmail, tdPhone, tdMsg, tdDate, tdDel);
+    tbody.appendChild(tr);
+  });
+}
+
+async function deleteMessage(id, name) {
+  if (!confirm('Șterge mesajul de la "' + name + '"?')) return;
+  const res = await api('contact_submissions?id=eq.' + id, { method: 'DELETE', prefer: 'return=minimal' });
+  if (res.ok) { toast('Mesaj șters'); loadMessages(); }
+  else toast('Eroare la ștergere', 'error');
 }
 </script>
 

@@ -164,14 +164,9 @@ function init() {
         message:    form.querySelector('[name="message"]').value
       };
 
-      fetch(SUPABASE_URL + '/rest/v1/contact_submissions', {
+      fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       }).then(function(res) {
         if (res.ok) {
