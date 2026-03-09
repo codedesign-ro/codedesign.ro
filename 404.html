@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="ro" data-lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <title>404 — Pagina nu a fost găsită | Code Design</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .error-section {
+      min-height: calc(100vh - 68px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 6rem 0;
+    }
+
+```
+.error-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* The big 404 */
+.error-code {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(7rem, 20vw, 12rem);
+  line-height: 1;
+  color: transparent;
+  background: linear-gradient(135deg, rgba(79,110,247,0.15), rgba(123,155,255,0.08));
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: -0.04em;
+  margin-bottom: 0;
+  position: relative;
+  display: inline-block;
+  /* Stroke effect via text-shadow layers */
+  -webkit-text-stroke: 1px rgba(79,110,247,0.25);
+  user-select: none;
+}
+
+/* Glowing accent dot between 4–0–4 */
+.error-code-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.error-code-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 18px 4px rgba(79,110,247,0.5);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+  50%       { opacity: 0.5; transform: translateX(-50%) scale(0.7); }
+}
+
+.error-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(79,110,247,0.08);
+  border: 1px solid rgba(79,110,247,0.2);
+  border-radius: 100px;
+  padding: 5px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-lt);
+  margin-bottom: 1.8rem;
+}
+
+.error-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.error-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Quick links grid */
+.error-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-top: 3.5rem;
+  text-align: left;
+}
+.error-link-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition);
+  display: block;
+}
+.error-link-card:hover {
+  border-color: rgba(79,110,247,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+.error-link-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.error-link-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+.error-link-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* grid bg from hero */
+.grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black, transparent);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black, transparent);
+}
+
+@media (max-width: 640px) {
+  .error-links { grid-template-columns: 1fr; }
+  .error-actions { flex-direction: column; align-items: center; }
+  .error-actions .btn-cta,
+  .error-actions .btn-outline { width: 100%; max-width: 280px; justify-content: center; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><img src="codedesign-logo.png" alt="Code Design" /></a>
+  <ul class="nav-links">
+    <li><a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a></li>
+    <li><a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a></li>
+    <li><a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a></li>
+    <li><a href="pachete.html"><span class="ro">Pachete</span><span class="en">Pricing</span></a></li>
+    <li><a href="blog.html" class="nav-blog-btn"><span class="blog-dot"></span>Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-group">
+      <button class="lang-btn active" data-lang="ro">RO</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <a href="contact.html" class="btn-cta nav-cta-btn"><span class="ro">Contactează-ne</span><span class="en">Contact Us</span></a>
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu">
+    <a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a>
+    <a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+    <a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a>
+    <a href="pachete.html"><span class="ro">Pachete</span><span class="en">Pricing</span></a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<section class="error-section">
+  <div class="grid-bg"></div>
+  <div class="orb" style="width:600px;height:500px;background:rgba(79,110,247,0.07);top:-150px;right:-150px"></div>
+  <div class="orb" style="width:400px;height:400px;background:rgba(62,207,142,0.04);bottom:-100px;left:-100px"></div>
+
+  <div class="container">
+    <div class="error-inner">
+
+```
+  <!-- Big 404 -->
+  <div class="error-code-wrap">
+    <div class="error-code">404</div>
+  </div>
+
+  <!-- Badge -->
+  <div>
+    <span class="error-label">
+      <span class="pulse" style="width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block"></span>
+      <span class="ro">Pagină negăsită</span>
+      <span class="en">Page not found</span>
+    </span>
+  </div>
+
+  <!-- Heading -->
+  <h1 class="error-title fade-up">
+    <span class="ro">Ups! Ai rătăcit <span class="accent-word">pe undeva</span></span>
+    <span class="en">Oops! You seem to be <span class="accent-word">lost</span></span>
+  </h1>
+
+  <!-- Description -->
+  <p class="error-desc fade-up-2">
+    <span class="ro">Pagina pe care o cauți nu există, a fost mutată sau adresa URL este greșită. Nu-i nimic — se întâmplă și la cele mai bune site-uri.</span>
+    <span class="en">The page you're looking for doesn't exist, may have been moved, or the URL is incorrect. No worries — it happens to the best websites.</span>
+  </p>
+
+  <!-- CTAs -->
+  <div class="error-actions fade-up-3">
+    <a href="index.html" class="btn-cta" style="font-size:1rem;padding:13px 30px">
+      <span class="ro">← Înapoi Acasă</span>
+      <span class="en">← Back to Home</span>
+    </a>
+    <a href="contact.html" class="btn-outline" style="font-size:1rem;padding:13px 30px">
+      <span class="ro">Contactează-ne</span>
+      <span class="en">Contact Us</span>
+    </a>
+  </div>
+
+  <!-- Quick links -->
+  <div class="error-links fade-up-4">
+    <a href="servicii.html" class="error-link-card">
+      <span class="error-link-icon">⚡</span>
+      <div class="error-link-title"><span class="ro">Servicii</span><span class="en">Services</span></div>
+      <div class="error-link-sub"><span class="ro">Web design, SEO, cloud</span><span class="en">Web design, SEO, cloud</span></div>
+    </a>
+    <a href="pachete.html" class="error-link-card">
+      <span class="error-link-icon">💎</span>
+      <div class="error-link-title"><span class="ro">Pachete & Prețuri</span><span class="en">Pricing</span></div>
+      <div class="error-link-sub"><span class="ro">Oferte transparente</span><span class="en">Transparent pricing</span></div>
+    </a>
+    <a href="blog.html" class="error-link-card">
+      <span class="error-link-icon">✦</span>
+      <div class="error-link-title">Blog</div>
+      <div class="error-link-sub"><span class="ro">Articole & resurse</span><span class="en">Articles & resources</span></div>
+    </a>
+  </div>
+
+</div>
+```
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <img src="codedesign-logo.png" alt="Code Design" style="height:28px;filter:brightness(0) invert(1);margin-bottom:1rem;display:block" />
+        <p style="color:var(--muted);font-size:0.9rem;max-width:300px;line-height:1.7"><span class="ro">Lucrăm îndeaproape cu clienții noștri pentru a crea branduri, nu doar site-uri.</span><span class="en">We work closely with our clients to create brands, not just websites.</span></p>
+      </div>
+      <div>
+        <span class="footer-heading"><span class="ro">Servicii</span><span class="en">Services</span></span>
+        <a href="servicii.html" class="footer-link">Web Design</a>
+        <a href="servicii.html" class="footer-link">SEO</a>
+        <a href="servicii.html" class="footer-link">WordPress</a>
+        <a href="servicii.html" class="footer-link">Cloud &amp; Backup</a>
+        <a href="servicii.html" class="footer-link"><span class="ro">Mail Personalizat</span><span class="en">Custom Email</span></a>
+      </div>
+      <div>
+        <span class="footer-heading"><span class="ro">Companie</span><span class="en">Company</span></span>
+        <a href="despre-noi.html" class="footer-link"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="https://www.iubenda.com/privacy-policy/63285477" class="iubenda-black iubenda-noiframe iubenda-embed footer-link" title="Privacy Policy">Privacy Policy</a>
+        <a href="https://www.iubenda.com/privacy-policy/63285477/cookie-policy" class="iubenda-black iubenda-noiframe iubenda-embed footer-link" title="Cookie Policy">Cookie Policy</a>
+        <script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+      </div>
+      <div>
+        <span class="footer-heading">Contact</span>
+        <a href="mailto:contact@codedesign.ro" class="footer-link">contact@codedesign.ro</a>
+        <a href="tel:0040757413393" class="footer-link">0040.757.413.393</a>
+        <div style="margin-top:1.5rem">
+          <a href="https://www.facebook.com/CodeDesignRo" class="social-btn fb" target="_blank" rel="noopener">f</a>
+          <a href="#" class="social-btn tw">&#120143;</a>
+          <a href="https://www.linkedin.com/company/codedesignro" class="social-btn li" target="_blank" rel="noopener">in</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <script>document.write(new Date().getFullYear())</script> codedesign.ro &mdash; <span class="ro">Toate drepturile rezervate</span><span class="en">All rights reserved</span></p>
+      <p><span class="ro">Realizat cu &#9829; în România</span><span class="en">Made with &#9829; in Romania</span></p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+
+</body>
+</html>
