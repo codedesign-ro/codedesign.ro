@@ -320,6 +320,7 @@
   .why-grid { grid-template-columns: 1fr 1fr; }
   .process-row { grid-template-columns: repeat(2, 1fr); }
   .process-row::before { display: none; }
+  .pricing-grid { grid-template-columns: 1fr !important; max-width: 420px; margin-left: auto; margin-right: auto; }
 }
 @media (max-width: 640px) {
   .why-grid { grid-template-columns: 1fr; }
@@ -600,7 +601,7 @@
     </div>
 
 
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem" class="reveal">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;overflow:visible" class="reveal pricing-grid">
 
   <div class="card" style="padding:2rem">
     <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem">Starter</div>
@@ -613,8 +614,8 @@
     <a href="contact.html" class="btn-outline" style="margin-top:1.5rem;width:100%;justify-content:center;font-size:0.88rem">Solicită Ofertă</a>
   </div>
 
-  <div class="card" style="padding:2rem;border-color:var(--accent);background:linear-gradient(135deg,rgba(79,110,247,0.08),var(--card));position:relative">
-    <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap">Cel mai ales</div>
+  <div class="card" style="padding:2rem;border-color:var(--accent);background:linear-gradient(135deg,rgba(79,110,247,0.08),var(--card));position:relative;overflow:visible">
+    <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap;z-index:1">Cel mai ales</div>
     <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem">Business</div>
     <div style="font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--white);line-height:1;margin-bottom:0.3rem">1.500€</div>
     <div style="font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem">de la / site avansat + CMS</div>
