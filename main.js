@@ -161,7 +161,9 @@ function init() {
         last_name:  form.querySelector('[name="last_name"]').value,
         email:      form.querySelector('[name="email"]').value,
         phone:      form.querySelector('[name="phone"]').value || null,
-        message:    form.querySelector('[name="message"]').value
+        message:    form.querySelector('[name="message"]').value,
+        website:    form.querySelector('[name="website"]').value,
+        'cf-turnstile-response': form.querySelector('[name="cf-turnstile-response"]')?.value || ''
       };
 
       fetch('/api/contact', {

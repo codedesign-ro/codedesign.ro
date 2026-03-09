@@ -6,9 +6,30 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { first_name, last_name, email, phone, message } = req.body || {};
+  const { first_name, last_name, email, phone, message, website } = req.body || {};
+  const turnstileToken = (req.body || {})['cf-turnstile-response'];
+
+  // Honeypot: reject if the hidden field has a value
+  if (website) {
+    return res.status(200).json({ ok: true }); // silent fail for bots
+  }
+
   if (!first_name || !last_name || !email || !message) {
     return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  // Verify Cloudflare Turnstile token
+  const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET_KEY;
+  if (TURNSTILE_SECRET) {
+    const cfRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${encodeURIComponent(TURNSTILE_SECRET)}&response=${encodeURIComponent(turnstileToken || '')}`
+    });
+    const cfData = await cfRes.json();
+    if (!cfData.success) {
+      return res.status(403).json({ error: 'Captcha verification failed' });
+    }
   }
 
   const SUPABASE_URL = process.env.SUPABASE_URL || 'https://pyzfilefqqyrmjhfdvgw.supabase.co';

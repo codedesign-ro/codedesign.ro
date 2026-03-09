@@ -49,6 +49,7 @@
   </script>
   <!-- ===== END SEO ===== -->
   <link rel="stylesheet" href="style.css" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -267,6 +268,9 @@
         <h3 style="margin-bottom:0.4rem"><span class="ro">Formular de Contact</span><span class="en">Contact Form</span></h3>
         <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.8rem"><span class="ro">Completează formularul și te vom contacta în cel mai scurt timp.</span><span class="en">Fill in the form and we'll contact you as soon as possible.</span></p>
         <form class="contact-form">
+          <div style="position:absolute;left:-9999px" aria-hidden="true">
+            <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label"><span class="ro">Prenume</span><span class="en">First Name</span></label>
@@ -289,6 +293,7 @@
             <label class="form-label"><span class="ro">Mesaj</span><span class="en">Message</span></label>
             <textarea class="form-input" name="message" placeholder="..." required></textarea>
           </div>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACoZKqyiOMdwK1fk" data-theme="dark"></div>
           <button type="submit" class="btn-cta" style="width:100%;justify-content:center;padding:14px;font-size:1rem">
             <span class="ro">Trimite Mesajul →</span><span class="en">Send Message →</span>
           </button>
