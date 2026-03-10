@@ -2,19 +2,66 @@
 <html lang="ro" data-lang="ro">
 <head>
   <meta charset="UTF-8" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XN3EV1NRPT"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XN3EV1NRPT');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Servicii — Code Design</title>
-  <meta name="description" content="Servicii web design, SEO, cloud, email marketing și mai multe de la Code Design România." />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <!-- ===== SEO: PRIMARY META TAGS ===== -->
+  <title>Servicii Web Design, SEO & Marketing Digital | Code Design</title>
+  <meta name="description" content="Web design profesional, SEO on-page & off-page, programare web, cloud & backup, email personalizat și publicitate online. Totul într-un singur loc — Code Design România." />
+  <meta name="keywords" content="servicii web design, SEO on-page, programare web Romania, cloud backup, email personalizat, publicitate online Romania" />
+  <meta name="author" content="Code Design" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://codedesign.ro/servicii.html" />
+  <link rel="alternate" hreflang="ro" href="https://codedesign.ro/servicii.html" />
+  <link rel="alternate" hreflang="en" href="https://codedesign.ro/servicii.html" />
+  <link rel="alternate" hreflang="x-default" href="https://codedesign.ro/servicii.html" />
+  <!-- ===== SEO: OPEN GRAPH ===== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://codedesign.ro/servicii.html" />
+  <meta property="og:title" content="Servicii Web Design, SEO & Marketing Digital | Code Design" />
+  <meta property="og:description" content="Web design profesional, SEO, programare web, cloud & backup și publicitate online. Totul într-un singur loc — Code Design România." />
+  <meta property="og:image" content="https://codedesign.ro/ogservicii.png" />
+  <meta property="og:locale" content="ro_RO" />
+  <meta property="og:site_name" content="Code Design" />
+  <!-- ===== SEO: TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Servicii Web Design, SEO & Marketing Digital | Code Design" />
+  <meta name="twitter:description" content="Web design profesional, SEO, programare web, cloud & backup și publicitate online — Code Design România." />
+  <meta name="twitter:image" content="https://codedesign.ro/ogservicii.png" />
+  <!-- ===== SEO: SCHEMA.ORG ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Servicii Web Design, SEO & Marketing Digital",
+    "url": "https://codedesign.ro/servicii.html",
+    "description": "Servicii complete de web design, SEO, programare web, cloud și marketing digital oferite de Code Design România.",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Acasă", "item": "https://codedesign.ro"},
+        {"@type": "ListItem", "position": 2, "name": "Servicii", "item": "https://codedesign.ro/servicii.html"}
+      ]
+    }
+  }
+  </script>
+  <!-- ===== END SEO ===== -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo"><img src="codedesign_logo_57px.png" alt="Code Design" /></a>
+  <a href="index.html" class="nav-logo"><img src="codedesign-logo.png" alt="Code Design" /></a>
   <ul class="nav-links">
     <li><a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a></li>
     <li><a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a></li>
     <li><a href="servicii.html" class="active"><span class="ro">Servicii</span><span class="en">Services</span></a></li>
+    <li><a href="pachete.html"><span class="ro">Pachete</span><span class="en">Pricing</span></a></li>
     <li><a href="blog.html" class="nav-blog-btn"><span class="blog-dot"></span>Blog</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
@@ -30,6 +77,7 @@
     <a href="index.html"><span class="ro">Acasă</span><span class="en">Home</span></a>
     <a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
     <a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a>
+    <a href="pachete.html"><span class="ro">Pachete</span><span class="en">Pricing</span></a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -45,8 +93,227 @@
         <h1><span class="ro">O gamă largă de <strong>servicii</strong></span><span class="en">A wide range of <strong>services</strong></span></h1>
         <p style="color:var(--muted);margin-top:1.5rem;font-size:1rem;line-height:1.8"><span class="ro">Code Design este o companie IT de top care se concentrează pe dezvoltarea companiei dvs. cu diverse servicii — totul într-un singur loc.</span><span class="en">Code Design is a top IT company focused on growing your company with diverse services — everything in one place.</span></p>
       </div>
-      <div class="illus" style="aspect-ratio:4/3">
-        <img src="ferw-services-rocket-2.jpg" alt="Servicii Code Design" />
+      <div class="illus" style="aspect-ratio:4/3;line-height:0;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" width="100%" height="auto" font-family="'Plus Jakarta Sans', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="sv_bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1117"/>
+      <stop offset="100%" stop-color="#0a0b0f"/>
+    </linearGradient>
+    <linearGradient id="sv_blueBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#4f6ef7" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="sv_greenBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3ecf8e"/>
+      <stop offset="100%" stop-color="#3ecf8e" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="sv_purpleBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="sv_amberBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="sv_cyanBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="sv_pinkBar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#f472b6" stop-opacity="0.3"/>
+    </linearGradient>
+    <filter id="sv_cardShadow" x="-5%" y="-5%" width="115%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="sv_glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer bg — no rx, no stroke -->
+  <rect x="0" y="0" width="560" height="420" fill="url(#sv_bgGrad)"/>
+
+  <!-- Ambient glows outside inner card -->
+  <ellipse cx="460" cy="55" rx="170" ry="110" fill="#4f6ef7" fill-opacity="0.06"/>
+  <ellipse cx="90" cy="370" rx="140" ry="90" fill="#3ecf8e" fill-opacity="0.05"/>
+  <ellipse cx="520" cy="380" rx="100" ry="70" fill="#a78bfa" fill-opacity="0.04"/>
+
+  <!-- Inner card -->
+  <rect x="24" y="24" width="512" height="372" rx="14" fill="#08090d" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#sv_cardShadow)"/>
+
+  <!-- Header bar -->
+  <rect x="24" y="24" width="512" height="40" rx="14" fill="#0f1117"/>
+  <rect x="24" y="50" width="512" height="14" fill="#0f1117"/>
+  <line x1="24" y1="64" x2="536" y2="64" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <circle cx="46" cy="44" r="5" fill="#ff5f57" fill-opacity="0.85"/>
+  <circle cx="62" cy="44" r="5" fill="#ffbd2e" fill-opacity="0.75"/>
+  <circle cx="78" cy="44" r="5" fill="#28c840" fill-opacity="0.75"/>
+  <rect x="100" y="33" width="300" height="22" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="250" y="48" text-anchor="middle" font-size="9" fill="#7a7f9a" letter-spacing="0.3">Serviciile Noastre — Code Design</text>
+  <!-- Active badge -->
+  <rect x="458" y="34" width="64" height="20" rx="6" fill="rgba(62,207,142,0.12)" stroke="rgba(62,207,142,0.25)" stroke-width="1"/>
+  <circle cx="468" cy="44" r="2.5" fill="#3ecf8e"/>
+  <text x="488" y="48" text-anchor="middle" font-size="7.5" font-weight="600" fill="#3ecf8e">6 Activ</text>
+
+  <!-- ── SERVICE CARDS GRID — 3x2 ── -->
+
+  <!-- Card 1: Web Design -->
+  <rect x="38" y="76" width="154" height="88" rx="10" fill="#0f1117" stroke="rgba(79,110,247,0.2)" stroke-width="1"/>
+  <rect x="38" y="76" width="154" height="3" rx="1.5" fill="#4f6ef7"/>
+  <rect x="50" y="88" width="28" height="28" rx="8" fill="rgba(79,110,247,0.15)" stroke="rgba(79,110,247,0.3)" stroke-width="1"/>
+  <!-- Web icon -->
+  <circle cx="64" cy="102" r="8" fill="none" stroke="#4f6ef7" stroke-width="1.5"/>
+  <line x1="64" y1="94" x2="64" y2="110" stroke="#4f6ef7" stroke-width="1" stroke-opacity="0.6"/>
+  <line x1="56" y1="102" x2="72" y2="102" stroke="#4f6ef7" stroke-width="1" stroke-opacity="0.6"/>
+  <ellipse cx="64" cy="102" rx="4" ry="8" fill="none" stroke="#4f6ef7" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="86" y="97" font-size="8.5" font-weight="700" fill="#f0f2ff">Web Design</text>
+  <text x="86" y="109" font-size="7" fill="#7a7f9a">UI/UX Premium</text>
+  <rect x="50" y="122" width="130" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="50" y="122" width="117" height="4" rx="2" fill="url(#sv_blueBar)" filter="url(#sv_glow)"/>
+  <text x="184" y="128" text-anchor="end" font-size="6.5" fill="#7b9bff">90%</text>
+  <rect x="50" y="130" width="56" height="14" rx="4" fill="rgba(79,110,247,0.1)" stroke="rgba(79,110,247,0.2)" stroke-width="1"/>
+  <text x="78" y="140" text-anchor="middle" font-size="6.5" fill="#7b9bff">Activ ●</text>
+  <rect x="112" y="130" width="72" height="14" rx="4" fill="rgba(255,255,255,0.04)"/>
+  <text x="148" y="140" text-anchor="middle" font-size="6.5" fill="#7a7f9a">48 proiecte</text>
+
+  <!-- Card 2: SEO -->
+  <rect x="203" y="76" width="154" height="88" rx="10" fill="#0f1117" stroke="rgba(62,207,142,0.2)" stroke-width="1"/>
+  <rect x="203" y="76" width="154" height="3" rx="1.5" fill="#3ecf8e"/>
+  <rect x="215" y="88" width="28" height="28" rx="8" fill="rgba(62,207,142,0.12)" stroke="rgba(62,207,142,0.25)" stroke-width="1"/>
+  <!-- SEO icon: magnifier -->
+  <circle cx="228" cy="100" r="6" fill="none" stroke="#3ecf8e" stroke-width="1.5"/>
+  <line x1="232" y1="104" x2="237" y2="109" stroke="#3ecf8e" stroke-width="2" stroke-linecap="round"/>
+  <text x="251" y="97" font-size="8.5" font-weight="700" fill="#f0f2ff">SEO</text>
+  <text x="251" y="109" font-size="7" fill="#7a7f9a">On-Page &amp; Off-Page</text>
+  <rect x="215" y="122" width="130" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="215" y="122" width="111" height="4" rx="2" fill="url(#sv_greenBar)" filter="url(#sv_glow)"/>
+  <text x="349" y="128" text-anchor="end" font-size="6.5" fill="#3ecf8e">85%</text>
+  <rect x="215" y="130" width="56" height="14" rx="4" fill="rgba(62,207,142,0.1)" stroke="rgba(62,207,142,0.2)" stroke-width="1"/>
+  <text x="243" y="140" text-anchor="middle" font-size="6.5" fill="#3ecf8e">Activ ●</text>
+  <rect x="277" y="130" width="68" height="14" rx="4" fill="rgba(255,255,255,0.04)"/>
+  <text x="311" y="140" text-anchor="middle" font-size="6.5" fill="#7a7f9a">+62% trafic</text>
+
+  <!-- Card 3: WordPress -->
+  <rect x="368" y="76" width="154" height="88" rx="10" fill="#0f1117" stroke="rgba(6,182,212,0.2)" stroke-width="1"/>
+  <rect x="368" y="76" width="154" height="3" rx="1.5" fill="#06b6d4"/>
+  <rect x="380" y="88" width="28" height="28" rx="8" fill="rgba(6,182,212,0.12)" stroke="rgba(6,182,212,0.25)" stroke-width="1"/>
+  <!-- WP icon -->
+  <circle cx="394" cy="102" r="8" fill="none" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="394" y="106" text-anchor="middle" font-size="8" font-weight="800" fill="#06b6d4">W</text>
+  <text x="416" y="97" font-size="8.5" font-weight="700" fill="#f0f2ff">WordPress</text>
+  <text x="416" y="109" font-size="7" fill="#7a7f9a">Teme &amp; Plugins</text>
+  <rect x="380" y="122" width="130" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="380" y="122" width="100" height="4" rx="2" fill="url(#sv_cyanBar)" filter="url(#sv_glow)"/>
+  <text x="514" y="128" text-anchor="end" font-size="6.5" fill="#06b6d4">77%</text>
+  <rect x="380" y="130" width="56" height="14" rx="4" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.2)" stroke-width="1"/>
+  <text x="408" y="140" text-anchor="middle" font-size="6.5" fill="#06b6d4">Activ ●</text>
+  <rect x="442" y="130" width="68" height="14" rx="4" fill="rgba(255,255,255,0.04)"/>
+  <text x="476" y="140" text-anchor="middle" font-size="6.5" fill="#7a7f9a">32 site-uri</text>
+
+  <!-- Card 4: Hosting & Cloud -->
+  <rect x="38" y="176" width="154" height="88" rx="10" fill="#0f1117" stroke="rgba(167,139,250,0.2)" stroke-width="1"/>
+  <rect x="38" y="176" width="154" height="3" rx="1.5" fill="#a78bfa"/>
+  <rect x="50" y="188" width="28" height="28" rx="8" fill="rgba(167,139,250,0.12)" stroke="rgba(167,139,250,0.25)" stroke-width="1"/>
+  <!-- Cloud icon -->
+  <path d="M57,108 Q57,104 61,104 Q62,100 66,100 Q70,100 71,104 Q74,104 74,108 Q74,111 71,111 L60,111 Q57,111 57,108Z" fill="none" stroke="#a78bfa" stroke-width="1.4" transform="translate(0,88)"/>
+  <text x="86" y="197" font-size="8.5" font-weight="700" fill="#f0f2ff">Cloud &amp; Hosting</text>
+  <text x="86" y="209" font-size="7" fill="#7a7f9a">99.9% Uptime</text>
+  <rect x="50" y="222" width="130" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="50" y="222" width="124" height="4" rx="2" fill="url(#sv_purpleBar)" filter="url(#sv_glow)"/>
+  <text x="184" y="228" text-anchor="end" font-size="6.5" fill="#a78bfa">95%</text>
+  <rect x="50" y="230" width="56" height="14" rx="4" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.2)" stroke-width="1"/>
+  <text x="78" y="240" text-anchor="middle" font-size="6.5" fill="#a78bfa">Activ ●</text>
+  <rect x="112" y="230" width="72" height="14" rx="4" fill="rgba(255,255,255,0.04)"/>
+  <text x="148" y="240" text-anchor="middle" font-size="6.5" fill="#7a7f9a">99.9% uptime</text>
+
+  <!-- Card 5: Advertising -->
+  <rect x="203" y="176" width="154" height="88" rx="10" fill="#0f1117" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
+  <rect x="203" y="176" width="154" height="3" rx="1.5" fill="#f59e0b"/>
+  <rect x="215" y="188" width="28" height="28" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.22)" stroke-width="1"/>
+  <!-- Ads icon -->
+  <rect x="219" y="193" width="4" height="14" rx="1" fill="#f59e0b" fill-opacity="0.9"/>
+  <rect x="225" y="198" width="4" height="9" rx="1" fill="#f59e0b" fill-opacity="0.6"/>
+  <rect x="231" y="195" width="4" height="12" rx="1" fill="#f59e0b" fill-opacity="0.8"/>
+  <text x="251" y="197" font-size="8.5" font-weight="700" fill="#f0f2ff">Advertising</text>
+  <text x="251" y="209" font-size="7" fill="#7a7f9a">Google &amp; Meta Ads</text>
+  <rect x="215" y="222" width="130" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="215" y="222" width="91" height="4" rx="2" fill="url(#sv_amberBar)" filter="url(#sv_glow)"/>
+  <text x="349" y="228" text-anchor="end" font-size="6.5" fill="#f59e0b">70%</text>
+  <rect x="215" y="230" width="56" height="14" rx="4" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
+  <text x="243" y="240" text-anchor="middle" font-size="6.5" fill="#f59e0b">Activ ●</text>
+  <rect x="277" y="230" width="68" height="14" rx="4" fill="rgba(255,255,255,0.04)"/>
+  <text x="311" y="240" text-anchor="middle" font-size="6.5" fill="#7a7f9a">ROI 3.2x</text>
+
+  <!-- Card 6: Email Personalizat -->
+  <rect x="368" y="176" width="154" height="88" rx="10" fill="#0f1117" stroke="rgba(244,114,182,0.2)" stroke-width="1"/>
+  <rect x="368" y="176" width="154" height="3" rx="1.5" fill="#f472b6"/>
+  <rect x="380" y="188" width="28" height="28" rx="8" fill="rgba(244,114,182,0.1)" stroke="rgba(244,114,182,0.22)" stroke-width="1"/>
+  <!-- Email icon -->
+  <rect x="382" y="193" width="22" height="16" rx="3" fill="none" stroke="#f472b6" stroke-width="1.4"/>
+  <polyline points="382,195 393,203 404,195" fill="none" stroke="#f472b6" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="416" y="197" font-size="8.5" font-weight="700" fill="#f0f2ff">Mail Custom</text>
+  <text x="416" y="209" font-size="7" fill="#7a7f9a">Pe domeniu propriu</text>
+  <rect x="380" y="222" width="130" height="4" rx="2" fill="rgba(255,255,255,0.05)"/>
+  <rect x="380" y="222" width="104" height="4" rx="2" fill="url(#sv_pinkBar)" filter="url(#sv_glow)"/>
+  <text x="514" y="228" text-anchor="end" font-size="6.5" fill="#f472b6">80%</text>
+  <rect x="380" y="230" width="56" height="14" rx="4" fill="rgba(244,114,182,0.08)" stroke="rgba(244,114,182,0.2)" stroke-width="1"/>
+  <text x="408" y="240" text-anchor="middle" font-size="6.5" fill="#f472b6">Activ ●</text>
+  <rect x="442" y="230" width="68" height="14" rx="4" fill="rgba(255,255,255,0.04)"/>
+  <text x="476" y="240" text-anchor="middle" font-size="6.5" fill="#7a7f9a">200+ conturi</text>
+
+  <!-- ── SUMMARY ROW ── -->
+  <rect x="38" y="276" width="498" height="50" rx="10" fill="#0f1117" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="54" y="293" font-size="8.5" font-weight="700" fill="#f0f2ff">Performanta Globala</text>
+
+  <!-- Mini stat pills -->
+  <rect x="54" y="299" width="70" height="18" rx="5" fill="rgba(79,110,247,0.1)" stroke="rgba(79,110,247,0.2)" stroke-width="1"/>
+  <circle cx="64" cy="308" r="2.5" fill="#4f6ef7"/>
+  <text x="80" y="311" text-anchor="middle" font-size="7" font-weight="600" fill="#7b9bff">120+ proiecte</text>
+
+  <rect x="132" y="299" width="70" height="18" rx="5" fill="rgba(62,207,142,0.1)" stroke="rgba(62,207,142,0.2)" stroke-width="1"/>
+  <circle cx="142" cy="308" r="2.5" fill="#3ecf8e"/>
+  <text x="158" y="311" text-anchor="middle" font-size="7" font-weight="600" fill="#3ecf8e">SEO +85%</text>
+
+  <rect x="210" y="299" width="70" height="18" rx="5" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.2)" stroke-width="1"/>
+  <circle cx="220" cy="308" r="2.5" fill="#a78bfa"/>
+  <text x="236" y="311" text-anchor="middle" font-size="7" font-weight="600" fill="#a78bfa">99.9% uptime</text>
+
+  <rect x="288" y="299" width="70" height="18" rx="5" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
+  <circle cx="298" cy="308" r="2.5" fill="#f59e0b"/>
+  <text x="314" y="311" text-anchor="middle" font-size="7" font-weight="600" fill="#f59e0b">ROI 3.2x</text>
+
+  <rect x="366" y="299" width="70" height="18" rx="5" fill="rgba(6,182,212,0.08)" stroke="rgba(6,182,212,0.2)" stroke-width="1"/>
+  <circle cx="376" cy="308" r="2.5" fill="#06b6d4"/>
+  <text x="392" y="311" text-anchor="middle" font-size="7" font-weight="600" fill="#06b6d4">50+ clienti</text>
+
+  <rect x="444" y="299" width="78" height="18" rx="5" fill="rgba(244,114,182,0.08)" stroke="rgba(244,114,182,0.2)" stroke-width="1"/>
+  <circle cx="454" cy="308" r="2.5" fill="#f472b6"/>
+  <text x="474" y="311" text-anchor="middle" font-size="7" font-weight="600" fill="#f472b6">98% satisfactie</text>
+
+  <!-- ── CODE BAR ── -->
+  <rect x="38" y="338" width="498" height="46" rx="10" fill="#0c0d12" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="50" y="353" font-size="7" fill="#7a7f9a" fill-opacity="0.4" font-family="monospace">1</text>
+  <text x="60" y="353" font-size="7.5" fill="#7b9bff" font-family="monospace">const</text>
+  <text x="88" y="353" font-size="7.5" fill="#f0f2ff" font-family="monospace">services</text>
+  <text x="130" y="353" font-size="7.5" fill="#f0f2ff" font-family="monospace">=</text>
+  <text x="140" y="353" font-size="7.5" fill="#3ecf8e" font-family="monospace">codedesign</text>
+  <text x="198" y="353" font-size="7.5" fill="#4f6ef7" font-family="monospace">.getAll</text>
+  <text x="234" y="353" font-size="7.5" fill="#f0f2ff" font-family="monospace">({ web:</text>
+  <text x="278" y="353" font-size="7.5" fill="#7b9bff" font-family="monospace">true</text>
+  <text x="298" y="353" font-size="7.5" fill="#f0f2ff" font-family="monospace">, seo:</text>
+  <text x="328" y="353" font-size="7.5" fill="#7b9bff" font-family="monospace">true</text>
+  <text x="348" y="353" font-size="7.5" fill="#f0f2ff" font-family="monospace">, ads:</text>
+  <text x="378" y="353" font-size="7.5" fill="#7b9bff" font-family="monospace">true</text>
+  <text x="398" y="353" font-size="7.5" fill="#f0f2ff" font-family="monospace">})</text>
+  <text x="50" y="367" font-size="7" fill="#7a7f9a" fill-opacity="0.4" font-family="monospace">2</text>
+  <text x="60" y="367" font-size="7.5" fill="#7a7f9a" fill-opacity="0.5" font-family="monospace">// → 6 servicii active · tot ce ai nevoie intr-un singur loc ✓</text>
+  <rect x="421" y="343" width="1.5" height="11" rx="1" fill="#4f6ef7" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0;0.9" dur="1.1s" repeatCount="indefinite"/>
+  </rect>
+</svg>
       </div>
     </div>
   </div>
@@ -56,15 +323,15 @@
 <section>
   <div class="container">
     <div class="services-grid">
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="seo_icon_illustration.png" alt="SEO" /></div><h3 style="margin-bottom:0.6rem">SEO On-Page &amp; Off-Page</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Optimizăm site-ul tău pentru motoarele de căutare și creștem vizibilitatea organică.</span><span class="en">We optimize your website for search engines and grow your organic visibility.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="Web_Design_Illuatration.png" alt="Web Design" /></div><h3 style="margin-bottom:0.6rem">Web Design</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Creăm site-uri web atractive, moderne și optimizate pentru conversie.</span><span class="en">We create attractive, modern websites optimized for conversion.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="Web_Developing_Icon.png" alt="Web Dev" /></div><h3 style="margin-bottom:0.6rem"><span class="ro">Programare Web</span><span class="en">Web Development</span></h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Dezvoltăm soluții web personalizate, robuste și scalabile.</span><span class="en">We develop custom, robust and scalable web solutions.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="server_icon.png" alt="Cloud" /></div><h3 style="margin-bottom:0.6rem">Cloud &amp; Backup</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Servicii NAS Cloud și server pentru toate tipurile de afaceri.</span><span class="en">NAS Cloud and server services for all types of businesses.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="Custom_Mail_Icon.png" alt="Email" /></div><h3 style="margin-bottom:0.6rem"><span class="ro">Mail Personalizat</span><span class="en">Custom Email</span></h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Adrese de email profesionale pe domeniul tău pentru credibilitate maximă.</span><span class="en">Professional email addresses on your domain for maximum credibility.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="Advertisment_Icon.png" alt="Ads" /></div><h3 style="margin-bottom:0.6rem">Online Advertising</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Campanii publicitare online care ajung la publicul tău și generează rezultate.</span><span class="en">Online ad campaigns that reach your audience and generate results.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="Wordpress_Icon.png" alt="WordPress" /></div><h3 style="margin-bottom:0.6rem">WordPress Development</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Site-uri WordPress performante, sigure și ușor de administrat.</span><span class="en">Performant, secure and easy-to-manage WordPress websites.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="Social_Media_Advertising.png" alt="Social Media" /></div><h3 style="margin-bottom:0.6rem">Social Media Marketing</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Campanii de social media care ajung la publicul tău și generează engagement.</span><span class="en">Social media campaigns that reach your audience and generate engagement.</span></p></div>
-      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="mail_icon_illustration.png" alt="Email Marketing" /></div><h3 style="margin-bottom:0.6rem">Email Marketing</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Campanii de email marketing personalizate cu rate de deschidere ridicate.</span><span class="en">Personalized email marketing campaigns with high open rates.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="seo_icon_illustration.png" alt="Servicii SEO on-page și off-page România" /></div><h3 style="margin-bottom:0.6rem">SEO On-Page &amp; Off-Page</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Optimizăm site-ul tău pentru motoarele de căutare și creștem vizibilitatea organică.</span><span class="en">We optimize your website for search engines and grow your organic visibility.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="web_design_illuatration.png" alt="Web design profesional România" /></div><h3 style="margin-bottom:0.6rem">Web Design</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Creăm site-uri web atractive, moderne și optimizate pentru conversie.</span><span class="en">We create attractive, modern websites optimized for conversion.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="web_developing_icon.png" alt="Programare web și dezvoltare aplicații România" /></div><h3 style="margin-bottom:0.6rem"><span class="ro">Programare Web</span><span class="en">Web Development</span></h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Dezvoltăm soluții web personalizate, robuste și scalabile.</span><span class="en">We develop custom, robust and scalable web solutions.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="server_icon.png" alt="Servicii cloud și backup pentru afaceri" /></div><h3 style="margin-bottom:0.6rem">Cloud &amp; Backup</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Servicii NAS Cloud și server pentru toate tipurile de afaceri.</span><span class="en">NAS Cloud and server services for all types of businesses.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="mail_icon_illustration.png" alt="Email personalizat pe domeniu propriu" /></div><h3 style="margin-bottom:0.6rem"><span class="ro">Mail Personalizat</span><span class="en">Custom Email</span></h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Adrese de email profesionale pe domeniul tău pentru credibilitate maximă.</span><span class="en">Professional email addresses on your domain for maximum credibility.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="advertisment_icon.png" alt="Publicitate online și campanii Google Ads" /></div><h3 style="margin-bottom:0.6rem">Online Advertising</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Campanii publicitare online care ajung la publicul tău și generează rezultate.</span><span class="en">Online ad campaigns that reach your audience and generate results.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="wordpress_icon.png" alt="Dezvoltare site-uri WordPress profesionale" /></div><h3 style="margin-bottom:0.6rem">WordPress Development</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Site-uri WordPress performante, sigure și ușor de administrat.</span><span class="en">Performant, secure and easy-to-manage WordPress websites.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="social_media_advertising.png" alt="Social media marketing și campanii Facebook" /></div><h3 style="margin-bottom:0.6rem">Social Media Marketing</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Campanii de social media care ajung la publicul tău și generează engagement.</span><span class="en">Social media campaigns that reach your audience and generate engagement.</span></p></div>
+      <div class="card reveal" style="padding:2rem"><div class="icon-box"><img src="mail_icon_illustration.png" alt="Campanii email marketing personalizate" /></div><h3 style="margin-bottom:0.6rem">Email Marketing</h3><p style="font-size:0.9rem;color:var(--muted);line-height:1.65"><span class="ro">Campanii de email marketing personalizate cu rate de deschidere ridicate.</span><span class="en">Personalized email marketing campaigns with high open rates.</span></p></div>
     </div>
   </div>
 </section>
@@ -77,12 +344,12 @@
       <h2 class="reveal"><span class="ro">Cum lucrăm <strong>cu tine</strong></span><span class="en">How we work <strong>with you</strong></span></h2>
     </div>
     <div class="process-full">
-      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">01</div><div class="step-icon"><img src="Info_Gathering_Icon.png" alt="Info" /></div><p><span class="ro">Colectare informații</span><span class="en">Info Gathering</span></p></div>
-      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">02</div><div class="step-icon"><img src="Planning_Icon.png" alt="Plan" /></div><p><span class="ro">Planificare</span><span class="en">Planning</span></p></div>
-      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">03</div><div class="step-icon"><img src="Web_Design_Illuatration.png" alt="Design" /></div><p>Design</p></div>
-      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">04</div><div class="step-icon"><img src="Web_Developing_Icon.png" alt="Dev" /></div><p><span class="ro">Dezvoltare</span><span class="en">Development</span></p></div>
-      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">05</div><div class="step-icon"><img src="Testing_Icon.png" alt="Test" /></div><p><span class="ro">Testare</span><span class="en">Testing</span></p></div>
-      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">06</div><div class="step-icon"><img src="Rocket_Icon.png" alt="Launch" /></div><p><span class="ro">Lansare</span><span class="en">Launch</span></p></div>
+      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">01</div><div class="step-icon"><img src="info_gathering_icon.png" alt="Colectare informatii proiect web design" /></div><p><span class="ro">Colectare informații</span><span class="en">Info Gathering</span></p></div>
+      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">02</div><div class="step-icon"><img src="planning_icon.png" alt="Planificare proiect web design" /></div><p><span class="ro">Planificare</span><span class="en">Planning</span></p></div>
+      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">03</div><div class="step-icon"><img src="web_design_illuatration.png" alt="Etapa de design web" /></div><p>Design</p></div>
+      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">04</div><div class="step-icon"><img src="web_developing_icon.png" alt="Dezvoltare si programare web" /></div><p><span class="ro">Dezvoltare</span><span class="en">Development</span></p></div>
+      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">05</div><div class="step-icon"><img src="testing_icon.png" alt="Testare site web inainte de lansare" /></div><p><span class="ro">Testare</span><span class="en">Testing</span></p></div>
+      <div class="step-item reveal"><div class="step-box" style="position:relative;z-index:1">06</div><div class="step-icon"><img src="rocket_icon.png" alt="Lansare site web profesional" /></div><p><span class="ro">Lansare</span><span class="en">Launch</span></p></div>
     </div>
   </div>
 </section>
@@ -101,7 +368,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <img src="codedesign_logo_57px.png" alt="Code Design" style="height:28px;filter:brightness(0) invert(1);margin-bottom:1rem;display:block" />
+        <img src="codedesign-logo.png" alt="Code Design" style="height:28px;filter:brightness(0) invert(1);margin-bottom:1rem;display:block" />
         <p style="color:var(--muted);font-size:0.9rem;max-width:300px;line-height:1.7"><span class="ro">Lucrăm îndeaproape cu clienții noștri pentru a crea branduri, nu doar site-uri.</span><span class="en">We work closely with our clients to create brands, not just websites.</span></p>
       </div>
       <div>
@@ -115,23 +382,25 @@
       <div>
         <span class="footer-heading"><span class="ro">Companie</span><span class="en">Company</span></span>
         <a href="despre-noi.html" class="footer-link"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+        <a href="pachete.html" class="footer-link"><span class="ro">Pachete & Prețuri</span><span class="en">Pricing</span></a>
         <a href="contact.html" class="footer-link">Contact</a>
-        <a href="#" class="footer-link"><span class="ro">Politică Confidențialitate</span><span class="en">Privacy Policy</span></a>
-        <a href="#" class="footer-link">Cookie Policy</a>
+        <a href="https://www.iubenda.com/privacy-policy/63285477" class="iubenda-black iubenda-noiframe iubenda-embed footer-link" title="Privacy Policy">Privacy Policy</a>
+        <a href="https://www.iubenda.com/privacy-policy/63285477/cookie-policy" class="iubenda-black iubenda-noiframe iubenda-embed footer-link" title="Cookie Policy">Cookie Policy</a>
+        <script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
       </div>
       <div>
         <span class="footer-heading">Contact</span>
-        <a href="mailto:office@codedesign.ro" class="footer-link">office@codedesign.ro</a>
+        <a href="mailto:contact@codedesign.ro" class="footer-link">contact@codedesign.ro</a>
         <a href="tel:0040757413393" class="footer-link">0040.757.413.393</a>
         <div style="margin-top:1.5rem">
-          <a href="#" class="social-btn fb">f</a>
-          <a href="#" class="social-btn tw">𝕏</a>
-          <a href="#" class="social-btn li">in</a>
+          <a href="https://www.facebook.com/CodeDesignRo" class="social-btn fb" target="_blank" rel="noopener">f</a>
+          <a href="https://x.com/codedesignro" class="social-btn tw" target="_blank" rel="noopener">𝕏</a>
+          <a href="https://www.linkedin.com/company/codedesignro" class="social-btn li" target="_blank" rel="noopener">in</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 codedesign.ro — <span class="ro">Toate drepturile rezervate</span><span class="en">All rights reserved</span></p>
+      <p>&copy; <script>document.write(new Date().getFullYear())</script> codedesign.ro — <span class="ro">Toate drepturile rezervate</span><span class="en">All rights reserved</span></p>
       <p><span class="ro">Realizat cu ♥ în România</span><span class="en">Made with ♥ in Romania</span></p>
     </div>
   </div>

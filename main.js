@@ -107,28 +107,44 @@ function init() {
 
   var counters = document.querySelectorAll('.counter');
   if (counters.length) {
-    // Run immediately for counters already on screen
-    counters.forEach(function(el) {
-      var r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) {
-        animCounter(el, parseInt(el.dataset.target, 10));
-      }
-    });
-    // Watch for counters scrolled into view later
-    if ('IntersectionObserver' in window) {
-      var cObs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (e.isIntersecting) {
-            animCounter(e.target, parseInt(e.target.dataset.target, 10));
-            cObs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.2 });
+    function initCounters() {
+      // Run for counters already on screen (above-fold)
       counters.forEach(function(el) {
-        if (!el.dataset.animated) cObs.observe(el);
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          animCounter(el, parseInt(el.dataset.target, 10));
+        }
       });
+      // Watch for counters scrolled into view later
+      if ('IntersectionObserver' in window) {
+        var cObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              animCounter(e.target, parseInt(e.target.dataset.target, 10));
+              cObs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        counters.forEach(function(el) {
+          if (!el.dataset.animated) cObs.observe(el);
+        });
+      }
     }
+    // Delay to allow CSS fade-up animations to complete before measuring visibility
+    setTimeout(initCounters, 800);
   }
+
+  // FAQ accordion
+  var faqBtns = document.querySelectorAll('.faq-q');
+  faqBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      // Close all
+      faqBtns.forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+      // Open clicked if it was closed
+      if (!isOpen) btn.setAttribute('aria-expanded', 'true');
+    });
+  });
 
   // Contact form submit
   var form = document.querySelector('.contact-form');
@@ -145,17 +161,14 @@ function init() {
         last_name:  form.querySelector('[name="last_name"]').value,
         email:      form.querySelector('[name="email"]').value,
         phone:      form.querySelector('[name="phone"]').value || null,
-        message:    form.querySelector('[name="message"]').value
+        message:    form.querySelector('[name="message"]').value,
+        website:    form.querySelector('[name="website"]').value,
+        'cf-turnstile-response': form.querySelector('[name="cf-turnstile-response"]')?.value || ''
       };
 
-      fetch(SUPABASE_URL + '/rest/v1/contact_submissions', {
+      fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_KEY,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       }).then(function(res) {
         if (res.ok) {
