@@ -256,7 +256,8 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:4rem 0 
   .hero-stat-num{font-size:1.8rem}
 }
 .turnstile-wrap{width:100%;max-width:100%;overflow:hidden}
-.cf-turnstile{display:inline-block}
+.cf-turnstile{margin:1.5rem 0;display:flex;justify-content:flex-start}
+@media(max-width:480px){.cf-turnstile iframe{transform:scale(0.85);transform-origin:left center}}
  /* Standardize all section images */
   .illus img{
    border-radius:16px;
