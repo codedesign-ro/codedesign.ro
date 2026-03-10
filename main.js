@@ -3,8 +3,6 @@
 var SUPABASE_URL = 'https://pyzfilefqqyrmjhfdvgw.supabase.co';
 var SUPABASE_KEY = 'sb_publishable_nH6dJS5-3iX9qv8loybgpw_iUAivA2Z';
 
-document.documentElement.classList.add('js-loaded');
-
 function init() {
 
   // Language switching
@@ -74,7 +72,7 @@ function init() {
             revealObs.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+      }, { threshold: 0.01, rootMargin: '0px 0px 60px 0px' });
       revealEls.forEach(function(el) {
         var r = el.getBoundingClientRect();
         if (r.top < window.innerHeight && r.bottom > 0) {
@@ -87,6 +85,7 @@ function init() {
       revealEls.forEach(function(el) { el.classList.add('visible'); });
     }
   }
+  document.documentElement.classList.add('js-loaded');
 
   // Counter animation
   function animCounter(el, target) {
