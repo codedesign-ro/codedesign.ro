@@ -581,6 +581,11 @@ function renderPost(post) {
   document.title = fullTitle;
   document.getElementById('metaDesc').setAttribute('content', excerpt);
   document.getElementById('linkCanonical').setAttribute('href', pageUrl);
+  ['ro', 'en', 'x-default'].forEach(function(lang) {
+    var el = document.querySelector('link[hreflang="' + lang + '"]');
+    if (!el) { el = document.createElement('link'); el.rel = 'alternate'; el.hreflang = lang; document.head.appendChild(el); }
+    el.href = pageUrl;
+  });
   document.getElementById('ogTitle').setAttribute('content', fullTitle);
   document.getElementById('ogDesc').setAttribute('content', excerpt);
   document.getElementById('ogUrl').setAttribute('content', pageUrl);
