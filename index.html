@@ -108,6 +108,7 @@
     <li><a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a></li>
     <li><a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a></li>
     <li><a href="pachete.html"><span class="ro">Pachete</span><span class="en">Pricing</span></a></li>
+    <li><a href="portofoliu.html"><span class="ro">Portofoliu</span><span class="en">Portfolio</span></a></li>
     <li><a href="blog.html" class="nav-blog-btn"><span class="blog-dot"></span>Blog</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
@@ -126,6 +127,7 @@
     <a href="despre-noi.html"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
     <a href="servicii.html"><span class="ro">Servicii</span><span class="en">Services</span></a>
     <a href="pachete.html"><span class="ro">Pachete</span><span class="en">Pricing</span></a>
+    <a href="portofoliu.html"><span class="ro">Portofoliu</span><span class="en">Portfolio</span></a>
     <a href="blog.html">Blog</a>
     <a href="contact.html">Contact</a>
   </div>
@@ -2382,6 +2384,125 @@
 }
 </script>
 
+<!-- PORTFOLIO TEASER -->
+<section style="padding:6rem 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden">
+  <div class="orb" style="width:500px;height:500px;background:rgba(79,110,247,0.06);top:-150px;right:-150px"></div>
+
+  <div class="container" style="position:relative;z-index:1">
+
+    <!-- header -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem">
+      <div class="reveal">
+        <span class="section-label">
+          <span class="ro">Munca noastră</span>
+          <span class="en">Our work</span>
+        </span>
+        <h2 style="margin-top:.5rem">
+          <span class="ro">Proiecte <strong>reale</strong>,<br>probleme <strong>rezolvate</strong>.</span>
+          <span class="en"><strong>Real</strong> projects,<br><strong>real</strong> problems solved.</span>
+        </h2>
+      </div>
+      <a href="portofoliu.html" class="btn-outline reveal" style="flex-shrink:0">
+        <span class="ro">Vezi toate proiectele →</span>
+        <span class="en">View all projects →</span>
+      </a>
+    </div>
+
+    <!-- 3 project thumbnails -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2.5rem">
+
+      <!-- Card 1 — AppleMob -->
+      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer">
+        <div style="position:relative;overflow:hidden">
+          <img src="https://applemobdesign.ro/wp-content/uploads/2021/12/DSC_6789-HDR-Edit.jpg"
+            alt="AppleMob Design"
+            style="width:100%;height:180px;object-fit:cover;display:block;transition:transform .4s ease"
+            loading="lazy"
+            onmouseover="this.style.transform='scale(1.05)'"
+            onmouseout="this.style.transform='scale(1)'"/>
+          <!-- overlay -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(8,9,13,.85))"></div>
+          <div style="position:absolute;bottom:12px;left:14px;display:flex;gap:5px">
+            <span style="background:rgba(30,77,34,.85);color:#4A8C4E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Web Design</span>
+            <span style="background:rgba(30,77,34,.85);color:#4A8C4E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">SEO</span>
+          </div>
+        </div>
+        <div style="padding:1.25rem">
+          <div style="font-size:.72rem;color:#4A8C4E;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem">AppleMob Design</div>
+          <div style="color:var(--white);font-weight:600;font-size:.95rem;line-height:1.35">
+            <span class="ro">20 ani de meșteșug, invizibili online.</span>
+            <span class="en">20 years of craft, invisible online.</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 — Aldaco -->
+      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer">
+        <div style="position:relative;overflow:hidden;background:#2a2510;height:180px;display:flex;align-items:center;justify-content:center">
+          <div style="text-align:center">
+            <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:#f5efe0;line-height:1.1">Interior<br><em style="color:#C9A96E">Renovation,</em><br><em style="color:#C9A96E">Done Right.</em></div>
+          </div>
+          <div style="position:absolute;bottom:12px;left:14px;display:flex;gap:5px">
+            <span style="background:rgba(61,53,32,.85);color:#C9A96E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Belgium</span>
+            <span style="background:rgba(61,53,32,.85);color:#C9A96E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">NL/FR/EN</span>
+          </div>
+        </div>
+        <div style="padding:1.25rem">
+          <div style="font-size:.72rem;color:#C9A96E;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem">Aldaco BV</div>
+          <div style="color:var(--white);font-weight:600;font-size:.95rem;line-height:1.35">
+            <span class="ro">Piață nouă, zero credibilitate.</span>
+            <span class="en">New market, zero credibility.</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 — Kalio -->
+      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer">
+        <div style="position:relative;overflow:hidden">
+          <img src="https://pb.kalio.ro/api/files/pbc_2708086759/5p6lxlrkw1d5sdw/photo_2026_03_20_17_42_19_3_isr61j8vjj.jpg"
+            alt="Kalio"
+            style="width:100%;height:180px;object-fit:cover;display:block;transition:transform .4s ease"
+            loading="lazy"
+            onmouseover="this.style.transform='scale(1.05)'"
+            onmouseout="this.style.transform='scale(1)'"/>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(8,9,13,.85))"></div>
+          <div style="position:absolute;bottom:12px;left:14px;display:flex;gap:5px">
+            <span style="background:rgba(30,60,12,.85);color:#6DBE45;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Next.js</span>
+            <span style="background:rgba(30,60,12,.85);color:#6DBE45;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Configurator</span>
+          </div>
+        </div>
+        <div style="padding:1.25rem">
+          <div style="font-size:.72rem;color:#6DBE45;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem">Kalio.ro</div>
+          <div style="color:var(--white);font-weight:600;font-size:.95rem;line-height:1.35">
+            <span class="ro">Mobilier care se configurează live.</span>
+            <span class="en">Furniture that configures live.</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- bottom CTA row -->
+    <div class="reveal" style="text-align:center">
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.25rem">
+        <span class="ro">+ 2 proiecte în portofoliu, inclusiv o aplicație internă CRM custom.</span>
+        <span class="en">+ 2 more projects in portfolio, including a custom internal CRM app.</span>
+      </p>
+      <a href="portofoliu.html" class="btn-cta" style="font-size:.95rem;padding:12px 32px">
+        <span class="ro">Vezi toate proiectele și poveștile lor →</span>
+        <span class="en">See all projects and their stories →</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- responsive override for 3-col grid above -->
+<style>
+@media(max-width:768px){
+  section > .container > div[style*="grid-template-columns:repeat(3"] { grid-template-columns:1fr !important; }
+}
+</style>
+
 <!-- CTA -->
 <div class="cta-section">
   <div class="container">
@@ -2410,6 +2531,7 @@
       <div>
         <span class="footer-heading"><span class="ro">Companie</span><span class="en">Company</span></span>
         <a href="despre-noi.html" class="footer-link"><span class="ro">Despre Noi</span><span class="en">About Us</span></a>
+        <a href="portofoliu.html" class="footer-link"><span class="ro">Portofoliu</span><span class="en">Portfolio</span></a>
         <a href="pachete.html" class="footer-link"><span class="ro">Pachete & Prețuri</span><span class="en">Pricing</span></a>
         <a href="contact.html" class="footer-link">Contact</a>
         <a href="https://www.iubenda.com/privacy-policy/63285477" class="iubenda-black iubenda-noiframe iubenda-embed footer-link" title="Privacy Policy">Privacy Policy</a>

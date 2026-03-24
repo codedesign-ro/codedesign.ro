@@ -43,6 +43,13 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://codedesign.ro/portofoliu.html</loc>
+    <lastmod>2026-03-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Blog articles -->
   <url>
     <loc>https://codedesign.ro/post.html?slug=de-ce-ai-nevoie-de-site-web</loc>
