@@ -2408,80 +2408,216 @@
       </a>
     </div>
 
-    <!-- 3 project thumbnails -->
+    <!-- 3 project cards with mockup thumbnails -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2.5rem">
 
-      <!-- Card 1 — AppleMob -->
-      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer">
-        <div style="position:relative;overflow:hidden">
-          <img src="https://applemobdesign.ro/wp-content/uploads/2021/12/DSC_6789-HDR-Edit.jpg"
-            alt="AppleMob Design"
-            style="width:100%;height:180px;object-fit:cover;display:block;transition:transform .4s ease"
-            loading="lazy"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"/>
-          <!-- overlay -->
-          <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(8,9,13,.85))"></div>
-          <div style="position:absolute;bottom:12px;left:14px;display:flex;gap:5px">
-            <span style="background:rgba(30,77,34,.85);color:#4A8C4E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Web Design</span>
-            <span style="background:rgba(30,77,34,.85);color:#4A8C4E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">SEO</span>
+      <!-- ── Card 1 — AppleMob Design ── -->
+      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease"
+        onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.45)'"
+        onmouseout="this.style.transform='';this.style.boxShadow=''">
+
+        <!-- Mockup thumbnail -->
+        <div style="position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+          <!-- browser bar -->
+          <div style="background:#0b0d1c;padding:7px 12px;display:flex;align-items:center;gap:6px">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ef4444;display:inline-block"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#3ecf8e;display:inline-block"></span>
+            <span style="margin-left:6px;font-size:.62rem;color:var(--muted)">applemobdesign.ro</span>
+          </div>
+          <!-- site mockup — white bg matching AppleMob -->
+          <div style="background:#ffffff;padding:1.1rem 1.2rem;position:relative;overflow:hidden">
+            <!-- nav -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+              <div style="width:22px;height:22px;background:#1E4D22;border-radius:4px;display:flex;align-items:center;justify-content:center">
+                <span style="font-size:.42rem;font-weight:900;color:white">AM</span>
+              </div>
+              <div style="display:flex;gap:.6rem">
+                <div style="width:24px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+                <div style="width:24px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+                <div style="width:24px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+              </div>
+              <div style="background:#1E4D22;border-radius:12px;padding:3px 9px;font-size:.5rem;color:white;font-weight:700">Contact</div>
+            </div>
+            <!-- location pill -->
+            <div style="display:inline-flex;align-items:center;gap:4px;border:1px solid #1E4D22;border-radius:12px;padding:2px 8px;margin-bottom:.65rem">
+              <span style="width:4px;height:4px;background:#1E4D22;border-radius:50%;display:inline-block"></span>
+              <span style="font-size:.44rem;color:#1E4D22;font-weight:600;letter-spacing:.3px">BAIA MARE • EST. 2019</span>
+            </div>
+            <!-- hero text -->
+            <div style="margin-bottom:.75rem">
+              <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:#1a1a1a;line-height:1.2">Mobilier la Comandă</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;font-style:italic;color:#1E4D22;line-height:1.2">Creat cu Pasiune</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;font-weight:700;color:#1a1a1a;line-height:1.2">pentru Tine</div>
+            </div>
+            <!-- CTAs -->
+            <div style="display:flex;gap:.4rem;margin-bottom:.9rem;flex-wrap:wrap">
+              <div style="background:#1E4D22;border-radius:16px;padding:4px 10px;font-size:.44rem;font-weight:700;color:white">Vezi Portofoliul →</div>
+              <div style="border:1px solid #ccc;border-radius:16px;padding:4px 8px;font-size:.44rem;color:#555">Solicită Ofertă</div>
+            </div>
+            <!-- stats row -->
+            <div style="display:flex;gap:1rem;padding-top:.65rem;border-top:1px solid #ebebeb">
+              <div><div style="font-family:'DM Serif Display',serif;font-size:.85rem;color:#1a1a1a;font-weight:700">8+</div><div style="font-size:.42rem;color:#888">Ani Exp.</div></div>
+              <div><div style="font-family:'DM Serif Display',serif;font-size:.85rem;color:#1a1a1a;font-weight:700">500+</div><div style="font-size:.42rem;color:#888">Proiecte</div></div>
+              <div><div style="font-family:'DM Serif Display',serif;font-size:.85rem;color:#1a1a1a;font-weight:700">100%</div><div style="font-size:.42rem;color:#888">Satisfăcuți</div></div>
+            </div>
+          </div>
+          <!-- tag chips overlaid -->
+          <div style="position:absolute;bottom:10px;left:12px;display:flex;gap:5px">
+            <span style="background:rgba(30,77,34,.88);color:#4A8C4E;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:8px">Web Design</span>
+            <span style="background:rgba(30,77,34,.88);color:#4A8C4E;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:8px">SEO</span>
           </div>
         </div>
-        <div style="padding:1.25rem">
-          <div style="font-size:.72rem;color:#4A8C4E;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem">AppleMob Design</div>
-          <div style="color:var(--white);font-weight:600;font-size:.95rem;line-height:1.35">
+
+        <!-- card footer -->
+        <div style="padding:1rem 1.1rem">
+          <div style="font-size:.68rem;color:#4A8C4E;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.35rem">AppleMob Design</div>
+          <div style="color:var(--white);font-weight:600;font-size:.9rem;line-height:1.35">
             <span class="ro">20 ani de meșteșug, invizibili online.</span>
             <span class="en">20 years of craft, invisible online.</span>
           </div>
         </div>
       </a>
 
-      <!-- Card 2 — Aldaco -->
-      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer">
-        <div style="position:relative;overflow:hidden;background:#2a2510;height:180px;display:flex;align-items:center;justify-content:center">
-          <div style="text-align:center">
-            <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:#f5efe0;line-height:1.1">Interior<br><em style="color:#C9A96E">Renovation,</em><br><em style="color:#C9A96E">Done Right.</em></div>
+      <!-- ── Card 2 — Aldaco BV ── -->
+      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease"
+        onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.45)'"
+        onmouseout="this.style.transform='';this.style.boxShadow=''">
+
+        <div style="position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+          <!-- browser bar -->
+          <div style="background:#0b0d1c;padding:7px 12px;display:flex;align-items:center;gap:6px">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ef4444;display:inline-block"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#3ecf8e;display:inline-block"></span>
+            <span style="margin-left:6px;font-size:.62rem;color:var(--muted)">aldaco.be</span>
+            <div style="margin-left:auto;display:flex;gap:3px">
+              <span style="background:rgba(233,162,59,.15);color:#E9A23B;font-size:.5rem;font-weight:700;padding:1px 6px;border-radius:5px">NL</span>
+              <span style="background:rgba(233,162,59,.1);color:#E9A23B;font-size:.5rem;font-weight:700;padding:1px 6px;border-radius:5px">FR</span>
+              <span style="background:rgba(233,162,59,.15);color:#E9A23B;font-size:.5rem;font-weight:700;padding:1px 6px;border-radius:5px">EN</span>
+            </div>
           </div>
-          <div style="position:absolute;bottom:12px;left:14px;display:flex;gap:5px">
-            <span style="background:rgba(61,53,32,.85);color:#C9A96E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Belgium</span>
-            <span style="background:rgba(61,53,32,.85);color:#C9A96E;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">NL/FR/EN</span>
+          <!-- site mockup — dark olive matching Aldaco -->
+          <div style="background:#1e1a0d;padding:1.1rem 1.2rem;position:relative;overflow:hidden">
+            <!-- grid texture -->
+            <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(233,162,59,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(233,162,59,.04) 1px,transparent 1px);background-size:32px 32px"></div>
+            <div style="position:relative;z-index:1">
+              <!-- eyebrow -->
+              <div style="font-size:.44rem;color:rgba(233,162,59,.55);letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:4px">
+                <span style="display:inline-block;width:14px;height:1px;background:rgba(233,162,59,.35)"></span>ALDACO BV — BELGIUM
+              </div>
+              <!-- hero -->
+              <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;line-height:1.2;color:#f5efe0;margin-bottom:2px">Interior Renovation,</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;color:#E9A23B;line-height:1.2;margin-bottom:.85rem">Done Right.</div>
+              <!-- chips -->
+              <div style="display:flex;gap:.35rem;margin-bottom:.85rem;flex-wrap:wrap">
+                <span style="background:rgba(233,162,59,.1);color:#E9A23B;font-size:.44rem;padding:3px 8px;border-radius:12px;border:1px solid rgba(233,162,59,.2)">5+ Services</span>
+                <span style="background:rgba(233,162,59,.1);color:#E9A23B;font-size:.44rem;padding:3px 8px;border-radius:12px;border:1px solid rgba(233,162,59,.2)">100% Transparent</span>
+              </div>
+              <!-- service cards mini -->
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem">
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:.5rem">
+                  <div style="font-size:.42rem;color:#E9A23B;margin-bottom:.2rem;font-weight:600">01</div>
+                  <div style="font-size:.5rem;color:#f5efe0">Bathroom Reno</div>
+                </div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:.5rem">
+                  <div style="font-size:.42rem;color:#E9A23B;margin-bottom:.2rem;font-weight:600">02</div>
+                  <div style="font-size:.5rem;color:#f5efe0">Kitchen Reno</div>
+                </div>
+                <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:.5rem">
+                  <div style="font-size:.42rem;color:#E9A23B;margin-bottom:.2rem;font-weight:600">03</div>
+                  <div style="font-size:.5rem;color:#f5efe0">Flooring</div>
+                </div>
+                <div style="background:rgba(233,162,59,.08);border:1px solid rgba(233,162,59,.18);border-radius:6px;padding:.5rem">
+                  <div style="font-size:.42rem;color:#E9A23B;margin-bottom:.2rem;font-weight:600">04</div>
+                  <div style="font-size:.5rem;color:#f5efe0">Full Renovation</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- tag chips -->
+          <div style="position:absolute;bottom:10px;left:12px;display:flex;gap:5px">
+            <span style="background:rgba(61,53,16,.9);color:#E9A23B;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:8px">Belgium</span>
+            <span style="background:rgba(61,53,16,.9);color:#E9A23B;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:8px">NL/FR/EN</span>
           </div>
         </div>
-        <div style="padding:1.25rem">
-          <div style="font-size:.72rem;color:#C9A96E;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem">Aldaco BV</div>
-          <div style="color:var(--white);font-weight:600;font-size:.95rem;line-height:1.35">
+
+        <div style="padding:1rem 1.1rem">
+          <div style="font-size:.68rem;color:#E9A23B;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.35rem">Aldaco BV</div>
+          <div style="color:var(--white);font-weight:600;font-size:.9rem;line-height:1.35">
             <span class="ro">Piață nouă, zero credibilitate.</span>
             <span class="en">New market, zero credibility.</span>
           </div>
         </div>
       </a>
 
-      <!-- Card 3 — Kalio -->
-      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer">
-        <div style="position:relative;overflow:hidden">
-          <img src="https://pb.kalio.ro/api/files/pbc_2708086759/5p6lxlrkw1d5sdw/photo_2026_03_20_17_42_19_3_isr61j8vjj.jpg"
-            alt="Kalio"
-            style="width:100%;height:180px;object-fit:cover;display:block;transition:transform .4s ease"
-            loading="lazy"
-            onmouseover="this.style.transform='scale(1.05)'"
-            onmouseout="this.style.transform='scale(1)'"/>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(8,9,13,.85))"></div>
-          <div style="position:absolute;bottom:12px;left:14px;display:flex;gap:5px">
-            <span style="background:rgba(30,60,12,.85);color:#6DBE45;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Next.js</span>
-            <span style="background:rgba(30,60,12,.85);color:#6DBE45;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">Configurator</span>
+      <!-- ── Card 3 — Kalio ── -->
+      <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease"
+        onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.45)'"
+        onmouseout="this.style.transform='';this.style.boxShadow=''">
+
+        <div style="position:relative;overflow:hidden;border-bottom:1px solid var(--border)">
+          <!-- browser bar -->
+          <div style="background:#0b0d1c;padding:7px 12px;display:flex;align-items:center;gap:6px">
+            <span style="width:8px;height:8px;border-radius:50%;background:#ef4444;display:inline-block"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:#3ecf8e;display:inline-block"></span>
+            <span style="margin-left:6px;font-size:.62rem;color:var(--muted)">kalio.ro</span>
+            <span style="margin-left:auto;background:rgba(109,190,69,.15);color:#6DBE45;font-size:.5rem;font-weight:700;padding:1px 7px;border-radius:5px">Next.js</span>
+          </div>
+          <!-- site mockup — white bg matching Kalio -->
+          <div style="background:#ffffff;padding:1.1rem 1.2rem;position:relative;overflow:hidden">
+            <!-- nav -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem">
+              <div style="font-family:'DM Serif Display',serif;font-size:.75rem;font-weight:700;color:#6DBE45">Kalio</div>
+              <div style="display:flex;gap:.5rem">
+                <div style="width:20px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+                <div style="width:20px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+                <div style="width:20px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+                <div style="width:20px;height:3px;background:#e8e8e8;border-radius:2px"></div>
+              </div>
+              <div style="background:#6DBE45;border-radius:6px;padding:3px 8px;font-size:.44rem;color:white;font-weight:700">Creează-ți mobila</div>
+            </div>
+            <!-- design modular pill -->
+            <div style="display:inline-block;background:#eaf6e1;border-radius:12px;padding:2px 8px;margin-bottom:.55rem">
+              <span style="font-size:.42rem;color:#4A8C4E;font-weight:600;letter-spacing:.3px">DESIGN MODULAR</span>
+            </div>
+            <!-- hero text -->
+            <div style="margin-bottom:.7rem">
+              <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#1a1a1a;line-height:1.2;font-weight:800">Mobilier modular,</div>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;font-style:italic;color:#6DBE45;line-height:1.2">reinventat.</div>
+            </div>
+            <!-- CTAs -->
+            <div style="display:flex;gap:.35rem;margin-bottom:.85rem">
+              <div style="background:#6DBE45;border-radius:6px;padding:4px 10px;font-size:.44rem;font-weight:700;color:white">Creaza-ti mobila</div>
+              <div style="border:1px solid #ccc;border-radius:6px;padding:4px 8px;font-size:.44rem;color:#555">Contact</div>
+            </div>
+            <!-- stats -->
+            <div style="display:flex;gap:.9rem;padding-top:.6rem;border-top:1px solid #ebebeb">
+              <div><div style="font-family:'DM Serif Display',serif;font-size:.85rem;color:#6DBE45;font-weight:700">500+</div><div style="font-size:.4rem;color:#888">Proiecte</div></div>
+              <div><div style="font-family:'DM Serif Display',serif;font-size:.85rem;color:#6DBE45;font-weight:700">8mm</div><div style="font-size:.4rem;color:#888">Spate solid</div></div>
+              <div><div style="font-family:'DM Serif Display',serif;font-size:.85rem;color:#6DBE45;font-weight:700">100%</div><div style="font-size:.4rem;color:#888">Personalizabil</div></div>
+            </div>
+          </div>
+          <!-- tag chips -->
+          <div style="position:absolute;bottom:10px;left:12px;display:flex;gap:5px">
+            <span style="background:rgba(30,60,12,.88);color:#6DBE45;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:8px">Next.js</span>
+            <span style="background:rgba(30,60,12,.88);color:#6DBE45;font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:8px">Configurator</span>
           </div>
         </div>
-        <div style="padding:1.25rem">
-          <div style="font-size:.72rem;color:#6DBE45;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem">Kalio.ro</div>
-          <div style="color:var(--white);font-weight:600;font-size:.95rem;line-height:1.35">
+
+        <div style="padding:1rem 1.1rem">
+          <div style="font-size:.68rem;color:#6DBE45;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.35rem">Kalio.ro</div>
+          <div style="color:var(--white);font-weight:600;font-size:.9rem;line-height:1.35">
             <span class="ro">Mobilier care se configurează live.</span>
             <span class="en">Furniture that configures live.</span>
           </div>
         </div>
       </a>
-    </div>
 
-    <!-- bottom CTA row -->
+    </div><!-- /grid -->
+
+    <!-- bottom CTA -->
     <div class="reveal" style="text-align:center">
       <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.25rem">
         <span class="ro">+ 2 proiecte în portofoliu, inclusiv o aplicație internă CRM custom.</span>
@@ -2496,10 +2632,9 @@
   </div>
 </section>
 
-<!-- responsive override for 3-col grid above -->
 <style>
 @media(max-width:768px){
-  section > .container > div[style*="grid-template-columns:repeat(3"] { grid-template-columns:1fr !important; }
+  .pf-teaser-grid { grid-template-columns:1fr !important; }
 }
 </style>
 
