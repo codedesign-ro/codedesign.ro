@@ -2391,7 +2391,7 @@
   <div class="container" style="position:relative;z-index:1">
 
     <!-- header -->
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem">
+    <div class="pf-teaser-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem">
       <div class="reveal">
         <span class="section-label">
           <span class="ro">Munca noastră</span>
@@ -2409,7 +2409,7 @@
     </div>
 
     <!-- 3 project cards with mockup thumbnails -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2.5rem">
+    <div class="pf-teaser-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2.5rem">
 
       <!-- ── Card 1 — AppleMob Design ── -->
       <a href="portofoliu.html" class="card reveal" style="text-decoration:none;overflow:hidden;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease"
@@ -2633,8 +2633,17 @@
 </section>
 
 <style>
-@media(max-width:768px){
-  .pf-teaser-grid { grid-template-columns:1fr !important; }
+@media(max-width:900px){
+  .pf-teaser-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pf-teaser-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
 }
 </style>
 

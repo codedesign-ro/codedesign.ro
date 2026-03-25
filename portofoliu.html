@@ -68,11 +68,43 @@
   from { transform:rotate(0deg); }
   to { transform:rotate(360deg); }
 }
-@media(max-width:768px){
-  .pf-inner { grid-template-columns:1fr !important; gap:2rem !important; }
-  .pf-inner .pf-story:first-child { order:2; }
-  .pf-inner .pf-visual:last-child { order:1; }
-  .pf-cta { padding:2.5rem 1.5rem; }
+@media(max-width:900px){
+  .pf-inner {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+    direction: ltr !important;
+  }
+  .pf-inner .pf-story:first-child { order: 2; }
+  .pf-inner .pf-visual:last-child  { order: 1; }
+  .pf-inner .pf-story:last-child  { order: 2; }
+  .pf-inner .pf-visual:first-child { order: 1; }
+
+  /* Self card — stack the mirror badge below text */
+  .pf-case > div[style*="grid-template-columns:1fr auto"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* CTA banner */
+  .pf-cta {
+    padding: 2.5rem 1.5rem !important;
+  }
+
+  /* Tech grid — 3 columns on mobile instead of auto-fill */
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Hero */
+  .page-hero h1 {
+    font-size: 2.2rem !important;
+  }
+}
+
+@media(max-width:480px){
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .mdiv { display: none !important; }
 }
 </style>
 </head>
@@ -224,12 +256,12 @@
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">Top 3</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Google · 3 luni</span><span class="en">Google · 3 months</span></div>
             </div>
-            <div style="width:1px;background:var(--border)"></div>
+            <div class="mdiv" style="width:1px;background:var(--border)"></div>
             <div>
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">500+</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Proiecte prezentate</span><span class="en">Projects showcased</span></div>
             </div>
-            <div style="width:1px;background:var(--border)"></div>
+            <div class="mdiv" style="width:1px;background:var(--border)"></div>
             <div>
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">RO/EN</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Bilingv</span><span class="en">Bilingual</span></div>
@@ -268,12 +300,12 @@
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">NL/FR/EN</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Trilingv</span><span class="en">Trilingual</span></div>
             </div>
-            <div style="width:1px;background:var(--border)"></div>
+            <div class="mdiv" style="width:1px;background:var(--border)"></div>
             <div>
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">BV</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Entitate legală BE</span><span class="en">Belgian legal entity</span></div>
             </div>
-            <div style="width:1px;background:var(--border)"></div>
+            <div class="mdiv" style="width:1px;background:var(--border)"></div>
             <div>
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">5+</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Servicii prezentate</span><span class="en">Services presented</span></div>
@@ -419,12 +451,12 @@
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">Next.js</div>
               <div style="font-size:.78rem;color:var(--muted)">App Router</div>
             </div>
-            <div style="width:1px;background:var(--border)"></div>
+            <div class="mdiv" style="width:1px;background:var(--border)"></div>
             <div>
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">Live</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Configurator prețuri</span><span class="en">Price configurator</span></div>
             </div>
-            <div style="width:1px;background:var(--border)"></div>
+            <div class="mdiv" style="width:1px;background:var(--border)"></div>
             <div>
               <div style="font-size:1.6rem;font-weight:700;color:var(--white);font-family:'DM Serif Display',serif">8mm</div>
               <div style="font-size:.78rem;color:var(--muted)"><span class="ro">Spate solid, PAL premium</span><span class="en">Solid back, premium PAL</span></div>
