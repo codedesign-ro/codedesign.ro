@@ -98,65 +98,6 @@
   .page-hero h1 {
     font-size: 2.2rem !important;
   }
-
-  /* ── Fix: neon pill buttons overflow on mobile ── */
-  .pf-visual { overflow: visible !important; }
-  .pf-visual > div { overflow: visible !important; }
-
-  /* The absolute positioned neon pill at bottom of each visual card */
-  [style*="position:absolute;bottom:-16px"] {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
-    display: inline-flex !important;
-    margin-top: 1rem !important;
-  }
-
-  /* ── Fix: case rows — ensure full width, no overflow ── */
-  .pf-case { overflow: hidden; }
-  .pf-inner {
-    overflow: hidden;
-    width: 100%;
-  }
-
-  /* ── Fix: body text overflow in story blocks ── */
-  .pf-story p,
-  .pf-story h3,
-  .pf-story h2 {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
-    max-width: 100%;
-  }
-
-  /* ── Fix: codedesign.ro self-card — collapse mirror badge ── */
-  [style*="grid-template-columns:1fr auto"] {
-    grid-template-columns: 1fr !important;
-  }
-  [style*="grid-template-columns:1fr auto"] > [style*="text-align:center;flex-shrink:0"] {
-    display: none !important;
-  }
-
-  /* ── Fix: metrics row — allow wrap and constrain ── */
-  .pf-story [style*="display:flex;gap:1.5rem"] {
-    gap: 1rem !important;
-  }
-  .pf-story [style*="display:flex;gap:1.75rem"] {
-    gap: 1rem !important;
-  }
-
-  /* ── Fix: pills row — allow wrap ── */
-  .pf-story [style*="flex-wrap:wrap"] {
-    max-width: 100%;
-  }
-
-  /* ── Fix: browser mockup cards — constrain width ── */
-  .browser-mock,
-  [style*="border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border)"] {
-    max-width: 100%;
-    overflow: hidden !important;
-  }
 }
 
 @media(max-width:480px){
@@ -164,27 +105,6 @@
     grid-template-columns: repeat(2, 1fr) !important;
   }
   .mdiv { display: none !important; }
-
-  /* Reduce case title font size */
-  .case-title,
-  [style*="font-size:1.65rem"] {
-    font-size: 1.35rem !important;
-  }
-
-  /* Reduce metric values */
-  [style*="font-size:1.6rem;font-weight:700"] {
-    font-size: 1.25rem !important;
-  }
-
-  /* Hide the spinning ring on mirror badge */
-  [style*="animation:spin"] {
-    display: none !important;
-  }
-
-  /* Ensure section padding is tighter */
-  #portofoliu .container {
-    padding: 0 1rem !important;
-  }
 }
 </style>
 </head>
